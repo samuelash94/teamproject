@@ -1,0 +1,109 @@
+html{
+	background-color: #98ff98;
+	margin-left: 10%;
+	margin-right: 10%;
+	border: 4px solid black;
+	padding: 10px 10px 10px 10px;
+	font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+	}
+a{
+	color: orangered;
+	}
+a:visited {
+	color: #98ff98;
+	}
+header{
+	background-color: #f09314;
+	display: inline-block;
+	padding: 0px 20px 20px 20px; 
+	border: 2px solid black;					
+	}
+div#header-left{
+	float: left;
+	width: 60%;		
+	}
+div#header-right{
+	float: right;
+	width: 30%;
+	padding-top: 50px;
+	}
+.itinerary{
+	background-color: white;
+	display: inline-block;
+	float: left;
+	padding: 0px 20px 20px 20px;
+	border: 2px solid black;
+	margin-bottom: 10px;
+	width: 62.5%;
+	}
+div.info{
+	background-color: white;
+	float: left;
+	clear: left;
+	width: 60%;
+	}
+#barbadospic{
+	content:url(images/barbados.jpg);
+	display: block;
+	height: auto;
+	max-width:100%;
+	max-height:100%;
+	}
+#barcelonapic{
+	content:url(images/barcelona2.jpg);
+	display: block;
+	height: auto;
+	max-width:100%;
+	max-height:100%;
+	}
+#klpic{
+	content:url(images/kualalumpur.jpg);
+	display: block;
+	height: auto;
+	max-width:100%;
+	max-height:100%;
+	}
+#nycpic{
+	content:url(images/nyc2.jpg);
+	display: block;
+	height: auto;
+	max-width:100%;
+	max-height:100%;
+	}
+div.signup{
+	background-color: white;
+	float: right;
+	padding: 0px 20px 20px 20px;
+	border: 2px solid black;
+	margin: auto;
+	width: 27.5%;
+	}
+div#sidepic1{
+	content:url(thumbnails/barcelona.jpg);
+	display: block;
+	height: auto;
+	max-width:100%;
+	max-height:100%;
+	}
+div#sidepic2{
+	content:url(thumbnails/new-york-city-statue-of-liberty2.jpg);
+	display: block;
+	height: auto;
+	max-width:100%;
+	max-height:100%;
+	}
+div#sidepic3{
+	content:url(images/kualalumpur2.jpg);
+	display: block;
+	height: auto;
+	max-width:100%;
+	max-height:100%;
+	}
+footer{
+	background-color: #f09314;
+	text-align: center;
+	padding: 15px;
+	border: 2px solid black;
+	margin: auto;
+	clear: left;
+	}
