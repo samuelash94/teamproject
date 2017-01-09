@@ -1,0 +1,25 @@
+Use Cases
+
+1. Creating a new profile
+	1. (User) Access homepage through browser
+	2. (User) Access sign up page (if not on index page)
+	3. (User) Input username, password, date of birth, some personal info
+	4. (User) Click "sign up"
+	5. (System) Send confirmation email
+	6. (User) Access email inbox and read confirmation email, click confirmation link
+	7. (System) Link directs user to index, confirms email in the system
+
+2. Signing in
+	1. (User) Access homepage through browser
+	2. (User) Click "sign in"
+	3. (System) Redirects user to sign in page*
+	4. (User) Enters username, password, clicks "sign in"
+	5. (System) Validates username and password are correct step 6 if not
+	6. (System) Alert user that username or password was incorrect
+	7. (System) Redirect user to homepage
+
+3. Add a friend
+	1. (User) Signs in
+	2. (User) Searches for a user to add as a friend through search bar OR
+	3. (User) Searches for a friend through search bar
+	4. (System) 
