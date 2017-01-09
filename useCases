@@ -5,9 +5,10 @@ Use Cases
 	2. (User) Access sign up page (if not on index page)
 	3. (User) Input username, password, date of birth, some personal info
 	4. (User) Click "sign up"
-	5. (System) Send confirmation email
-	6. (User) Access email inbox and read confirmation email, click confirmation link
-	7. (System) Link directs user to index, confirms email in the system
+	5. (System) Verify that the username is a MUN email (ends in @mun.ca)
+	6. (System) Send confirmation email
+	7. (User) Access email inbox and read confirmation email, click confirmation link
+	8. (System) Link directs user to index, confirms email in the system
 
 2. Signing in
 	1. (User) Access homepage through browser
@@ -18,7 +19,20 @@ Use Cases
 	6. (System) Alert user that username or password was incorrect
 	7. (System) Redirect user to homepage
 
-3. Add a friend
-	1. (User) Signs in
-	2. (User) Searches for a user to add as a friend through search bar OR
-	3. (User) Searches for a friend through search bar
+
+3. Finding another user's profile
+	1. (User) Sign in
+	2.	a. (User) Search for a user through search bar
+		b. (User) Search for a user through their suggested friends**
+		c. (User) Search for a user through a friend's friends list**
+		d. (User) Find a user's profile through a friend request they have received
+		e. (User) Find a user's profile through a post or comment on their "newsfeed"**
+	3. (User) Click on the user's name or profile picture
+	4. (System) Redirect the user to this user's profile
+
+4. Add a friend
+	1. (User) Sign in
+	2. (User) Access another user's profile
+	3. (User) Click "add friend"
+
+** only possible if the user already has at least one friend
