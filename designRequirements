@@ -1,0 +1,14 @@
+1. Create Profile
+  (Functional) User should be able to create a profile, with an @mun.ca username required, and receive a confirmation email with
+  a link. When the link is clicked, the user should return to the index page and be notified that their profile is ready.
+  (Non-Functional) User should be presented with the necessary fields to enter their information for the system to retrieve,
+  where each field is checked for validity, and the information is passed (via JSON?). A confirmation link should be generated
+  and emailed to the user. When the link is clicked,
+  
+2. Sign In
+  (Functional) User should click "sign in" and be presented with fields to enter their username and password, and then click
+  "sign in" to be taken to their homepage.
+  (Non-Functional) User should be presented with a username and (hidden characters) password field when they click "sign in".
+  After entering their credentials and clicking "sign in", the information must be validated from the database. If confirmed, the
+  user will be redirected to their homepage and a session will be started. If the information entered was invalid, the user will
+  be notified on the sign in page, and they will be asked to retry to enter their credentials.
