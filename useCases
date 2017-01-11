@@ -20,19 +20,45 @@ Use Cases
 	7. (System) Redirect user to homepage
 
 
-3. Finding another user's profile
+3. Accessing another user's profile
 	1. (User) Sign in
 	2.	a. (User) Search for a user through search bar
-		b. (User) Search for a user through their suggested friends**
-		c. (User) Search for a user through a friend's friends list**
+		b. (User) Search for a user through their suggested friends*
+		c. (User) Search for a user through a friend's friends list*
 		d. (User) Find a user's profile through a friend request they have received
-		e. (User) Find a user's profile through a post or comment on their "newsfeed"**
+		e. (User) Find a user's profile through a post or comment on their "newsfeed"*
 	3. (User) Click on the user's name or profile picture
 	4. (System) Redirect the user to this user's profile
+	
+* only possible if the user already has at least one friend
 
 4. Add a friend
 	1. (User) Sign in
 	2. (User) Access another user's profile
 	3. (User) Click "add friend"
 
-** only possible if the user already has at least one friend
+5. Create post
+	1. (User) Sign in
+	2. (User) Click "create a post"
+	3. (User) Type post in text field, add picture(s) if desired
+	4. (User) Set visibility of post (public, friends only, only me, only a select list of friends)*
+		a. If a select list of friends, select friends from list who can see post
+	5. (User) Click "post"
+	
+* note that this is optional, the default setting is based upon the user's preference under their profile settings,
+  the default for all users is "public"
+	
+6. Reply to post
+	1. (User) Sign in
+	2. (User) Find post they want to comment on
+	3. (User) Click "reply to post"
+	4. (User) Type post in text field (add picture(s) if desired?)
+	5. (User) Click "post"
+
+7. Create a group
+	1. (User) Sign in
+	2. (User) Click "create group"
+	3. (User) Set group name, description, type?
+	4. (User) Choose group privacy (Public, private)
+	5. (User) Select friends from list to invite to join
+	6. (User) Click "create group"
