@@ -7,3 +7,7 @@ Hey guys, so I figure we could just use a general file like this to throw around
 -sign in form top right?
 -settings/preferences tabs top right? what options to include?
 -lost & found could be completely public to view, but require sign-in to post, could be visible from index page for guests
+
+
+non-functional requirements describe how the system works, while functional requirements describe what the system should do.
+(http://reqtest.com/requirements-blog/functional-vs-non-functional-requirements/)
