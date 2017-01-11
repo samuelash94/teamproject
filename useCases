@@ -40,7 +40,7 @@ Use Cases
 5. Create post
 	1. (User) Sign in
 	2. (User) Click "create a post"
-	3. (User) Type post in text field, add picture(s) if desired
+	3. (User) Type post in text field, add picture(s) if desired, hyprerlink, emojis
 	4. (User) Set visibility of post (public, friends only, only me, only a select list of friends)*
 		a. If a select list of friends, select friends from list who can see post
 	5. (User) Click "post"
@@ -52,7 +52,7 @@ Use Cases
 	1. (User) Sign in
 	2. (User) Find post they want to comment on
 	3. (User) Click "reply to post"
-	4. (User) Type post in text field (add picture(s) if desired?)
+	4. (User) Type post in text field, hyperlink, emojis (add picture(s) if desired?)
 	5. (User) Click "post"
 
 7. Create a group
@@ -62,3 +62,19 @@ Use Cases
 	4. (User) Choose group privacy (Public, private)
 	5. (User) Select friends from list to invite to join
 	6. (User) Click "create group"
+	
+8. Create schedule
+	1. (User) Sign in
+	2. (User) Click "edit semester schedule"
+	3. (User) Select the semester to edit (not before current semester, not after 2 semesters ahead?)
+	4. (User) Enter day(s), time slot, course number (professor's name?)
+		a. Repeat for as many courses as necessary
+	5. (User) Click "update schedule"
+
+9. Upload resume
+	1. (User) Sign in
+	2. (User) Click "upload/update resume"
+	3. (User) Browse through file system and find, select resume
+	4. (User) Click "open"
+	5. (System) Verify that this type of file can be displayed
+	6. (User) Click "upload resume"
