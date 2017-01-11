@@ -47,15 +47,23 @@ Use Cases
 	
 * note that this is optional, the default setting is based upon the user's preference under their profile settings,
   the default for all users is "public"
+  
+6. Edit visibility of post
+	1. (User) Sign in
+	2. (User) Click "My wall"
+	3. (User) Click "Visibility Settings" button for the post they wish to change
+	4. (User) Select desired visibility (everyone, friends only, user only, list of friend only)
+		a. (If list of friends only) Select friends from users friend list that can view the post
+	5. (System) Update the post visibility in the database
 	
-6. Reply to post
+7. Reply to post
 	1. (User) Sign in
 	2. (User) Find post they want to comment on
 	3. (User) Click "reply to post"
 	4. (User) Type post in text field, hyperlink, emojis (add picture(s) if desired?)
 	5. (User) Click "post"
 
-7. Create a group
+8. Create a group
 	1. (User) Sign in
 	2. (User) Click "create group"
 	3. (User) Set group name, description, type?
@@ -63,7 +71,17 @@ Use Cases
 	5. (User) Select friends from list to invite to join
 	6. (User) Click "create group"
 	
-8. Create schedule
+9. Join a group
+	1. (User) Sign in
+	2. (User) Click "Groups"
+	3. (User) Select group they wish to join
+	4. (System) Check if the group is public or private
+		a. (System) (If public) Add the user to the group and display group details
+		b. (System) (If private) Display message explaining that the group is private and ask user if they would like to request an invite
+			i. (User) Click "Request to join this group"
+			ii. (System) Send a notification to the group owner 
+	
+10. Create schedule
 	1. (User) Sign in
 	2. (User) Click "edit semester schedule"
 	3. (User) Select the semester to edit (not before current semester, not after 2 semesters ahead?)
@@ -71,10 +89,49 @@ Use Cases
 		a. Repeat for as many courses as necessary
 	5. (User) Click "update schedule"
 
-9. Upload resume
+11. Upload resume
 	1. (User) Sign in
 	2. (User) Click "upload/update resume"
 	3. (User) Browse through file system and find, select resume
 	4. (User) Click "open"
 	5. (System) Verify that this type of file can be displayed
 	6. (User) Click "upload resume"
+
+12. Add item to lost and found
+	1. (User) Sign in
+	2. (User) Click "Lost and Found"
+	3. (User) Click "Add item"
+	4. (User) Enter required information, including a photo, description of item, and location it was found
+	5. (User) Click "submit"
+	6. (System) Check that the required information has been entered
+	7. (System) Add new item to database and display it
+	
+13. Check lost and found for item
+	1. (User) Click "Lost and Found" (Membership not required)
+	2. (User) Browse list of items
+	3. (User) Click on desired item to get contact information for the user that found the item
+
+14. Create poll
+	1. (User) Sign in
+	2. (User) Click "Polls"
+	3. (User) Click "Create new poll"
+	4. (User) Enter course you wish to create a poll for
+	5. (System) Confirm that user is registered for the course they entered (based on schedule)
+	6. (System) a. Create and display poll (if acceptable), OR
+		b. Display a message explaining why the poll could not be created
+	7. (User) Enter poll questions/information for other users to vote on
+
+15. Vote on poll
+	1. (User) Sign in
+	2. (User) Click "Polls"
+	3. (User) Browse list of polls and click the poll they wish to view/vote on
+	4. (System) Check if user is in the course related to the selected poll
+		a. If the user is not in the course, disable ability to vote/submit answers
+	5. (User) Enter poll information 
+	6. (User) Click "Submit answers"
+	7. (System) Ensure all required fields and filled out
+		a. (If accepted) Update poll resultes based on the new information
+		b. (If denied) Print a message explaining why the submittion was rejected
+		
+
+	
