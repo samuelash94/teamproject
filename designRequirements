@@ -1,3 +1,7 @@
+non-functional requirements describe how the system works, while functional requirements describe what the system should do.
+(http://reqtest.com/requirements-blog/functional-vs-non-functional-requirements/)
+
+
 1. Create Profile
   (Functional) User should be able to create a profile, with an @mun.ca username required, and receive a confirmation email with
   a link. When the link is clicked, the user should return to the index page and be notified that their profile is ready.
