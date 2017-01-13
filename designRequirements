@@ -1,6 +1,11 @@
 non-functional requirements describe how the system works, while functional requirements describe what the system should do.
 (http://reqtest.com/requirements-blog/functional-vs-non-functional-requirements/)
 
+General:
+  Non-functional:
+    The system should ensure the user is logged in at all times.
+    If a user signs out, prompt them to sign in before displaying new pages (profile, comments, etc.)
+    
 
 1. Create Profile
   (Functional) User should be able to create a profile, with an @mun.ca username required, and receive a confirmation email with
@@ -8,6 +13,8 @@ non-functional requirements describe how the system works, while functional requ
   (Non-Functional) User should be presented with the necessary fields to enter their information for the system to retrieve,
   where each field is checked for validity, and the information is passed (via JSON?). A confirmation link should be generated
   and emailed to the user. When the link is clicked,
+  The system should ensure the email is a valid @mun.ca account.
+  The system should ensure the password is acceptable [need to decide these details. capitals, min/max length, numbers, etc.]
   
 2. Sign In
   (Functional) User should click "sign in" and be presented with fields to enter their username and password, and then click
@@ -16,3 +23,64 @@ non-functional requirements describe how the system works, while functional requ
   After entering their credentials and clicking "sign in", the information must be validated from the database. If confirmed, the
   user will be redirected to their homepage and a session will be started. If the information entered was invalid, the user will
   be notified on the sign in page, and they will be asked to retry to enter their credentials.
+
+3. Accessing another user's profile  
+  (Non-functional)
+   When a user navigates to another member's profile, the visibility of each post should be checked and only those that the user has permission
+   to view should be displayed.
+
+4. Adding a friend
+   (Non-functional)
+   When a someone sends a friend request the system should notify the reciever of the request within 5 minutes which prompts them to accept 
+   or reject. If accepted, the database should add the members to each other's friends lists.
+
+5. Create a post
+  (Non-functional)
+  When a user creates a new post the system should update the database and display the information of the post within 3
+  seconds.
+  
+6. Edit visibility of a post
+  (Non-functional)
+   When a user edits the visibility options of a particular post, the system should update the database with the new permission rules.
+   The new permission rules should take effect within 3 seconds.
+   
+7. Comment on a post
+  (Non-functional)
+    When a user attempts to reply to a post, the system should check if that user has permission to reply based on the visibility rules of
+    the post.
+        If they have permission, the system should prompt the user to enter a reply. Once submitted (and verified: ensure the text field is
+        not empty, etc.) the database should be updated and the reply should be displayed within 3 seconds. The system should send the
+        owner of original post a notification that informs them someone has added a comment to their post.
+        If they do not have permission, the system should display a message explaining why the reply cannot be made.
+        
+8. Create a group
+    (Non-functional)
+    When a user creates a new group, the system should ensure the group details are acceptable (requried fields are filled out, permission
+    is set, etc.)
+    Once accepted, the system should update the database to include the new group, add the user who created it to the group and set them
+    as the owner.
+    
+9. Edit a group (as owner)
+  (Non-functional)
+   When the owner changes the type of group (public vs private), the database should update the permission settings of the group.
+   When the owner invites a user to the group, the system should send a notification to the user asking them if they would like to join
+   the group. If accepted, the system should update the group in database to include the new user as a member.
+   When the owner of a group changes another group member's invite privileges, the system should update the members privileges in
+   the database. [send member notification?]
+   When the owner removes a group member from the group, the system should update the group in the database by removing the member. [notification?]
+   When the owner deletes the group, the system should update the database by removing the group. [remove it entirely vs no longer show it]
+   
+    
+9. Join a group
+   (Non-functional)
+   When a user joins a public group, the system should update the group in the database to include the user as a member [send 
+   notification to owner?]
+   When a user accepts an invite to a private group, the system should update the group in the database to include the user as a member
+   [send notification to owner?]
+   
+   
+   
+   
+   
+   
+  
