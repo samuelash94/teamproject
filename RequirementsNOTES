@@ -1,0 +1,69 @@
+FUNCTIONAL VS NON-FUNCTIONAL REQUIREMENTS (notes from class, he said he is putting information on D2L)
+
+
+FUNCTIONAL REQUIREMENTS:
+
+-what system should do
+
+verbs, mandatory features, captured in use cases, product feature, easy to capture
+
+examples:
+
+-business rules
+-transactoin corrections, adjustments and cancellations
+-administrative functions
+
+-authentication:
+	functional requirements for authenication (from step 1)
+		every user needs a username and password
+		email must end in @mun.ca (legit mun email)
+		some sort of requirements for the password (max/min chars, numbers, capitals, etc.)
+
+
+
+NON-FUNCTIONAL:
+
+-how the system should do something
+
+attributes, not mandatory, captured in quality attribute scenario, product properties, difficult to capture
+
+non-functional requirements (examples):
+-performance
+-scalability
+-capacity
+-availability
+-reliability
+
+	after first signup, confirmation email should be sent within 5 minutes
+	scalibility - how many suggested friends should be presented to the user?
+	security of the system, network, server-side data, etc.
+
+
+after functional requirements, proceed to design, then coding, the testing, all of which is based upon the
+requirements. Testing should involved functional and non-functional testing.
+
+TESTING:
+
+functional testing:
+
+	-Black box testing:
+		testing of a system without knowledge of the inner-workings
+		do not look at code, only input/output
+
+	-white box testing:
+		testing of a system with knowledge of the inner-workings/code
+		have full access to the source code
+
+	-unit testing*
+	-acceptance testing*
+	-integration testing
+	-smoke testing
+	-user acceptance testing
+	-regression testing*
+		-testing to make sure changes to one module doesn't break other modules functioning
+
+	(*important)
+
+
+non-functional testing:
+	
