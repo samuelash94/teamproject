@@ -15,6 +15,7 @@ General:
   and emailed to the user. When the link is clicked,
   The system should ensure the email is a valid @mun.ca account.
   The system should ensure the password is acceptable [need to decide these details. capitals, min/max length, numbers, etc.]
+  The system should hash the user's password and store it in the database.
   
 2. Sign In
   (Functional) User should click "sign in" and be presented with fields to enter their username and password, and then click
@@ -79,8 +80,55 @@ General:
    [send notification to owner?]
    
    
-   
-   
-   
-   
+10. Create a schedule
+  (Non-functional)
+  When a user submits a new schedule or adds a course to a schedule, the system shoould ensure that the required data has been entered
+  (course name, course number, time of class.
+  The system should confirm that there is not conflict in course times for the schedule and give an error if a conflict exists.
+    If the schedule is accepted, the system should add the schedule to the database and display it to the user.
   
+  
+11. Upload a resume
+  (Non-functional)
+   When a user attempts to upload a resume, the system should confirm that it is an apporiate file format (.pdf, .doc, .docx, etc.).
+     If the file is not accepted, the system should give the user an error.
+     If the file is accepted, the system should update the database and display the resume on the user's profile.
+     
+12. Add item to lost and found
+  (Non-functional)
+  When a user attempts to add an item to the lost and found, the system should first confirm that they are signed in.
+      If not: give user an error
+      If yes: proceed to item information menu
+          When a user submits information about an item, the system should confirm the required fields are filled out (description, location
+          found, etc.)
+              If fields are not filled, the system should give the user an error.
+              If the fields are filled, the system should update the datebase to include the new item.
+              
+13. Check lost and found for item
+  [No non-functional requirements?]
+  
+14. Remove item from lost and found
+  (Non-functional)
+    When a user confirms they wish to remove an item from the lost and found, the system should update the database by removing the item
+    from the lost and found list.
+    
+15. Create a poll
+  (Non-functional)
+    When a user attempts to create a new poll, the system should check the user's schedule to confirm they are in the course the poll is
+    about.
+      If user is not in course, give the user an error.
+      If the user is in the course, display the "Create poll" page.
+        When a user attempts to submit a created poll, the system should confirm the required information has been entered.
+          If requried information is not entered, the system should give the user an error and specify the fields that are invalid.
+          If the required informtion is entered, the system should add the poll to the database.
+          
+16. Vote on a poll
+  (Non-functional)
+    When a user attempts to vote on a poll, the system should check if the user is signed in.
+      If not signed in, give the user an error/take them to the login screen
+      If the user is signed in:
+        The system should check the users schedule to confirm they are in the course the poll is about..
+          If the user is not in the course, the system should give the user an error.
+          If the user is in the course, the system should confirm that the required fields have been filled out.
+            If fields are invalid, the system should give the user an error.
+            If the required fields have been filled, the system should update the results of the poll in the database.
