@@ -129,6 +129,7 @@ Use Cases
 	6. (System) a. Create and display poll (if acceptable), OR
 		b. Display a message explaining why the poll could not be created
 	7. (User) Enter poll questions/information for other users to vote on
+	8. (System) Confirm the entered information is valid/sufficient
 
 16. Vote on poll
 	1. (User) Sign in
