@@ -110,8 +110,17 @@ Use Cases
 	1. (User) Click "Lost and Found" (Membership not required)
 	2. (User) Browse list of items
 	3. (User) Click on desired item to get contact information for the user that found the item
+	
+14. Remove item from lost and found
+	1. (User) Sign in
+	2. (User) Click "Lost and Found"
+	3. (User) Click "My Posts"
+	4. (User) Click "Remove Item" from the list of posts
+	5. (System) Prompt the user for confirmation
+	6. (System) Remove the item from the database
+	7. (System) Return user to their lost and found posts
 
-14. Create poll
+15. Create poll
 	1. (User) Sign in
 	2. (User) Click "Polls"
 	3. (User) Click "Create new poll"
@@ -121,7 +130,7 @@ Use Cases
 		b. Display a message explaining why the poll could not be created
 	7. (User) Enter poll questions/information for other users to vote on
 
-15. Vote on poll
+16. Vote on poll
 	1. (User) Sign in
 	2. (User) Click "Polls"
 	3. (User) Browse list of polls and click the poll they wish to view/vote on
