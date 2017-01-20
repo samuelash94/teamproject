@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Website Name - Update Your Preferences</title>
+<link type="text/css" rel="stylesheet" href="itinerary-mobile.css"
+	media="screen and (max-device-width: 800px)" href="800.css">
+<link type="text/css" rel="stylesheet" href="itinerary.css"
+	media="screen and (min-device-width: 801px)" href="800.css">
+</head>
+<body>
+	<header>
+		<div id="header-title">
+			<h1>User Preferences</h1>
+			<h2>Update your settings for posts (more?).</h2>
+		</div>
+
+	</header>
+
+	<script type="text/javascript" src="./posting.js"></script>
+	<div class="container">
+		<div class="row">
+			<form class="form-horizontal" action="" method="POST"
+				enctype="application/x-www-form-urlencoded">
+				<fieldset>
+
+					<label class="control-label">Who can see my posts?</label> <br>
+					<select name="postvisibility" id="postvisibility">
+						<option>(select)</option>
+						<option value="everyone">Everyone</option>
+						<option value="friends">My Friends</option>
+						<option value="onlyme">Only Me</option>
+						<option value="listoffriends">Only a select list of
+							friends</option>
+					</select><br> <label class="control-label">Who can post to my
+						timeline?</label> <br> <select name="timeline" id="timeline">
+						<option>(select)</option>
+						<option value="everyone">Everyone</option>
+						<option value="friends">My Friends</option>
+						<option value="onlyme">Only Me</option>
+					</select><br> <INPUT type="submit" value="Send"
+						onclick="displayBooked();"> <INPUT type="reset">
+		</div>
+	</div>
+	</fieldset>
+	</form>
+	</div>
+	</div>
+	<div id="identity"></div>
+	<div id="newForm"></div>
+	<footer>
+		<p>Copyright, Contact</p>
+		<br>
+		<p>
+			<a href="../index.html">Back to Homepage</a>
+		</p>
+	</footer>
+</body>
+</html>
