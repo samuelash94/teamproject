@@ -29,7 +29,7 @@ Use Cases
 		e. (User) Find a user's profile through a post or comment on their "newsfeed"*
 	3. (User) Click on the user's name or profile picture
 	4. (System) Redirect the user to this user's profile
-	
+
 * only possible if the user already has at least one friend
 
 4. Add a friend
@@ -40,14 +40,14 @@ Use Cases
 5. Create post
 	1. (User) Sign in
 	2. (User) Click "create a post"
-	3. (User) Type post in text field, add picture(s) if desired, hyprerlink, emojis
+	3. (User) Type post in text field, add picture(s) if desired, hyperlink, emoji's
 	4. (User) Set visibility of post (public, friends only, only me, only a select list of friends)*
 		a. If a select list of friends, select friends from list who can see post
 	5. (User) Click "post"
-	
+
 * note that this is optional, the default setting is based upon the user's preference under their profile settings,
   the default for all users is "public"
-  
+
 6. Edit visibility of post
 	1. (User) Sign in
 	2. (User) Click "My wall"
@@ -55,12 +55,12 @@ Use Cases
 	4. (User) Select desired visibility (everyone, friends only, user only, list of friend only)
 		a. (If list of friends only) Select friends from users friend list that can view the post
 	5. (System) Update the post visibility in the database
-	
+
 7. Reply to post
 	1. (User) Sign in
 	2. (User) Find post they want to comment on
 	3. (User) Click "reply to post"
-	4. (User) Type post in text field, hyperlink, emojis (add picture(s) if desired?)
+	4. (User) Type post in text field, hyperlink, emoji's (add picture(s) if desired?)
 	5. (User) Click "post"
 
 8. Create a group
@@ -70,7 +70,7 @@ Use Cases
 	4. (User) Choose group privacy (Public, private)
 	5. (User) Select friends from list to invite to join
 	6. (User) Click "create group"
-	
+
 9. Join a group
 	1. (User) Sign in
 	2. (User) Click "Groups"
@@ -79,8 +79,8 @@ Use Cases
 		a. (System) (If public) Add the user to the group and display group details
 		b. (System) (If private) Display message explaining that the group is private and ask user if they would like to request an invite
 			i. (User) Click "Request to join this group"
-			ii. (System) Send a notification to the group owner 
-	
+			ii. (System) Send a notification to the group owner
+
 10. Create schedule
 	1. (User) Sign in
 	2. (User) Click "edit semester schedule"
@@ -105,12 +105,12 @@ Use Cases
 	5. (User) Click "submit"
 	6. (System) Check that the required information has been entered
 	7. (System) Add new item to database and display it
-	
+
 13. Check lost and found for item
 	1. (User) Click "Lost and Found" (Membership not required)
 	2. (User) Browse list of items
 	3. (User) Click on desired item to get contact information for the user that found the item
-	
+
 14. Remove item from lost and found
 	1. (User) Sign in
 	2. (User) Click "Lost and Found"
@@ -137,8 +137,8 @@ Use Cases
 	3. (User) Browse list of polls and click the poll they wish to view/vote on
 	4. (System) Check if user is in the course related to the selected poll
 		a. If the user is not in the course, disable ability to vote/submit answers
-	5. (User) Enter poll information 
+	5. (User) Enter poll information
 	6. (User) Click "Submit answers"
 	7. (System) Ensure all required fields and filled out
-		a. (If accepted) Update poll resultes based on the new information
-		b. (If denied) Print a message explaining why the submittion was rejected
+		a. (If accepted) Update poll results based on the new information
+		b. (If denied) Print a message explaining why the submission was rejected

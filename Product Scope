@@ -1,0 +1,13 @@
+This project will be written in the JavaScript based runtime environment Node.js. What makes Node.js ideal in this case is that it has an
+event driven architecture that allows throughput and scalability in Web Applications with many input/output operations. One advantage of
+using Node.js is that the functions are designed to be non-blocking. Commands do not have be sequential and wait for the preceding command
+to finish.
+
+One benefit of Node.js is that it works very well with the document-oriented database program MongoDB. This program is also written in
+JavaScript like Node.js. We will be using this to store any data relating to the user and the associated functionalities and privileges.\
+When necessary we will retrieve any data to use for the output of the webpages.
+
+We still need:
+-Objectives:
+-Goals, corporate goals
+-Business strategies

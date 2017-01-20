@@ -30,6 +30,7 @@ router.post('/register', function(req, res){
 	req.checkBody('name', 'Name is required').notEmpty();
 	req.checkBody('email', 'Email is required').notEmpty();
 	req.checkBody('student_id', 'Student number is required').notEmpty();
+	req.checkBody('student_id', 'Student number must be an integer') = /^\d+$/.test(student_id);
 	req.checkBody('email', 'Email is not valid').isEmail();
 	req.checkBody('username', 'Username is required').notEmpty();
 	req.checkBody('password', 'Password is required').notEmpty();

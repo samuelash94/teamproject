@@ -5,7 +5,7 @@ General:
   Non-functional:
     The system should ensure the user is logged in at all times.
     If a user signs out, prompt them to sign in before displaying new pages (profile, comments, etc.)
-    
+
 
 1. Create Profile
   (Functional) User should be able to create a profile, with an @mun.ca username required, and receive a confirmation email with
@@ -16,7 +16,7 @@ General:
   The system should ensure the email is a valid @mun.ca account.
   The system should ensure the password is acceptable [need to decide these details. capitals, min/max length, numbers, etc.]
   The system should hash the user's password and store it in the database.
-  
+
 2. Sign In
   (Functional) User should click "sign in" and be presented with fields to enter their username and password, and then click
   "sign in" to be taken to their homepage.
@@ -25,26 +25,26 @@ General:
   user will be redirected to their homepage and a session will be started. If the information entered was invalid, the user will
   be notified on the sign in page, and they will be asked to retry to enter their credentials.
 
-3. Accessing another user's profile  
+3. Accessing another user's profile
   (Non-functional)
    When a user navigates to another member's profile, the visibility of each post should be checked and only those that the user has permission
    to view should be displayed.
 
 4. Adding a friend
    (Non-functional)
-   When a someone sends a friend request the system should notify the reciever of the request within 5 minutes which prompts them to accept 
+   When a someone sends a friend request the system should notify the receiver of the request within 5 minutes which prompts them to accept
    or reject. If accepted, the database should add the members to each other's friends lists.
 
 5. Create a post
   (Non-functional)
   When a user creates a new post the system should update the database and display the information of the post within 3
   seconds.
-  
+
 6. Edit visibility of a post
   (Non-functional)
    When a user edits the visibility options of a particular post, the system should update the database with the new permission rules.
    The new permission rules should take effect within 3 seconds.
-   
+
 7. Comment on a post
   (Non-functional)
     When a user attempts to reply to a post, the system should check if that user has permission to reply based on the visibility rules of
@@ -53,14 +53,14 @@ General:
         not empty, etc.) the database should be updated and the reply should be displayed within 3 seconds. The system should send the
         owner of original post a notification that informs them someone has added a comment to their post.
         If they do not have permission, the system should display a message explaining why the reply cannot be made.
-        
+
 8. Create a group
     (Non-functional)
-    When a user creates a new group, the system should ensure the group details are acceptable (requried fields are filled out, permission
+    When a user creates a new group, the system should ensure the group details are acceptable (required fields are filled out, permission
     is set, etc.)
     Once accepted, the system should update the database to include the new group, add the user who created it to the group and set them
     as the owner.
-    
+
 9. Edit a group (as owner)
   (Non-functional)
    When the owner changes the type of group (public vs private), the database should update the permission settings of the group.
@@ -70,30 +70,30 @@ General:
    the database. [send member notification?]
    When the owner removes a group member from the group, the system should update the group in the database by removing the member. [notification?]
    When the owner deletes the group, the system should update the database by removing the group. [remove it entirely vs no longer show it]
-   
-    
+
+
 9. Join a group
    (Non-functional)
-   When a user joins a public group, the system should update the group in the database to include the user as a member [send 
+   When a user joins a public group, the system should update the group in the database to include the user as a member [send
    notification to owner?]
    When a user accepts an invite to a private group, the system should update the group in the database to include the user as a member
    [send notification to owner?]
-   
-   
+
+
 10. Create a schedule
   (Non-functional)
-  When a user submits a new schedule or adds a course to a schedule, the system shoould ensure that the required data has been entered
+  When a user submits a new schedule or adds a course to a schedule, the system should ensure that the required data has been entered
   (course name, course number, time of class.
   The system should confirm that there is not conflict in course times for the schedule and give an error if a conflict exists.
     If the schedule is accepted, the system should add the schedule to the database and display it to the user.
-  
-  
+
+
 11. Upload a resume
   (Non-functional)
-   When a user attempts to upload a resume, the system should confirm that it is an apporiate file format (.pdf, .doc, .docx, etc.).
+   When a user attempts to upload a resume, the system should confirm that it is an appropriate file format (.pdf, .doc, .docx, etc.).
      If the file is not accepted, the system should give the user an error.
      If the file is accepted, the system should update the database and display the resume on the user's profile.
-     
+
 12. Add item to lost and found
   (Non-functional)
   When a user attempts to add an item to the lost and found, the system should first confirm that they are signed in.
@@ -102,16 +102,16 @@ General:
           When a user submits information about an item, the system should confirm the required fields are filled out (description, location
           found, etc.)
               If fields are not filled, the system should give the user an error.
-              If the fields are filled, the system should update the datebase to include the new item.
-              
+              If the fields are filled, the system should update the database to include the new item.
+
 13. Check lost and found for item
   [No non-functional requirements?]
-  
+
 14. Remove item from lost and found
   (Non-functional)
     When a user confirms they wish to remove an item from the lost and found, the system should update the database by removing the item
     from the lost and found list.
-    
+
 15. Create a poll
   (Non-functional)
     When a user attempts to create a new poll, the system should check the user's schedule to confirm they are in the course the poll is
@@ -119,9 +119,9 @@ General:
       If user is not in course, give the user an error.
       If the user is in the course, display the "Create poll" page.
         When a user attempts to submit a created poll, the system should confirm the required information has been entered.
-          If requried information is not entered, the system should give the user an error and specify the fields that are invalid.
-          If the required informtion is entered, the system should add the poll to the database.
-          
+          If required information is not entered, the system should give the user an error and specify the fields that are invalid.
+          If the required information is entered, the system should add the poll to the database.
+
 16. Vote on a poll
   (Non-functional)
     When a user attempts to vote on a poll, the system should check if the user is signed in.
