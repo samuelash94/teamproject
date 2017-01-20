@@ -1,0 +1,35 @@
+{
+  "name": "teamproject",
+  "version": "1.0.0",
+  "description": "Node js project for CS 4770 - Team Project",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/samuelash94/teamproject.git"
+  },
+  "author": "Osede Onodenalore",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "*",
+    "body-parser": "*",
+    "connect-flash": "*",
+    "cookie-parser": "^1.4.1",
+    "express": "*",
+    "express-handlebars": "*",
+    "express-messages": "*",
+    "express-session": "*",
+    "express-validator": "*",
+    "mongodb": "*",
+    "mongoose": "*",
+    "passport": "*",
+    "passport-http": "*",
+    "passport-local": "*"
+  },
+  "bugs": {
+    "url": "https://github.com/samuelash94/teamproject/issues"
+  },
+  "homepage": "https://github.com/samuelash94/teamproject#readme"
+}
