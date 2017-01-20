@@ -15,9 +15,9 @@ Use Cases
 	2. (User) Click "sign in"
 	3. (System) Redirects user to sign in page*
 	4. (User) Enters username, password, clicks "sign in"
-	5. (System) Validates username and password are correct step 6 if not
-	6. (System) Alert user that username or password was incorrect
-	7. (System) Redirect user to homepage
+	5. (System) Validates username and password are correct, a if not
+		a. (System) Alert user that username or password was incorrect
+	6. (System) Redirect user to homepage
 
 
 3. Accessing another user's profile
@@ -41,9 +41,9 @@ Use Cases
 	1. (User) Sign in
 	2. (User) Click "create a post"
 	3. (User) Type post in text field, add picture(s) if desired, hyprerlink, emojis
-	4. (User) Set visibility of post (public, friends only, only me, only a select list of friends)*
-		a. If a select list of friends, select friends from list who can see post
-	5. (User) Click "post"
+		a. (User) Set visibility of post (public, friends only, only me, only a select list of friends)*
+		b. If a select list of friends, select friends from list who can see post
+	4. (User) Click "post"
 	
 * note that this is optional, the default setting is based upon the user's preference under their profile settings,
   the default for all users is "public"
@@ -62,6 +62,7 @@ Use Cases
 	3. (User) Click "reply to post"
 	4. (User) Type post in text field, hyperlink, emojis (add picture(s) if desired?)
 	5. (User) Click "post"
+	6. (System) Update database, display comment on post
 
 8. Create a group
 	1. (User) Sign in
@@ -70,6 +71,7 @@ Use Cases
 	4. (User) Choose group privacy (Public, private)
 	5. (User) Select friends from list to invite to join
 	6. (User) Click "create group"
+	7. (System) Create group in database, maintain list of users in group and their level of authority in the group
 	
 9. Join a group
 	1. (User) Sign in
@@ -79,7 +81,10 @@ Use Cases
 		a. (System) (If public) Add the user to the group and display group details
 		b. (System) (If private) Display message explaining that the group is private and ask user if they would like to request an invite
 			i. (User) Click "Request to join this group"
-			ii. (System) Send a notification to the group owner 
+			ii. (System) Send a notification to the group owner
+	5. (System) Add user to list of users in group, in database*
+	
+* if the user requests to join, this can only be done if and when the owner/admin of the group accepts the request
 	
 10. Create schedule
 	1. (User) Sign in
@@ -88,6 +93,7 @@ Use Cases
 	4. (User) Enter day(s), time slot, course number (professor's name?)
 		a. Repeat for as many courses as necessary
 	5. (User) Click "update schedule"
+	6. (System) Update that user's schedule in database
 
 11. Upload resume
 	1. (User) Sign in
@@ -96,6 +102,7 @@ Use Cases
 	4. (User) Click "open"
 	5. (System) Verify that this type of file can be displayed
 	6. (User) Click "upload resume"
+	7. (System) Maintain this user's resume in database
 
 12. Add item to lost and found
 	1. (User) Sign in
@@ -124,12 +131,14 @@ Use Cases
 	1. (User) Sign in
 	2. (User) Click "Polls"
 	3. (User) Click "Create new poll"
-	4. (User) Enter course you wish to create a poll for
+	4. (User) Enter course you wish to create a poll for**
 	5. (System) Confirm that user is registered for the course they entered (based on schedule)
 	6. (System) a. Create and display poll (if acceptable), OR
 		b. Display a message explaining why the poll could not be created
 	7. (User) Enter poll questions/information for other users to vote on
 	8. (System) Confirm the entered information is valid/sufficient
+	
+** could also add public polls? (not related to any course)
 
 16. Vote on poll
 	1. (User) Sign in
@@ -140,5 +149,5 @@ Use Cases
 	5. (User) Enter poll information 
 	6. (User) Click "Submit answers"
 	7. (System) Ensure all required fields and filled out
-		a. (If accepted) Update poll resultes based on the new information
+		a. (If accepted) Update poll results based on the new information
 		b. (If denied) Print a message explaining why the submittion was rejected
