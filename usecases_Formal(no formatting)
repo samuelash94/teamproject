@@ -1,0 +1,134 @@
+======TEMPLATE=========
+
+UC	Flow of Events for the  Use Case
+
+.1	Preconditions:
+
+.2	Main Flow:
+
+.3	Subflows:
+
+.4	Alternative Flows:
+
+=======TEMPLATE============
+
+II. Use Cases
+UC1	Create a Profile
+UC2	Sign In
+UC3	View Profile
+UC4	Accessing Another User's Profile
+UC5	Add Friend
+UC6	Create a Post
+
+UC1	Flow of Events for the Create a Profile Use Case
+
+1.1	Preconditions:
+None.
+
+1.2	Main Flow:
+After navigating to the sign-up page, the user is presented with a form in which they must enter there username, password, email [E1], student ID, campus, and gender [E2]. The user will then be required to access their email and click the confirmation link the confirmation email.
+
+1.3	Subflows:
+None.
+
+1.4	Alternative Flows:
+[E1]	The email that is entered must be a valid @mun.ca email address. If the email does not end with 	@mun.ca, the system displays an error explaining that only official mun emails can be used.
+[E2]	All the fields must be filled out. If any fields are empty, the system displays an error explaining 	that the fields are required.
+
+
+UC2	Flow of Events for the Sign In Use Case
+
+2.1	Preconditions:
+None.
+
+2.2	Main Flow:
+After clicking the “Sign In” button, the user will be prompted to enter their account information. One the user enters their account name and password and the submit button is clicked [E1] [E2], the user will be brought to the dashboard/profile.
+
+2.3	Subflows:
+None.
+
+2.4	Alternative Flows:
+[E1]	All fields must be filled out. If the any fields are left empty, the system displays an error 	explaining that a required field has not been filled out.
+[E2]	Must be a valid username/password combination. If they information is not valid, the system 	displays an error explaining that the username/password combination is not valid.
+
+UC3	Flow of Events for the View Profile Use Case
+
+3.1	Preconditions:
+1. The user is signed in [UC2].
+
+3.2	Main Flow:
+Upon creating an account [UC1] signing in [UC2], the user is brought to their profile. The user may also click their name/profile picture from the top of the page to be brought to their profile [E1].
+
+3.3	Subflows:
+None.
+
+3.4	Alternative Flows:
+[E1]	A user is automatic signed out after 20 minutes of inactivity. If they user attempts to view their 	profile after being logged out, they will be prompted to sign in [UC1].
+
+UC4	Flow of Events for the Accessing Another User's Profile Use Case
+
+4.1	Preconditions:
+The user is signed in [UC2].
+
+4.2	Main Flow:
+The user clicks another user's name to view their profile [S1][S2][S3][S4][S5].
+
+4.3	Subflows:
+[S1]	The user enters a name in the search bar and clicks “Search” which brings up a list of users 	based on the name they entered.
+[S2]	After accessing their own profile [UC3], the user clicks on a friend from their suggested 	friend's list and is brought to their profile.
+[S3]	After accessing their own profile [UC3], the user clicks on a user in a friend's friend list and 		they are brought to the users profile.
+[S4]	The user clicks the friend request from their notification area and can click their name to view 	their profile.
+[S5]	After accessing their own profile [UC3] or another user's profile [UC4], the user clicks on the 	name of someone who has posted on their newsfeed and is brought to their profile.		
+
+4.4	Alternative Flows:
+None.
+
+UC5	Flow of Events for the Add Friend Use Case
+
+5.1	Preconditions:
+The user is signed in [UC2].
+
+5.2	Main Flow:
+After the user accesses another user's profile [UC3], they click the “Add Friend” button to send that user a friend request, or they can accept a friend request from their notification area [S1].
+
+5.3	Subflows:
+[S1]	The user clicks on a friend request notification and presses “Accept
+
+5.4	Alternative Flows:
+None.
+
+UC6	Flow of Events for the Create Post Use Case
+
+6.1	Preconditions:
+1. The user is signed in [UC2].
+2. The user is viewing their profile [UC3].
+
+6.2	Main Flow:
+After clicking create post on their newsfeed, the user is prompted to enter text [E2], pictures [E3], hyperlinks, or other text-based information. The user may select the visibility settings of their post [S1]. The user then clicks “Post” and their post is displayed on their newsfeed [E1].
+
+6.3	Subflows:
+[S1]	The user can choose to set the visibility of their post to something other than their default 	setting. If they choose to select a list of friends, their friends list is displayed and they can check  	a box next to the friend that they wish to allow visibility.
+
+6.4	Alternative Flows:
+[E1]	The post cannot be empty. If the post is empty an error is displayed explaining that the user 	must enter some information in their post before it can be submitted.
+[E2]	The post cannot be longer than 1000 characters. If the post exceeds the character limit an error 	is displayed.
+[E3]	Only .jpeg, .png, .gif files can be uploaded up to the size of 50MB [???]. If the image is an 	invalid type or too large, an error is displayed.
+
+UC7	Flow of Events for the Edit Visibility of a Post Use Case
+
+7.1	Preconditions:
+1. The user is signed in [UC2].
+2. The user is viewing their own profile [UC3].
+
+7.2	Main Flow:
+After finding a post they wish to edit the visibility of, they click the “Edit Visibility” button and select how they want to change it [S1][S2][S3][S4].
+
+7.3	Subflows:
+[S1]	The user selects “Everyone,” allowing anyone to see the post.
+[S2]	The user selects “Friends Only,” allowing only users on their friends list to view the post.
+[S3]	The user selects “User Only,” allowing only themselves to view the post.
+[S4]	The user selects “Only Certain Friends,” and is prompted to select friends from a list to allow to 	view the post.
+
+7.4	Alternative Flows:
+None.
+
