@@ -36,15 +36,17 @@ provided they are a registered student at MUN or have administrative privelages.
 
 
 Operating Environment
-The Project is web-based and will be hosted on the university server. It can be viewed on
-a Personal Computer. It is currently assumed that it is only viewed on a personal computer and not
-on any mobile environment. 
+The Project is web-based and will be hosted on the university server. It is intended to work on any
+browser in any operating system. It is currently assumed that it is only viewed on a personal computer
+and not on any mobile environment. 
 
 Design and Implementation Constarint
 Any Regular user will be able to basic functions like signing in, creating a profile, adding 
 friends, creating/editing a post, joining a group, creating and voting a poll. However, each user
 has to have a valid email id that ends with mun.ca, which is the way the system assumes that the user 
-is a MUN user. Every User has privacy restrictions, the profile has limited visibility for non- friends/ the public. But for every friend in the profile have complete access to the user's profile and vice-versa.
+is a MUN user. Every User has privacy restrictions, the profile has limited visibility for 
+non- friends/ the public. But for every friend in the profile have complete access to the user's profile
+and vice-versa.
 
 User Documentation
 
