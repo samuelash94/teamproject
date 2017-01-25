@@ -1,0 +1,24 @@
+3.1 User Interfaces
+
+The first interface will be our login screen. In this interface the user will have to input their username and password to gain access to their
+account and profile.
+
+We intend to have an interface for creating and post and all of the associated functionalities such as commenting, uploading images and publishing content
+
+As well an interface for shared interaction between users such as the study groups and lost and found.
+
+3.2 Hardware Interfaces
+
+-The system must be connected to the internet.
+-The system will be deployed on a MUN server that will connected using a port number.
+-Network interaction will use https
+
+3.3 Communications interface
+
+The system will interact with the database to retrieve any necessary data related to the user, friends, groups and content
+- Possibly talk about TCP/IP???
+
+3.4 Software interfaces
+Along with an internet connection. The system will makes indirect use of an internet browser. As mentioned before, this application is written in
+Node JS(version ???) with use of mongodb (version ???) as the database. Other than that, the system does not tell any software what to do.
+(This probably needs some better description)
