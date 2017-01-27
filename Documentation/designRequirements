@@ -50,56 +50,66 @@ General:
   permission rules should take effect within 3 seconds.
 
 7. Comment on a post
-  (Non-functional)
-    When a user attempts to reply to a post, the system should check if that user has permission to reply based on the visibility rules of
-    the post.
+  (Functional) User should have the ability to click "reply" on any post they can see (on their dashboard, in a group) and should be able to 
+  post content underneath a post.
+  (Non-functional) System should present the user with field(s) for posting content under a post when requested. When a user attempts to reply\
+  to a post, the system should check if that user has permission to reply based on the visibility rules of the post.
         If they have permission, the system should prompt the user to enter a reply. Once submitted (and verified: ensure the text field is
         not empty, etc.) the database should be updated and the reply should be displayed within 3 seconds. The system should send the
         owner of original post a notification that informs them someone has added a comment to their post.
         If they do not have permission, the system should display a message explaining why the reply cannot be made.
 
 8. Create a group
-    (Non-functional)
-    When a user creates a new group, the system should ensure the group details are acceptable (required fields are filled out, permission
-    is set, etc.)
-    Once accepted, the system should update the database to include the new group, add the user who created it to the group and set them
-    as the owner.
+  (Functional) User should have access to a groups page, accessible from the dashboard, on which they can create a group, or edit any owned group.
+  (Non-functional) When a user requests to creata a new group, the system should ensure the group details are acceptable (required fields are
+  filled out, permission is set, etc.)
+  Once accepted, the system should update the database to include the new group, add the user who created it to the group and set them
+  as the owner. The system is then responsible for ensuring the visibility of the group (set by the owner at creation and can be changed at any
+  time).
 
 9. Edit a group (as owner)
-  (Non-functional)
-   When the owner changes the type of group (public vs private), the database should update the permission settings of the group.
-   When the owner invites a user to the group, the system should send a notification to the user asking them if they would like to join
-   the group. If accepted, the system should update the group in database to include the new user as a member.
-   When the owner of a group changes another group member's invite privileges, the system should update the members privileges in
-   the database. [send member notification?]
-   When the owner removes a group member from the group, the system should update the group in the database by removing the member. [notification?]
-   When the owner deletes the group, the system should update the database by removing the group. [remove it entirely vs no longer show it]
+  (Functional) User should be able to edit any group they own to change the attributes of the group, add or remove members, remove posts, etc.
+  (Non-functional) System must allow the user to edit some, if not all, attributes of the group, including possible deletion.
+  When the owner changes the type of group (public vs private), the database should update the permission settings of the group.
+  When the owner invites a user to the group, the system should send a notification to the user asking them if they would like to join
+  the group. If accepted, the system should update the group in database to include the new user as a member.
+  When the owner of a group changes another group member's invite privileges, the system should update the members privileges in
+  the database. [send member notification?]
+  When the owner removes a group member from the group, the system should update the group in the database by removing the member. [notification?]
+  When the owner deletes the group, the system should update the database by removing the group. [remove it entirely vs no longer show it]
 
 
 9. Join a group
-   (Non-functional)
-   When a user joins a public group, the system should update the group in the database to include the user as a member [send
-   notification to owner?]
-   When a user accepts an invite to a private group, the system should update the group in the database to include the user as a member
-   [send notification to owner?]
+  (Functional) User should be able to see public groups on the groups page, and be able to click "join" on any group they wish to, as well as
+  being able to join any group they have been invited to (via notifications).
+  (Non-functional) System must add user to a group when requested. When a user joins a public group, the system should update the group in the
+  database to include the user as a member [send notification to owner?]
+  When a user accepts an invite to a private group, the system should update the group in the database to include the user as a member
+  [send notification to owner?]
 
 
 10. Create a schedule
-  (Non-functional)
+  (Functional) User should be able to create a (one) schedule (from their profile page) of their courses for their friends to view.
+  (Non-functional) System should present user with fields to fill out their schedule, including the ability to specify which days and times
+  each class occurs, as well as other potential fields (professor's name, etc). System must ensure that friends can see each user's schedule.
   When a user submits a new schedule or adds a course to a schedule, the system should ensure that the required data has been entered
   (course name, course number, time of class.
   The system should confirm that there is not conflict in course times for the schedule and give an error if a conflict exists.
-    If the schedule is accepted, the system should add the schedule to the database and display it to the user.
+  If the schedule is accepted, the system should add the schedule to the database and display it to the user.
 
 
 11. Upload a resume
-  (Non-functional)
-   When a user attempts to upload a resume, the system should confirm that it is an appropriate file format (.pdf, .doc, .docx, etc.).
-     If the file is not accepted, the system should give the user an error.
-     If the file is accepted, the system should update the database and display the resume on the user's profile.
+  (Functional) User should be able to upload a (one) resume (from their profile page) for their friends to view.
+  (Non-functional) System should allow the user to upload their resume via file upload. System should ensure that friends can see each user's
+  resume.
+  When a user attempts to upload a resume, the system should confirm that it is an appropriate file format (.pdf, .doc, .docx, etc.).
+    If the file is not accepted, the system should give the user an error.
+    If the file is accepted, the system should update the database and display the resume on the user's profile.
 
 12. Add item to lost and found
-  (Non-functional)
+  (Functional) User should be able to create a post in the lost and found section (available from dashboard) about an item they have found.
+  (Non-functional) System should present user with fields to create a post about an item they have found, when requested. User should be able
+  to include a short description, location, and a photo of the item, so system must present fields appropriate for this.
   When a user attempts to add an item to the lost and found, the system should first confirm that they are signed in.
       If not: give user an error
       If yes: proceed to item information menu
@@ -109,17 +119,23 @@ General:
               If the fields are filled, the system should update the database to include the new item.
 
 13. Check lost and found for item
-  [No non-functional requirements?]
+  (Functional) User should be able to access lost and found section and scroll through it to search for any items they may have lost.
+  (Non-functional) System should present all posts in lost and found in reverse chronological order (newest first) to user when requested.
+  [time limit for posts? eg. 7 days]
 
 14. Remove item from lost and found
-  (Non-functional)
-    When a user confirms they wish to remove an item from the lost and found, the system should update the database by removing the item
-    from the lost and found list.
+  (Functional) Once the owner of an item has been in contact, user who made a post in the lost and found section should be able to remove the post
+  for that item. (Click remove item.)
+  (Non-functional) System must remove a post from the lost and found section when the user who made that post requests to do so.
+  When a user confirms they wish to remove an item from the lost and found, the system should update the database by removing the item
+  from the lost and found list.
 
 15. Create a poll
-  (Non-functional)
-    When a user attempts to create a new poll, the system should check the user's schedule to confirm they are in the course the poll is
-    about.
+  (Functional) User should be able to create a poll from within a group they are in [or from the dashboard?] and be able to include the
+  question/proposal as well as multiple choices for other users to answer [limit of 7-10 choices?].
+  (Non-functional) System should present user with fields to specify the question/proposal and potential answers for a poll.
+  When a user attempts to create a new poll, the system should check the user's schedule to confirm they are in the course the poll is
+  about.
       If user is not in course, give the user an error.
       If the user is in the course, display the "Create poll" page.
         When a user attempts to submit a created poll, the system should confirm the required information has been entered.
@@ -127,8 +143,9 @@ General:
           If the required information is entered, the system should add the poll to the database.
 
 16. Vote on a poll
-  (Non-functional)
-    When a user attempts to vote on a poll, the system should check if the user is signed in.
+  (Functional) User should be able to see polls in any group they're in [public polls section?] and answer any polls they wish to.
+  (Non-functional) System should keep track of all answers to each poll and later display the results of the poll.
+  When a user attempts to vote on a poll, the system should check if the user is signed in.
       If not signed in, give the user an error/take them to the login screen
       If the user is signed in:
         The system should check the users schedule to confirm they are in the course the poll is about..
