@@ -26,24 +26,28 @@ General:
   be notified on the sign in page, and they will be asked to retry to enter their credentials.
 
 3. Accessing another user's profile
-  (Non-functional)
-   When a user navigates to another member's profile, the visibility of each post should be checked and only those that the user has permission
-   to view should be displayed.
+  (Functional) User should be able to access the profiles of other members a number of different ways, including via a search, through
+  a received friend request, through a group, etc. User should click that member's name to be taken to their profile.
+  (Non-functional) The system should present the user with another member's profile when requested. When a user navigates to another
+  member's profile, the visibility of each post should be checked and only those posts that the user has permission to view should be displayed.
 
 4. Adding a friend
-   (Non-functional)
-   When a someone sends a friend request the system should notify the receiver of the request within 5 minutes which prompts them to accept
-   or reject. If accepted, the database should add the members to each other's friends lists.
+  (Functional) User should be able to send a friend request to another user by clicking a link to do so once they are on that member's
+  profile page.
+  (Non-functional) When a someone sends a friend request the system should notify the receiver of the request within 5 minutes which prompts
+  them to accept or reject. If accepted, the database should add the members to each other's friends lists.
 
 5. Create a post
-  (Non-functional)
-  When a user creates a new post the system should update the database and display the information of the post within 3
-  seconds.
+  (Functional) User should be able to click "create post" while on the "dashboard" or on the page of a group they belong to, and have the ability to
+  post content.
+  (Non-functional) System must present the user with field(s) though which they can post content when requested. When a user creates a new post
+  the system should update the database and display the information of the post within 3 seconds.
 
 6. Edit visibility of a post
-  (Non-functional)
-   When a user edits the visibility options of a particular post, the system should update the database with the new permission rules.
-   The new permission rules should take effect within 3 seconds.
+  (Functional) User should be able to edit the visibility of any post they have made by clicking on "edit post" and changing the visibility.
+  (Non-functional) System should present the user with options for visibility, along with actual editing ability, then the user clicks "edit post".
+  When a user edits the visibility options of a particular post, the system should update the database with the new permission rules. The new
+  permission rules should take effect within 3 seconds.
 
 7. Comment on a post
   (Non-functional)
