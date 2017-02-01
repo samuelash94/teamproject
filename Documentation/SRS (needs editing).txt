@@ -1,7 +1,8 @@
 Purpose
 
-The intended audience are the students at MUN and the purpose is for students to be able to 
-create an account, so as to be able to interact with other students within the university.
+The intended audience for this software are students at Memorial University of Newfoundland.
+Its purpose is for students within the university to be able to interact with each other through
+and share opinions and content.
 
 OVERALL DESCRIPTION
 Product Perspective
@@ -13,19 +14,16 @@ user at the university with an email suffix "@mun.ca". <<<<<<<DIAGRAM>>>>>>>>
 Product Functions
 
 The major functions the product must perform is: 
-i) creating an user profile
-ii) signing in a registered user
-iii) accessing another user's profile
-iv) adding a friend
-v) creating a post
-vi) editing a post, commenting on a post
-vii) creating a group
-viii) editing a group(owner)
-ix) joining a group
-x) creating a course schedule
-xi) uploading a resume
-xii) accessing lost and found section
-xiii) create a poll, vote on a poll
+i) create an user profile
+ii) sign in a registered user
+iii) display another user's profile
+iv) send friend requests, add friends when accepted
+v) create a post, allow user to edit own posts and comment on any post they can see
+vi) create a group, allow group owner to edit a group, allow users to join groups
+vii) create a course schedule for any user
+viii) allow users to upload a resume
+ix) maintain lost and found section, allow users to create posts within it
+x) create a poll, allow owner to delete polls, allow users to vote on polls,
 
 User Classes and Characteristics
 
@@ -40,7 +38,7 @@ The Project is web-based and will be hosted on the university server. It is inte
 browser in any operating system. It is currently assumed that it is only viewed on a personal computer
 and not on any mobile environment. 
 
-Design and Implementation Constarint
+Design and Implementation Constraint
 Any Regular user will be able to basic functions like signing in, creating a profile, adding 
 friends, creating/editing a post, joining a group, creating and voting a poll. However, each user
 has to have a valid email id that ends with mun.ca, which is the way the system assumes that the user 
