@@ -2,10 +2,10 @@ Use Cases
 UC1	Create a Profile
 UC2	Sign In
 UC3	View Profile
-UC4	Accessing Another User's Profile
-UC5	Add Friend
+UC4	Access Another User's Profile
+UC5	Add a Friend
 UC6	Create a Post
-UC7	Edit the Visibility of a Post
+UC7	Edit Visibility of a Post
 UC8	Edit a Post
 UC9	View Groups
 UC10	Create a Group
@@ -16,7 +16,7 @@ UC14	Edit Schedule
 UC15	View Resume
 UC16	Upload Resume
 UC17	Delete Resume
-UC18	Check Lost and Found
+UC18	View Lost and Found
 UC19	View My Lost and Found Items
 UC20	Add Item to Lost and Found
 UC21	Remove Item from Lost and Found
@@ -72,7 +72,7 @@ None.
 [E1]	A user is automatically signed out after 20 minutes of inactivity. If the user attempts to view 	their profile after being logged out, they will be prompted to sign-in [UC1].
 
 
-UC4	Flow of Events for the Accessing Another User's Profile Use Case
+UC4	Flow of Events for the Access Another User's Profile Use Case
 
 4.1	Preconditions:
 The user is signed in [UC2].
@@ -91,7 +91,7 @@ The user clicks another user's name to view their profile [S1][S2][S3][S4][S5].
 None.
 
 
-UC5	Flow of Events for the Add Friend Use Case
+UC5	Flow of Events for the Add a Friend Use Case
 
 5.1	Preconditions:
 The user is signed in [UC2].
@@ -305,7 +305,7 @@ None.
 None.
 
 
-UC18	Flow of Events for the Check Lost and Found Use Case
+UC18	Flow of Events for the View Lost and Found Use Case
 
 18.1	Preconditions:
 None.
