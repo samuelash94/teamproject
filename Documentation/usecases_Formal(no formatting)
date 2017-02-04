@@ -1,4 +1,4 @@
-II. Use Cases
+Use Cases
 UC1	Create a Profile
 UC2	Sign In
 UC3	View Profile
@@ -69,7 +69,7 @@ Upon creating an account [UC1] or signing in [UC2], the user is brought to their
 None.
 
 3.4	Alternative Flows:
-[E1]	A user is automatic signed out after 20 minutes of inactivity. If the user attempts to view their 	profile after being logged out, they will be prompted to sign-in [UC1].
+[E1]	A user is automatically signed out after 20 minutes of inactivity. If the user attempts to view 	their profile after being logged out, they will be prompted to sign-in [UC1].
 
 
 UC4	Flow of Events for the Accessing Another User's Profile Use Case
@@ -113,7 +113,7 @@ UC6	Flow of Events for the Create Post Use Case
 2. The user is viewing their profile [UC3].
 
 6.2	Main Flow:
-After clicking create post on their newsfeed, the user is prompted to enter text [E2], pictures [E3], hyperlinks, or other text-based information. The user may select the visibility settings of their post [S1]. The user then clicks “Post” and their post is displayed on their newsfeed [E1].
+After clicking “Create Post” on their newsfeed, the user is prompted to enter text [E2], pictures [E3], hyperlinks, or other text-based information. The user may select the visibility settings of their post [S1]. The user then clicks “Post” and their post is displayed on their newsfeed [E1].
 
 6.3	Subflows:
 [S1]	The user can choose to set the visibility of their post to something other than their default 	setting. If they choose to select a list of friends, their friends list is displayed and they can check  	a box next to the friend that they wish to allow visibility.
@@ -131,7 +131,7 @@ UC7	Flow of Events for the Edit Visibility of a Post Use Case
 2. The user is viewing their own profile [UC3].
 
 7.2	Main Flow:
-After finding a post they wish to edit the visibility of, they click the “Edit Visibility” button and select how they want to change it [S1][S2][S3][S4].
+After finding a post they wish to edit the visibility of, the user clicks the “Edit Visibility” button and select how they want to change it [S1][S2][S3][S4].
 
 7.3	Subflows:
 [S1]	The user selects “Everyone,” allowing anyone to see the post.
@@ -156,7 +156,7 @@ After finding a post they wish to edit, they click the “Edit Post” button an
 None.
 
 8.4	Alternative Flows:
-[E1]	The most must meet the requirements for a post [UC6]. If it does not an error is given.
+[E1]	The post must meet the requirements for a post [UC6]. If it does not an error is given.
 [E2]	The user may cancel the edit and leave the post the same.
 
 
@@ -187,7 +187,7 @@ After navigating to the groups page, the user clicks “New Group.” The user e
 10.3	Subflows:
 
 10.4	Alternative Flows:
-[E1]	The group must have a name and description. If either fields are blank, the user recieves an 	error.
+[E1]	The group must have a name and description. If either fields are blank, an error is given.
 
 
 UC11	Flow of Events for the Join a Group Use Case
@@ -200,7 +200,7 @@ After finding a group they wish to join, they click “Join Group.” [S1][S2][S
 
 11.3	Subflows:
 [S1]	The user finds a public group from the groups page [UC9][E1].
-[S2]	The user gets an invite from a friend in their notifications tab and clicks “Accept Invite.”
+[S2]	The user recieves an invite from a friend in their notifications tab and clicks “Accept Invite.”
 [S3]	The user requests an invite to a private group and a message is set to the group owner. Once 	approved by the owner, the user is placed in the group.
 
 11.4	Alternative Flows:
@@ -255,6 +255,7 @@ None.
 [E1]	If the user does not have a schedule, the “Edit Schedule” button is replaced with the “Create 	Schedule” button.
 [E2]	The user may not have two courses at the same time. If a conflict exists, an error is given.
 
+
 UC15	Flow of Events for the View Resume Use Case
 
 15.1	Preconditions:
@@ -263,6 +264,7 @@ UC15	Flow of Events for the View Resume Use Case
 
 15.2	Main Flow:
 The user clicks “View Resume” from their profile page.
+
 15.3	Subflows:
 None.
 
@@ -285,6 +287,7 @@ None.
 16.4	Alternative Flows:
 [E1]	Only files of the type .pdf, .docx, and .txt can be upload. If another file type is selected an 	error is given.
 
+
 UC17	Flow of Events for the Delete Resume Use Case
 
 17.1	Preconditions:
@@ -301,19 +304,21 @@ None.
 17.4	Alternative Flows:
 None.
 
+
 UC18	Flow of Events for the Check Lost and Found Use Case
 
 18.1	Preconditions:
 None.
 
 18.2	Main Flow:
-The user clicks “Lost and Found” from the top[side?] of the page.
+The user clicks “Lost and Found” from the top of the page.
 
 18.3	Subflows:
 None.
 
 18.4	Alternative Flows:
 None.
+
 
 UC19	Flow of Events for the View My Lost and Found Items Use Case
 
@@ -328,6 +333,7 @@ The user clicks the “My Items” button on the top of the lost and found page.
 None.
 
 19.4	Alternative Flows:
+
 
 UC20	Flow of Events for the Add Item to Lost and Found Use Case
 
@@ -344,6 +350,7 @@ None.
 19.4	Alternative Flows:
 [E1]	A description and location are required. If either field is blank, an error is given.
 
+
 UC21	Flow of Events for the Remove Item from Lost and Found Use Case
 
 21.1	Preconditions:
@@ -351,7 +358,7 @@ UC21	Flow of Events for the Remove Item from Lost and Found Use Case
 2. The user is viewing their lost and found items [UC19].
 
 21.2	Main Flow:
-The user clicks the “My Items” button on the top of the lost and found page and then clicks the “Remove item” button next to the item they wish to remove.
+The user clicks the “My Items” button on the top of the lost and found page and then clicks the “Remove Item” button next to the item they wish to remove.
 
 21.3	Subflows:
 None.
@@ -374,6 +381,7 @@ None.
 22.4	Alternative Flows:
 None.
 
+
 UC23	Flow of Events for the Create Poll Use Case
 
 23.1	Preconditions:
@@ -390,6 +398,7 @@ None.
 [E1]	The poll must have a name and at least one voting field. If field are blank, an error is given.
 [E2]	The user must have the course the poll is about on their schedule. If it is not an error is given.
 
+
 UC24	Flow of Events for the Vote on a Poll Use Case
 
 24.1	Preconditions:
@@ -401,6 +410,7 @@ The user clicks the “Vote” button under the poll they wish to vote on [E2]. 
 
 24.3	Subflows:
 None.
+
 24.4	Alternative Flows:
 [E1]	The user must have the course the poll is about on their schedule. If it is not, an error is given.
 [E2]	The user must fill out all the fields of the poll. If any are left blank, an error is given.
