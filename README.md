@@ -20,6 +20,5 @@ The following modules are used:
 - passport-http
 - passport-local
 
-We are assuming when a profile is created, That the email used is a valid email that ends in @mun.ca
-
+We are assuming when a profile is created, that the email used is a valid email that ends in @mun.ca.
 There will also be a limitation of one profile per email address.
