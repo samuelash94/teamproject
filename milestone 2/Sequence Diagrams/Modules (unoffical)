@@ -1,25 +1,62 @@
+[NOT COMPLETE, adding more as I go]
+
 MODULES
 
+DATABASE:
+Users (Object)
+	-list of friends
+	-list of notifations
+	-functions:
+		-addFriend
+		
+Profiles (Object)
+	-has an associated User
+	-list of comments on the profile
+	-Methods:
+		-addComment
 
-User (Object)
-Create User (Controller)
-Confirm User (Controller)
 
+UI:
 
+Create Account (UI)
+
+Search Bar(UI) [sub-module on all pages? not sure about this]
+Search Results(UI)
 Login Screen (UI)
 
 
-Profile (Object)
-Create Profile (Controller)
+
+
 Profile Screen (UI)
 
+CONTROLLERS:
 
-Confirm Email (Controller)
+Validate (Controller)
+	-can be used for creating a profile, comments, etc. takes in the type of request and checks various elements.
+SendNotification (Controller)
+	-sends a notification[reciever.notification(sender, type)]
 
 
-Database (?)
 
 
 
 
+
+
+REMOVED:
+
+Create User (Controller)	[now a functino of Users(database)]
+Create Profile (Controller) [now a function of Profiles(Databse)]
+Confirm Email (Controller)	[now done with Validate(controller)]
+
+
+
+
+Some notes:
+
+Not sure if this is the best way to handle profiles. Could be a variable in users? 
+Currently, a profile is loaded by calling the profiles list with a user object. Let me know if you guys have any thoughts.
+
+
+Need to figure out how notifications/search bar works. Is it one UI that overlays all other overlays? If so, we need to think about how to add this to sequence diagrams.
 	
