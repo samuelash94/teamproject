@@ -2,52 +2,90 @@
 
 MODULES
 
-DATABASE:
+DATABASE LISTS:
+
 Users (Object)
-	-list of friends
+	-list of friends (User)
 	-list of notifations
+	-password
 	-functions:
-		-addFriend
+		-addFriend(user)
+		-getPassword
+		-getName
+		-getEmail
+		-getFriends
+		-search(name)
+		-addNotification(fromUser, typeOfNote)
+		
 		
 Profiles (Object)
 	-has an associated User
-	-list of comments on the profile
-	-Methods:
-		-addComment
+	-list of posts on the profile
+	-functions:
+		-addPost(Object Post)
+		-assignUser(Object user)
 
+Post (Object)
+	-content
+	-has an associated user
+	-visibility setting
+	-list of comments
+	-functions:
+		-changeVisibility(setting)
+		-getComments
+		-edit(content)
+	
+Comment (Object)
+	-content
+	-Functions:
+		-getContent
+		-updateContent(content)
 
+Groups (Object)
+	-name
+	-permssion to join
+	-Functions:
+		-addUser(user)
+	
 UI:
 
-Create Account (UI)
-
+Login Screen (UI)
+Create User (UI)
 Search Bar(UI) [sub-module on all pages? not sure about this]
 Search Results(UI)
-Login Screen (UI)
-
-
-
-
 Profile Screen (UI)
-
+	-comment section
+Groups (UI)
+	
+	
 CONTROLLERS:
 
+Create User (Controller)
+	-creates a user object and adds it to the list in the database
+Create Profile (Controller)
+	-creates a profile object and adds it the list in the database
+Create Post (Controller)
+	-creates a post and adds it to the users profile
+Create Comment (Controller)
+	-creates a comment and adds it to the specified post
 Validate (Controller)
 	-can be used for creating a profile, comments, etc. takes in the type of request and checks various elements.
-SendNotification (Controller)
-	-sends a notification[reciever.notification(sender, type)]
+	-validate.newUser(user info) [for creating a user]
+	-validate.user(user info)	[for signing in]
+	-validate.post(content)		[creating and editing posts]
+	-validate.comment(content)	[creating and editing comments]
+	-validate.group(content)	[creating (and editing) groups]
+	-validate.joinGroup(user)	[for check permission to join a group]
+Create Notification (Controller)
+	-creates and sends a notification 
+	-.create(sender, receiever, type)
+	-.send(sender, reciever, type
+Create Group (Controller)
+	-creates group and adds it the database
+	-.create(content)
 
 
 
-
-
-
-
-
-REMOVED:
-
-Create User (Controller)	[now a functino of Users(database)]
-Create Profile (Controller) [now a function of Profiles(Databse)]
-Confirm Email (Controller)	[now done with Validate(controller)]
 
 
 
