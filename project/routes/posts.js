@@ -14,7 +14,7 @@ router.post('/post', function(req, res){
 	var postField = req.body.postField;
 	var date = new Date();
 	var image = null;
-/*	
+/*
 	var day = today.getDate();
 	var month = today.getMonth()+1;
 	var year = today.getFullYear();
@@ -22,7 +22,7 @@ router.post('/post', function(req, res){
 	var minute = today.getMinutes();
 	var ampm;
 	var newDate;
-	
+
 	if (hour < 11){
 		ampm = "AM";
 	}else{
@@ -38,10 +38,10 @@ router.post('/post', function(req, res){
 	}else{
 		newDate = day + "/" + (month+1) + "/" + (year+1900) + " " + hour + ":" + minute + ampm;
 	}
-	
+
 */
 	req.checkBody('postField', 'Post must not be empty').notEmpty();
-	
+
 	if(errors){
 		res.render('register',{
 			errors:errors
@@ -53,12 +53,12 @@ router.post('/post', function(req, res){
 			image: image;
 			visible: 0;
 		});
-		
+
 		Post.createPost(newPost, function(err, user){
 			if(err) throw err;
 			console.log(user);
 		});
-	  
+
 });
 
 module.exports = router;
