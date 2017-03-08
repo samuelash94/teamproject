@@ -62,6 +62,17 @@ app.use(expressValidator({
   }
 }));
 
+app.use(expressValidator({
+ customValidators: {
+    isArray: function(value) {
+        return Array.isArray(value);
+    },
+    endsWith: function(param, regex) {
+        return param.endsWith(regex);
+    }
+ }
+}));
+
 // Connect Flash
 app.use(flash());
 
