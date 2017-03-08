@@ -7,6 +7,7 @@ router.get('/', createPost, function(req, res){
 
 function displayPostField(){
 	document.getElementById("postField").style.visibility = 'visible';
+	document.getElementById("postSubmit").style.visibility = 'visible';
 }
 
 router.post('/post', function(req, res){
@@ -38,7 +39,7 @@ router.post('/post', function(req, res){
 		newDate = day + "/" + (month+1) + "/" + (year+1900) + " " + hour + ":" + minute + ampm;
 	}
 	
-*/	
+*/
 	req.checkBody('postField', 'Post must not be empty').notEmpty();
 	
 	if(errors){
@@ -50,6 +51,7 @@ router.post('/post', function(req, res){
 			body: postField;
 			date: date;
 			image: image;
+			visible: 0;
 		});
 		
 		Post.createPost(newPost, function(err, user){

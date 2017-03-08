@@ -30,15 +30,7 @@ module.exports.createPost = function(newPost, callback){
 module.exports.getPostByID = function(id, callback){
 	Post.findById(id, callback);
 }
-/*
-module.exports.getUserById = function(id, callback){
-	User.findById(id, callback);
-}
 
-module.exports.comparePassword = function(candidatePassword, hash, callback){
-	bcrypt.compare(candidatePassword, hash, function(err, isMatch) {
-    	if(err) throw err;
-    	callback(null, isMatch);
-	});
-*/
+module.exports.changeVisibility = function(newVisibility, callback){
+	Post.visible = newVisibility;
 }
