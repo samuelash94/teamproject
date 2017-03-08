@@ -1,19 +1,18 @@
 var express = require('express');
 var router = express.Router();
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
 
-router.get('/', createPost, function(req, res){
+var Post = require('../models/post');
+
+router.get('/', function(req, res){
 	res.render('index');
 });
 
-function displayPostField(){
-	document.getElementById("postField").style.visibility = 'visible';
-	document.getElementById("postSubmit").style.visibility = 'visible';
-}
-
 router.post('/post', function(req, res){
-	var postField = req.body.postField;
+	var text = req.body.postField;
 	var date = new Date();
-	var image = null;
+	var image = 0;
 /*
 	var day = today.getDate();
 	var month = today.getMonth()+1;
@@ -41,24 +40,30 @@ router.post('/post', function(req, res){
 
 */
 	req.checkBody('postField', 'Post must not be empty').notEmpty();
+	
+	var errors = req.validationErrors();
 
 	if(errors){
-		res.render('register',{
+		res.render('index',{
 			errors:errors
 		});
 	} else {
 		var newPost = new Post({
-			body: postField;
-			date: date;
-			image: image;
-			visible: 0;
+			text: text,
+			date: date,
+			image: image,
+			visible: 0,
 		});
 
 		Post.createPost(newPost, function(err, user){
 			if(err) throw err;
 			console.log(user);
 		});
+		
+		req.flash('success_msg', 'Post was posted.');
 
+		res.redirect('/');
+	}
 });
 
 module.exports = router;

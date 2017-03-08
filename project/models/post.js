@@ -50,5 +50,5 @@ module.exports.removeImage = function(id, callback){
 }
 
 module.exports.deletePost = function(id){
-	Post.remove({{_id: ObjectId(id)}});
+	Post.remove({_id: ObjectId(id)});
 }
