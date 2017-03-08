@@ -17,6 +17,7 @@
     "body-parser": "*",
     "connect-flash": "*",
     "cookie-parser": "^1.4.1",
+    "dotenv": "*",
     "express": "*",
     "express-handlebars": "*",
     "express-messages": "*",
@@ -24,10 +25,11 @@
     "express-validator": "*",
     "mongodb": "*",
     "mongoose": "*",
-    "nodemailer": "*",
+    "nodemailer": "^2.7.2",
     "passport": "*",
     "passport-http": "*",
-    "passport-local": "*"
+    "passport-local": "*",
+    "xoauth2": "*"
   },
   "bugs": {
     "url": "https://github.com/samuelash94/teamproject/issues"

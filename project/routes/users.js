@@ -5,6 +5,8 @@ var LocalStrategy = require('passport-local').Strategy;
 
 var User = require('../models/user');
 
+var mailer = require('../mailer');
+
 // Register
 router.get('/register', function(req, res){
 	res.render('register');
@@ -61,6 +63,8 @@ router.post('/register', function(req, res){
 		req.flash('success_msg', 'You are registered and can now login');
 
 		res.redirect('/users/login');
+
+		mailer.sendInitialEmail(newUser.email);
 	}
 });
 

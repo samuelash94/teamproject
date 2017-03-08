@@ -12,9 +12,12 @@ var PostSchema = mongoose.Schema({
 	},
 	date: {
 		type: Date
-	}
+	},
 	image: {
 		type: null
+	},
+	visible: {
+		type: Number
 	}
 });
 
