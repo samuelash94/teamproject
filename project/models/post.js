@@ -9,6 +9,9 @@ var PostSchema = mongoose.Schema({
 	userId: {
 		type: String
 	},
+	author: {
+		type: String
+	},
 	text: {
 		type: String
 	},
