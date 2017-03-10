@@ -26,7 +26,7 @@ router.post('/addComment', function(req, res){
 
 			//userId: "58b967c52427cf2890203b29",
       postID: "58c205adf16ac410e8ade94b",
-      userId: user.id,
+      userId: req.user.id,
 			text: commentText,
 			date: date,
 		});

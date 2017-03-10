@@ -16,7 +16,7 @@ router.post('/post', function(req, res){
 	var text = req.body.postField;
 	var date = new Date();
 	var image = 0;
-
+	var userId = req.user.id;
 	req.checkBody('postField', 'Post must not be empty').notEmpty();
 
 	var errors = req.validationErrors();
@@ -27,6 +27,7 @@ router.post('/post', function(req, res){
 		});
 	} else {
 		var newPost = new Post({
+			userId: userId,
 			text: text,
 			date: date,
 			image: image,

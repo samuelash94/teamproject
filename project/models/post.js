@@ -6,8 +6,11 @@ var bcrypt = require('bcryptjs');
 
 // Post Schema
 var PostSchema = mongoose.Schema({
+	userId: {
+		type: String
+	},
 	text: {
-		type: String,
+		type: String
 	},
 	date: {
 		type: Date
