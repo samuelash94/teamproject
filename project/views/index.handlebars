@@ -1,18 +1,43 @@
  <h2 class="page-header">Dashboard</h2>
 <p>Welcome to your dashboard</p>
-<button type="submit" onclick="displayPostField()">Create a Post</button>
+<button type="submit" class="btn btn-info" onclick="displayPostField()">Create a Post</button>
+<button type="submit" class="btn btn-warning" onclick="displayCommentField()">Add a comment</button>
 <br><br>
-<script>
-function displayPostField(){
-	document.getElementById("postField").style.visibility = 'visible';
-	document.getElementById("postSubmit").style.visibility = 'visible';
-}
-</script>
-<form method="post" action="/posts/post">
+
+
+<h3 id="postHeader" style="visibility:hidden">Add a new post</h3>
+<form class="form-horizontal" method="post" action="/posts/post">
   <div class="form-group">
-    <input type="text" id="postField" name="postField" style="visibility:hidden">
+  <textarea class="form-control" rows="3" id="postField" name="postField" style="visibility:hidden"></textarea>
   </div>
   <div class="form-group">
-  <button type="submit" id="postSubmit" style="visibility:hidden">Submit</button>
+    <div class="col-sm-offset-2 col-sm-10">
+      <button type="submit" class="btn btn-default" id="postSubmit" style="visibility:hidden">Submit</button>
+    </div>
   </div>
 </form>
+
+<form method="post" action="/comments/addComment">
+  <div class="form-group">
+    <input type="text" class="form-control" id="commentTextField" name="commentTextField" style="visibility:hidden">
+  </div>
+  <div class="form-group">
+  <button type="submit" class = "btn btn-default" id="commentSubmit" style="visibility:hidden">Submit</button>
+  </div>
+</form>
+
+<div>
+  <a href="/posts/loadPosts">Load Posts</a>
+</div>
+<div>
+  <a onclick="hidePosts()"> Hide Posts</a>
+</div>
+
+<div>
+  {{# each posts }}
+  <div class="jumbotron">
+  <h3>{{ this.date }}</h3>
+  <p>{{ this.text }}</p>
+</div>
+  {{/each}}
+</div>

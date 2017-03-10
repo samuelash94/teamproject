@@ -31,7 +31,7 @@ module.exports.getPostByID = function(id, callback){
 }
 
 module.exports.changeVisibility = function(id,newVisibility, callback){
-	Post.save({_id: ObjectId(id), text : newVisibility});
+	Post.save({_id: ObjectId(id), visible : newVisibility});
 	//Post.save(callback);
 }
 

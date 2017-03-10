@@ -2,6 +2,9 @@ var express = require('express');
 var router = express.Router();
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
+var mongo = require('mongodb');
+
+var url = 'mongodb://localhost/4770TeamProject';
 
 var Post = require('../models/post');
 
@@ -13,34 +16,9 @@ router.post('/post', function(req, res){
 	var text = req.body.postField;
 	var date = new Date();
 	var image = 0;
-/*
-	var day = today.getDate();
-	var month = today.getMonth()+1;
-	var year = today.getFullYear();
-	var hour = today.getHours();
-	var minute = today.getMinutes();
-	var ampm;
-	var newDate;
 
-	if (hour < 11){
-		ampm = "AM";
-	}else{
-		ampm = "PM";
-	}
-	if (hour == 0){
-		hour = hour+12;
-	}else if (hour == 12){
-		hour = hour-12;
-	}
-	if (minute < 10){
-		newDate = day + "/" + (month+1) + "/" + (year+1900) + " " + hour + "0:" + minute + ampm;
-	}else{
-		newDate = day + "/" + (month+1) + "/" + (year+1900) + " " + hour + ":" + minute + ampm;
-	}
-
-*/
 	req.checkBody('postField', 'Post must not be empty').notEmpty();
-	
+
 	var errors = req.validationErrors();
 
 	if(errors){
@@ -55,15 +33,29 @@ router.post('/post', function(req, res){
 			visible: 0,
 		});
 
-		Post.createPost(newPost, function(err, user){
+		Post.createPost(newPost, function(err, post){
 			if(err) throw err;
-			console.log(user);
+			console.log(post);
 		});
-		
+
 		req.flash('success_msg', 'Post was posted.');
 
 		res.redirect('/');
 	}
+});
+
+router.get('/loadPosts', function(req, res, next) {
+	var resultArray = [];
+	mongo.connect(url, function(err, db){
+		var cursor = db.collection('posts').find();
+		cursor.forEach(function(doc, err){
+			resultArray.push(doc);
+		}, function(){
+			db.close();
+			res.render('index', {posts: resultArray});
+		});
+	});
+	//res.redirect('/');
 });
 
 module.exports = router;
