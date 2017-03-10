@@ -18,6 +18,7 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 var posts = require('./routes/posts');
 var comments = require('./routes/comments');
+var groups = require('./routes/groups');
 
 // Init App
 var app = express();
@@ -87,12 +88,11 @@ app.use(function (req, res, next) {
   next();
 });
 
-
-
 app.use('/', routes);
 app.use('/users', users);
-app.use('/posts',posts);
+app.use('/posts', posts);
 app.use('/comments', comments);
+app.use('/groups', groups)
 
 // Set Port
 app.set('port', (process.env.PORT || 3000));

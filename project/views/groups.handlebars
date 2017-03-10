@@ -1,0 +1,32 @@
+<h2 class="page-header">Groups</h2>
+<p>View and manage your groups.</p>
+<button type="submit" onclick="displayGroupFields()">Create a Group</button>
+<br><br>
+<script src="/public/js/loadPosts.js"></script>
+<script>
+function displayGroupFields(){
+	document.getElementById("groupName").style.visibility = 'visible';
+	document.getElementById("groupDesc").style.visibility = 'visible';
+	document.getElementById("groupPrivacy").style.visibility = 'visible';
+	document.getElementById("groupSubmit").style.visibility = 'visible';
+}
+</script>
+<form method="post" action="/groups/create">
+  <div class="form-group">
+    <input type="text" id="groupName" name="groupName" style="visibility:hidden" placeholder="Group Name">
+  </div>
+  <div class="form-group">
+    <textarea rows=4 cols=50 id="groupDesc" name="groupDesc" style="visibility:hidden">Group Description...</textarea>
+  </div>
+  <div class="form-group" style="visibility:hidden">
+    <select id="groupPrivacy" class="form-control" name="groupPrivacy">
+  	<option value="public">Public</option>
+  	<option value="invite">Invite Only</option>
+  	<option value="private">Private (& Invite Only)</option>
+	</select>
+  </div>
+  <div class="form-group">
+  <button type="submit" id="groupSubmit" style="visibility:hidden">Submit</button>
+  </div>
+</form>
+<div class="loadGroups" id="loadGroups"></div>
