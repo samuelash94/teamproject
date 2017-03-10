@@ -6,6 +6,12 @@ var bcrypt = require('bcryptjs');
 
 // Group Schema
 var GroupSchema = mongoose.Schema({
+	userId: {
+		type: String
+	},
+	owner: {
+		type: String
+	},
 	name: {
 		type: String
 	},
