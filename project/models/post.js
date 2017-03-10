@@ -10,7 +10,7 @@ var PostSchema = mongoose.Schema({
 		type: String,
 	},
 	date: {
-		type: Date
+		type: String
 	},
 	image: {
 		type: Number
