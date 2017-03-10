@@ -67,7 +67,7 @@ router.post('/post', function(req, res){
 	}else if (hour == 0){
 		hour = hour+12;
 	}
-	var date = month + " " + day + ", " + dateObj.getFullYear() + " " + hour + ":" + dateObj.getMinutes() + "PM";
+	var date = month + " " + day + ", " + dateObj.getFullYear() + " " + hour + ":" + dateObj.getMinutes() + ampm;
 	var image = 0;
 	var userId = req.user.id;
 	req.checkBody('postField', 'Post must not be empty').notEmpty();
