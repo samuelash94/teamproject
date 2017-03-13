@@ -1,0 +1,15 @@
+<h2 class="page-header">Lost and Found</h2>
+<p>View list of found items and post additional items.</p>
+<button type="submit" class="btn btn-info" onclick="displayItemFields()">Post an Item</button>
+<br><br>
+<form method="post" action="/lostItems/postItem">
+  <div class="form-group">
+    <textarea class="form-control" rows=4 cols=50 id="itemDesc" name="itemDesc" style="visibility:hidden" placeholder="Item Description..."></textarea>
+  </div>
+  <div class="form-group">
+    <input class="form-control" type="text" id="foundLocation" name="foundLocation" style="visibility:hidden" placeholder="Location Found">
+  </div>
+  <div class="form-group">
+  <button class="btn btn-default" type="submit" id="itemSubmit" style="visibility:hidden">Submit</button>
+  </div>
+</form>

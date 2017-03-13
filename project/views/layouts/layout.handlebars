@@ -6,6 +6,7 @@
 	<link rel="stylesheet" href="/css/style.css" />
 	<script type="text/javascript" src="/js/index.js"></script>
 	<script type="text/javascript" src="/js/group.js"></script>
+	<script type="text/javascript" src="/js/lostItem.js"></script>
 	<!-- <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script> -->
 </head>
 <body>
@@ -16,6 +17,7 @@
             {{#if user}}
               <li role="presentation"><a href="/">Dashboard</a></li>
               <li role="presentation"><a href="/groups">Groups</a></li>
+							<li role="presentation"><a href="/lostItems">Lost and Found</a></li>
               <li role="presentation"><a href="/users/logout">Logout</a></li>
             {{else}}
               <li role="presentation"><a href="/users/login">Login</a></li>

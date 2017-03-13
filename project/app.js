@@ -19,6 +19,7 @@ var users = require('./routes/users');
 var posts = require('./routes/posts');
 var comments = require('./routes/comments');
 var groups = require('./routes/groups');
+var lostItems = require('./routes/lostItems');
 
 // Init App
 var app = express();
@@ -93,7 +94,8 @@ app.use('/', routes);
 app.use('/users', users);
 app.use('/posts', posts);
 app.use('/comments', comments);
-app.use('/groups', groups)
+app.use('/groups', groups);
+app.use('/lostItems', lostItems);
 
 // Set Port
 app.set('port', (process.env.PORT || 3000));
