@@ -15,6 +15,9 @@ var CommentSchema = mongoose.Schema({
 	date: {
 		type: String
 	},
+	author: {
+		type: String
+	},
 	isEdited: {
 		type: Boolean
 	}

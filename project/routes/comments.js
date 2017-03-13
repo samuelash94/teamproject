@@ -14,7 +14,6 @@ router.get('/', function(req, res){
 });
 
 router.post('/addComment/', function(req, res){
-	//var postIdentif = req.body.postIdentif;
 	var postIdentif = req.body.postIdentif;
   var commentText = req.body.commentTextField;
   var date = comment.getCurrentDate();
@@ -32,6 +31,7 @@ router.post('/addComment/', function(req, res){
       userId: req.user.id,
 			text: commentText,
 			date: date,
+			author: req.user.name,
 			isEdited: false
 		});
 

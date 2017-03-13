@@ -1,7 +1,7 @@
 function displayPostField(){
-	document.getElementById("postField").style.visibility = 'visible';
-	document.getElementById("postHeader").style.visibility = 'visible';
-	document.getElementById("postSubmit").style.visibility = 'visible';
+	document.getElementById("postField").style.display = 'block';
+	document.getElementById("postHeader").style.display = 'block';
+	document.getElementById("postSubmit").style.display = 'block';
 }
 
 function displayCommentField(){
