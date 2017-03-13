@@ -5,13 +5,19 @@ var Post = require('../models/post');
 var User = require('../models/user');
 var comment = require('../models/comment');
 
+var mongo = require('mongodb');
+
+var url = 'mongodb://localhost/4770TeamProject';
+
 router.get('/', function(req, res){
 	res.render('index');
 });
 
-router.post('/addComment', function(req, res){
+router.post('/addComment/', function(req, res){
+	//var postIdentif = req.body.postIdentif;
+	var postIdentif = req.body.postIdentif;
   var commentText = req.body.commentTextField;
-  var date = new Date();
+  var date = comment.getCurrentDate();
   req.checkBody('commentTextField', 'comment text must not be empty').notEmpty();
 
 	var errors = req.validationErrors();
@@ -22,13 +28,11 @@ router.post('/addComment', function(req, res){
 		});
 	} else {
 		var newComment = new comment({
-			//postId: Post.id,
-
-			//userId: "58b967c52427cf2890203b29",
-      postID: "58c205adf16ac410e8ade94b",
+      postId: postIdentif,
       userId: req.user.id,
 			text: commentText,
 			date: date,
+			isEdited: false
 		});
 
     comment.addComment(newComment, function(err, user){
@@ -40,6 +44,20 @@ router.post('/addComment', function(req, res){
     res.redirect("/");
   }
 
+});
+
+router.get('/loadComments', function(req, res, next) {
+	var commentsArray = [];
+	mongo.connect(url, function(err, db){
+		var cursor = db.collection('comments').find( { postId: req.body.postIdentif } )
+		cursor.forEach(function(doc, err){
+			resultArray.push(doc);
+		}, function(){
+			db.close();
+			res.render('index', {comments: commentsArray});
+			console.log(commentsArray);
+		});
+	});
 });
 
 /*

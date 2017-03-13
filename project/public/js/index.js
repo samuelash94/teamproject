@@ -1,7 +1,7 @@
 function displayPostField(){
-	document.getElementById("postField").style.visibility = 'visible';
-	document.getElementById("postHeader").style.visibility = 'visible';
-	document.getElementById("postSubmit").style.visibility = 'visible';
+	document.getElementById("postField").style.display = 'block';
+	document.getElementById("postHeader").style.display = 'block';
+	document.getElementById("postSubmit").style.display = 'block';
 }
 
 function displayCommentField(){
@@ -10,9 +10,9 @@ function displayCommentField(){
 }
 
 function hidePosts(){
-	var x = document.getElementsByClassName("jumbotron");
+	var x = document.getElementsByClassName("loadthesePosts");
 	var i;
 	for (i = 0; i < x.length; i++) {
-    x[i].style.visibility = "hidden";
+    x[i].style.display = "none";
 	}
 }
