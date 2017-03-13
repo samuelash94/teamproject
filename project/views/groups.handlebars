@@ -20,4 +20,19 @@
   <button class="btn btn-default" type="submit" id="groupSubmit" style="visibility:hidden">Submit</button>
   </div>
 </form>
-<div class="loadGroups" id="loadGroups"></div>
+
+<div>
+  <a href="/groups/loadGroups">Load Groups</a>
+</div>
+<div>
+  <a onclick="hideGroups()"> Hide Groups</a>
+</div>
+
+<div>
+  {{# each groups }}
+  <div class="jumbotron">
+  <h3>{{ this.name }}<h3>
+  <p>{{ this.description }}</p>
+</div>
+  {{/each}}
+</div>

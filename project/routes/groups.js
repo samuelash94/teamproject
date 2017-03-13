@@ -2,6 +2,9 @@ var express = require('express');
 var router = express.Router();
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
+var mongo = require('mongodb');
+
+var url = 'mongodb://localhost/4770TeamProject';
 
 var Group = require('../models/group');
 
@@ -43,6 +46,20 @@ router.post('/create', function(req, res){
 
 		res.redirect('/groups');
 	}
+});
+
+router.get('/loadGroups', function(req, res, next) {
+	var resultArray = [];
+	mongo.connect(url, function(err, db){
+		var cursor = db.collection('groups').find();
+		cursor.forEach(function(doc, err){
+			resultArray.push(doc);
+		}, function(){
+			db.close();
+			res.render('groups', {groups: resultArray});
+		});
+	});
+	//res.redirect('/');
 });
 
 module.exports = router;
