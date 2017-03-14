@@ -46,19 +46,6 @@ router.post('/addComment/', function(req, res){
 
 });
 
-router.get('/loadComments', function(req, res, next) {
-	var commentsArray = [];
-	mongo.connect(url, function(err, db){
-		var cursor = db.collection('comments').find( { postId: req.body.postIdentif } )
-		cursor.forEach(function(doc, err){
-			resultArray.push(doc);
-		}, function(){
-			db.close();
-			res.render('index', {comments: commentsArray});
-			console.log(commentsArray);
-		});
-	});
-});
 
 /*
 router.post('/editComment/'+ id , function(req, res) {

@@ -42,12 +42,12 @@
   <button type="submit" class = "btn btn-default">Submit</button>
   </div>
   <div class="form-group">
-    <a href="/comments/loadComments/"> Load comments </a>
-    {{#each comments}}
-    <div class="jumbotron" style="background:red; width:50%">
-      <p>{{this.text}}</p>
-      <p>{{this.date}}</p>
-    </div>
+    {{#each ../comments}}
+    {{#ifCond ../this._id '==' this.postId}}
+      <p><b>{{this.author}}, {{this.date}}</b></p>
+      <p><meta>{{this.text}}</meta></p>
+      <p></p>
+      {{/ifCond}}
     {{/each}}
   </div>
 </form>

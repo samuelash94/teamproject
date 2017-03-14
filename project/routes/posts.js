@@ -49,14 +49,24 @@ router.post('/post', function(req, res){
 
 router.get('/loadPosts', function(req, res, next) {
 	var resultArray = [];
+	var commentsArray = [];
 	mongo.connect(url, function(err, db){
 		var cursor = db.collection('posts').find();
+		var cursorComments = db.collection('comments').find();
 		cursor.forEach(function(doc, err){
 			resultArray.push(doc);
 		}, function(){
-			db.close();
-			res.render('index', {posts: resultArray});
+			//db.close();
+			//res.render('index', {posts: resultArray});
 		});
+
+		cursorComments.forEach(function(doc, err){
+			commentsArray.push(doc);
+		}, function(){
+			db.close();
+			res.render('index', {comments: commentsArray, posts:resultArray});
+		});
+
 	});
 	//res.redirect('/');
 });
