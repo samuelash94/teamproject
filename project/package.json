@@ -23,6 +23,8 @@
     "express-messages": "*",
     "express-session": "*",
     "express-validator": "*",
+    "jquery": "^3.1.1",
+    "jsdom": "^9.12.0",
     "mongodb": "*",
     "mongoose": "*",
     "nodemailer": "^2.7.2",

@@ -5,7 +5,8 @@ var Post = require('../models/post');
 var User = require('../models/user');
 var comment = require('../models/comment');
 
-var mongo = require('mongodb');
+var mongo = require('mongodb').MongoClient;
+var objectId = require('mongodb').ObjectID;
 
 var url = 'mongodb://localhost/4770TeamProject';
 
@@ -47,21 +48,42 @@ router.post('/addComment/', function(req, res){
 });
 
 
-/*
-router.post('/editComment/'+ id , function(req, res) {
-  comment.editComment(id, function(err, user){
-    if(err) throw err;
-    if(!comment){
-      return done(null, false, {message: 'Comment does not exist!'});
-    }
-    else{
-      req.flash('success_msg', 'comment was edited.');
+router.post('/editComment/', function(req, res){
 
-      res.redirect('/');
-    }
-  });
+	var newCommentText = req.body.commentText;
+	var currentDate = comment.getCurrentDate();
+	req.checkBody('commentText', 'comment text must not be empty').notEmpty();
+
+	var errors = req.validationErrors();
+
+  if(errors){
+		res.render('index',{
+			errors:errors
+		});
+	}
+	else {
+		mongo.connect(url, function(err, db){
+			var newComment = db.collection('comments').update(
+	   { _id: objectId(req.body.commentIdentif) },
+		 {
+	     $set:{
+	       'text': newCommentText,
+	       'date': currentDate,
+	     }
+		 }
+	);
+	db.close();
+	req.flash('success_msg', 'comment was edited.');
+		 res.redirect('/');
+
+		});
+
+	}
 });
 
+
+
+/*
 router.post('/deleteComment/'+ id , function(req, res) {
   comment.deleteComment(id, function(err, user){
     if(err) throw err;
@@ -76,5 +98,6 @@ router.post('/deleteComment/'+ id , function(req, res) {
   });
 });
 */
+
 
 module.exports = router;

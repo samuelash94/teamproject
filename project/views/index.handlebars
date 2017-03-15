@@ -3,6 +3,12 @@
 <button type="submit" class="btn btn-info" onclick="displayPostField()">Create a Post</button>
 <br><br>
 
+{{#if errors}}
+      {{#each errors}}
+        <div class="alert alert-danger">{{msg}}</div>
+      {{/each}}
+{{/if}}
+
 
 <h3 id="postHeader" style="display:none">Add a new post</h3>
 <form class="form-horizontal" method="post" action="/posts/post">
@@ -22,7 +28,7 @@
   <a href="/posts/loadPosts">Load Posts</a>
 </div>
 <div>
-  <a onclick="hidePosts()"> Hide Posts</a>
+  <a href = "#" onclick="hidePosts();"> Hide Posts</a>
 </div>
 
 <div class="loadthesePosts">
@@ -37,19 +43,33 @@
   <div class="form-group">
     <textarea class="form-control" rows = "2" id="commentTextField" name ="commentTextField" placeholder="Add Comment Here......"></textarea>
     <input name="postIdentif" value="{{this._id}}"  style="display:none" />
+
   </div>
   <div class="form-group">
   <button type="submit" class = "btn btn-default">Submit</button>
   </div>
-  <div class="form-group">
+  </form>
     {{#each ../comments}}
     {{#ifCond ../this._id '==' this.postId}}
+    <div class="comment">
       <p><b>{{this.author}}, {{this.date}}</b></p>
-      <p><meta>{{this.text}}</meta></p>
+      <form method="post" action="/comments/editComment/">
+        <div class="form-group">
+          <textarea class="editableComment form-control" id="commentText"  name="commentText" readonly>{{this.text}}</textarea>
+          <input name="commentIdentif" value="{{this._id}}"  style="display:none" />
+          </div>
+          <div class="form-group">
+            <button type="button" class="editButton btn btn-primary">Edit</button>
+          </div>
+      <div class="form-group">
+        <button type= "submit" class="saveButton btn btn-warning" >Save</button>
+      </div>
       <p></p>
+
+    </form>
+    </div>
       {{/ifCond}}
     {{/each}}
-  </div>
-</form>
+
   {{/each}}
 </div>

@@ -92,7 +92,10 @@ module.exports.getCommentByID = function(id, callback){
 
 module.exports.editComment = function(id, newCommentText, callback){
 	var currentDate = this.getCurrentDate();
-  comment.save({_id: ObjectId(id), text : newCommentText, date: currentDate, isEdited: true}, callback);
+	this.getCommentByID(id, function(err, user) {
+    done(err, user);
+  });
+  comment.save({_id: id, text : newCommentText, date: currentDate, isEdited: true}, callback);
 }
 
 module.exports.deleteComment = function(id, callback){
