@@ -5,10 +5,11 @@
 	<link rel="stylesheet" href="/css/bootstrap.css" />
 	<link rel="stylesheet" href="/css/style.css" />
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="/js/index.js"></script>
 	<script type="text/javascript" src="/js/group.js"></script>
 	<script type="text/javascript" src="/js/lostItem.js"></script>
-
 </head>
 <body>
 	<div class="container">
@@ -16,13 +17,31 @@
         <nav>
           <ul class="nav nav-pills pull-right">
             {{#if user}}
-              <li role="presentation"><a href="/">Dashboard</a></li>
-              <li role="presentation"><a href="/groups">Groups</a></li>
-							<li role="presentation"><a href="/lostItems">Lost and Found</a></li>
-              <li role="presentation"><a href="/users/logout">Logout</a></li>
+						<div class="dropdown">
+					  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+					    <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+					    <span class="caret"></span>
+					  </button>
+					  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+					    <li role="presentation"><a href="/">Dashboard</a></li>
+					    <li role="presentation"><a href="/groups">Groups</a></li>
+					    <li role="presentation"><a href="/lostItems">Lost and Found</a></li>
+					    <li role="separator" class="divider"></li>
+							<li role="presentation"><a href="/profile/{{currentUser._id}}">My Profile</a></li>
+					    <li role="presentation"><a href="/users/logout">Logout</a></li>
+					  </ul>
+					</div>
             {{else}}
-              <li role="presentation"><a href="/users/login">Login</a></li>
-              <li role="presentation"><a href="/users/register">Register</a></li>
+						<div class="dropdown">
+					  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+					    <span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span>
+					    <span class="caret"></span>
+					  </button>
+					  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+					    <li role="presentation"><a href="/users/login">Login</a></li>
+					    <li role="presentation"><a href="/users/register">Register</a></li>
+					  </ul>
+					</div>
             {{/if}}
           </ul>
         </nav>

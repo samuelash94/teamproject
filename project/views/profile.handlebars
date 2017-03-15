@@ -1,2 +1,4 @@
-<h2 class="page-header">Your Profile</h2>
-<p>ID passed: {{output}}</p>
+<h2 class="page-header">{{user.name}}'s Profile</h2>
+
+<a class="badge badge-success" href="mailto:{{user.email}}?body={{currentUser.email}}">{{user.email}}</a>
+<span class="badge badge-primary">{{user.campus}} campus</span>
