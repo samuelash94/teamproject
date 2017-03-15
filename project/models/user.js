@@ -4,6 +4,8 @@
 var mongoose = require('mongoose');
 var bcrypt = require('bcryptjs');
 
+var friends = require('mongoose-friends');
+
 // User Schema
 var UserSchema = mongoose.Schema({
 	username: {

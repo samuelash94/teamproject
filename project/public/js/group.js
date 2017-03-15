@@ -1,8 +1,8 @@
 function displayGroupFields(){
-	document.getElementById("groupName").style.visibility = 'visible';
-	document.getElementById("groupDesc").style.visibility = 'visible';
-	document.getElementById("groupPrivacy").style.visibility = 'visible';
-	document.getElementById("groupSubmit").style.visibility = 'visible';
+	document.getElementById("groupName").style.display = 'block';
+	document.getElementById("groupDesc").style.display = 'block';
+	document.getElementById("groupPrivacy").style.display = 'block';
+	document.getElementById("groupSubmit").style.display = 'block';
 }
 
 function hideGroups(){

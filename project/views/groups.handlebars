@@ -4,12 +4,12 @@
 <br><br>
 <form method="post" action="/groups/create">
   <div class="form-group">
-    <input class="form-control" type="text" id="groupName" name="groupName" style="visibility:hidden" placeholder="Group Name">
+    <input class="form-control" type="text" id="groupName" name="groupName" style="display:none" placeholder="Group Name">
   </div>
   <div class="form-group">
-    <textarea class="form-control" rows=4 cols=50 id="groupDesc" name="groupDesc" style="visibility:hidden" placeholder="Group Description..."></textarea>
+    <textarea class="form-control" rows=4 cols=50 id="groupDesc" name="groupDesc" style="display:none" placeholder="Group Description..."></textarea>
   </div>
-  <div class="form-group" style="visibility:hidden">
+  <div class="form-group" style="display:none">
     <select id="groupPrivacy" class="form-control" name="groupPrivacy">
   	<option value="public">Public</option>
   	<option value="invite">Invite Only</option>
@@ -17,7 +17,7 @@
 	</select>
   </div>
   <div class="form-group">
-  <button class="btn btn-default" type="submit" id="groupSubmit" style="visibility:hidden">Submit</button>
+  <button class="btn btn-default" type="submit" id="groupSubmit" style="display:none">Submit</button>
   </div>
 </form>
 
@@ -28,7 +28,7 @@
   <a onclick="hideGroups()"> Hide Groups</a>
 </div>
 
-<div>
+<div class="loadtheseGroups">
   {{# each groups }}
   <div class="jumbotron">
   <h3>{{ this.name }}<h3>
