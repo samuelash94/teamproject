@@ -1,5 +1,5 @@
 function displayItemFields(){
-  document.getElementById("itemDesc").style.visibility = 'visible';
-	document.getElementById("foundLocation").style.visibility = 'visible';
-	document.getElementById("itemSubmit").style.visibility = 'visible';
+  document.getElementById("itemDesc").style.display = 'block';
+	document.getElementById("foundLocation").style.display = 'block';
+	document.getElementById("itemSubmit").style.display = 'block';
 }

@@ -33,8 +33,10 @@ function displayPostField(){
 }
 
 function displayCommentField(){
-	document.getElementById("commentTextField").style.visibility = 'visible';
-	document.getElementById("commentSubmit").style.visibility = 'visible';
+
+  document.getElementById("commentTextField").style.display = 'block';
+	document.getElementById("commentSubmit").style.display = 'block';
+
 }
 
 function hidePosts(){
