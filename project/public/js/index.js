@@ -5,7 +5,7 @@ $(document).ready(function () {
 
 	function divClicked() {
 	    var divHtml = $(this).prev('textarea').html(); //select's the contents of div immediately previous to the button
-	    var editableText = $("<textarea class='form-control' />");
+	    var editableText = $("<textarea class='form-control' name = 'commentText' />");
 	    editableText.val(divHtml);
 	    $(this).prev('textarea').replaceWith(editableText); //replaces the required div with textarea
 	    editableText.focus();
@@ -15,7 +15,7 @@ $(document).ready(function () {
 
 	function editableTextBlurred() {
 	    var html = $(this).val();
-	    var viewableText = $("<textarea>");
+	    var viewableText = $("<textarea class='form-control' name = 'commentText'>");
 	    viewableText.html(html);
 	    $(this).replaceWith(viewableText);
 	    // setup the click event for this new div
@@ -23,7 +23,7 @@ $(document).ready(function () {
 	}
 
 
-    $(".editableComment").click(divClicked); //calls the function on button click
+    $(".editButton").click(divClicked); //calls the function on button click
 });
 
 function displayPostField(){

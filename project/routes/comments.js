@@ -83,21 +83,18 @@ router.post('/editComment/', function(req, res){
 
 
 
-/*
-router.post('/deleteComment/'+ id , function(req, res) {
-  comment.deleteComment(id, function(err, user){
-    if(err) throw err;
-    if(!comment){
-      return done(null, false, {message: 'Comment does not exist!'});
-    }
-    else{
-      req.flash('success_msg', 'comment was deleted.');
 
-      res.redirect('/');
-    }
-  });
+router.post('/deleteComment/', function(req, res) {
+		mongo.connect(url, function(err, db){
+			var newComment = db.collection('comments').deleteOne(
+	   { _id: objectId(req.body.commentIdentif) });
+	db.close();
+	req.flash('success_msg', 'comment was deleted.');
+		 res.redirect('/');
+
+		});
 });
-*/
+
 
 
 module.exports = router;
