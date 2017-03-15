@@ -2,6 +2,8 @@
 
 $(document).ready(function () {
 
+	$('.dropdown-toggle').dropdown('toggle');
+	$('.dropdown-toggle').dropdown('toggle');
 
 	function divClicked() {
 	    var divHtml = $(this).prev('textarea').html(); //select's the contents of div immediately previous to the button
