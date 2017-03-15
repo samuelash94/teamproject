@@ -58,3 +58,7 @@ module.exports.comparePassword = function(candidatePassword, hash, callback){
     	callback(null, isMatch);
 	});
 }
+
+module.exports.addFriend = function(user1id, user2id, callback){
+	User.requestFriend(user1id, user2id, callback);
+}

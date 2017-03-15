@@ -10,6 +10,7 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
+var friends = require("mongoose-friends");
 var handlebars = require('handlebars');
 
 mongoose.connect('mongodb://localhost/4770TeamProject');

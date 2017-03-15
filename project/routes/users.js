@@ -112,4 +112,16 @@ router.get('/logout', function(req, res){
 	res.redirect('/users/login');
 });
 
+router.post('/addFriend', function(req, res){
+	var friendId = req.body.friendId;
+	console.log(req.user.id);
+	User.addFriend(req.user.id, friendId, function(err){
+		if (err) throw err;
+		else{
+			req.flash('success_msg', 'Friend request sent.');
+			res.redirect('/');
+		}
+	});
+});
+
 module.exports = router;

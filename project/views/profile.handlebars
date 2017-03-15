@@ -1,4 +1,10 @@
 <h2 class="page-header">{{user.name}}'s Profile</h2>
 
+<form method="post" action="/users/addFriend/">
+  <div class="form-group">
+  <input name"friendId" value="{{user._id}}" style="display:none"/>
+  <button class="badge badge-success" type= "submit" id="addFriend" name="addFriend">+Add Friend</button>
+  </div>
+</form>
 <a class="badge badge-success" href="mailto:{{user.email}}?body={{currentUser.email}}">{{user.email}}</a>
 <span class="badge badge-primary">{{user.campus}} campus</span>
