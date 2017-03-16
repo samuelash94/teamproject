@@ -32,6 +32,7 @@ var UserSchema = mongoose.Schema({
 	}
 });
 
+UserSchema.plugin(friends());
 var User = module.exports = mongoose.model('User', UserSchema);
 
 module.exports.createUser = function(newUser, callback){

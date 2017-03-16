@@ -52,7 +52,7 @@
     {{#each ../comments}}
     {{#ifCond ../this._id '==' this.postId}}
     <div class="comment">
-      <p><b><a href="/profile/{{../this.userId}}">{{this.author}}</a>, {{this.date}}</b></p>
+      <p><b><a href="/profile/{{this.userId}}">{{this.author}}</a>, {{this.date}}</b></p>
       <form method="post" action="/comments/editComment/">
         <div class="form-group">
           <textarea class="editableComment form-control" id="commentText"  name="commentText" readonly>{{this.text}}</textarea>

@@ -69,6 +69,7 @@ router.post('/editComment/', function(req, res){
 	     $set:{
 	       'text': newCommentText,
 	       'date': currentDate,
+				 'isEdited': true,
 	     }
 		 }
 	);

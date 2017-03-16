@@ -64,7 +64,7 @@ router.get('/loadPosts', function(req, res, next) {
 			commentsArray.push(doc);
 		}, function(){
 			db.close();
-			res.render('index', {comments: commentsArray, posts:resultArray, userId: req.user.id});
+			res.render('index', {comments: commentsArray, posts:resultArray, myID: req.user.id});
 		});
 
 	});

@@ -1,6 +1,4 @@
 var mongoose = require('mongoose');
-//var Post = require('../models/post');
-//var User = require('.../models/user');
 
 var CommentSchema = mongoose.Schema({
 	postId: {
@@ -88,16 +86,4 @@ module.exports.addComment = function(newComment, callback){
 
 module.exports.getCommentByID = function(id, callback){
 	comment.findById(id, callback);
-}
-
-module.exports.editComment = function(id, newCommentText, callback){
-	var currentDate = this.getCurrentDate();
-	this.getCommentByID(id, function(err, user) {
-    done(err, user);
-  });
-  comment.save({_id: id, text : newCommentText, date: currentDate, isEdited: true}, callback);
-}
-
-module.exports.deleteComment = function(id, callback){
-  comment.remove({_id: ObjectId(id)}, callback);
 }
