@@ -13,7 +13,8 @@ var mongoose = require('mongoose');
 var friends = require("mongoose-friends");
 var handlebars = require('handlebars');
 
-mongoose.connect('mongodb://localhost/4770TeamProject');
+var url = 'mongodb://localhost/4770TeamProject';
+mongoose.connect(url);
 var db = mongoose.connection;
 
 var routes = require('./routes/index');
@@ -107,6 +108,28 @@ app.use(expressValidator({
     },
     endsWith: function(param, regex) {
         return param.endsWith(regex);
+    },
+    isStudentNumberUnique: function(value){
+      var resultArray = [];
+      var newValue = Number(value);
+
+      mongo.connect(url, function(err, db){
+        var numbers = db.collection('users').find(
+  	   { 'student_id': newValue });
+    		numbers.forEach(function(doc, err){
+    			resultArray.push(doc);
+    		}, function(){
+          db.close();
+    		});
+    	});
+
+      if(resultArray.length > 0){
+          return false;
+        }else{
+          return true;
+        }
+
+        console.log(resultArray);
     }
  }
 }));

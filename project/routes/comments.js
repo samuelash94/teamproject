@@ -63,6 +63,8 @@ router.post('/editComment/', function(req, res){
 	}
 	else {
 		mongo.connect(url, function(err, db){
+			var oldComment = db.collection('comments').findOne({_id : objectId(req.body.commentIdentif)});
+    		db.collection('oldComments').insert(oldComment);
 			var newComment = db.collection('comments').update(
 	   { _id: objectId(req.body.commentIdentif) },
 		 {
