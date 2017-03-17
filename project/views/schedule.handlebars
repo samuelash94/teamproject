@@ -1,0 +1,45 @@
+<h2 class="page-header">Schedule</h2>
+<p>View and manage your schedule.</p>
+<hr>
+<h3>Add a Course</h3>
+<div class="create-schedule">
+  <p>Enter information about a course to add to your schedule.</p>
+  <form method="post" action="/schedule/create">
+    <div class="form-group">
+      <input class="form-control" type="text" id="courseName" name="courseName" placeholder="Course Name">
+    </div>
+    <div class="form-group">
+      <input class="form-control" type="text" id="courseDays" name="courseDays" placeholder="Course Days">
+    </div>
+    <div class="form-group">
+      <input class="form-control" type="text" id="courseTime" name="courseTime" placeholder="Course Time">
+    </div>
+    <div class="form-group">
+      <input class="form-control" type="text" id="courseSlot" name="courseSlot" placeholder="Course Slot">
+    </div>
+    <div class="form-group">
+      <button class="btn btn-default" type="submit" id="courseSubmit">Submit</button>
+    </div>
+  </form>
+</div>
+
+<hr>
+
+
+<div>
+  <a href="/schedule/loadCourses">Show Courses</a>
+</div>
+<div>
+  <a onclick="hideCourses()">Hide Courses</a>
+</div>
+
+<div class="loadtheseCourses">
+  {{# each schedule }}
+  <div class="jumbotron">
+    <h3>{{ this.courseName }}<h3>
+    <p>{{ this.days }}</p>
+    <p>{{ this.time }}</p>
+    <p>{{ this.slot }}</p>
+  </div>
+  {{/each}}
+</div>
