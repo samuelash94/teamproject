@@ -1,4 +1,4 @@
-{{#ifCond user._id '==' currentUserId}}
+{{#ifCond user._id 'equals' currentUser._id}}
 <h2 class="page-header">My Profile</h2>
 {{else}}
 <h2 class="page-header">{{user.name}}'s Profile</h2>
