@@ -1,0 +1,32 @@
+<h2 class="page-header">Poll</h2>
+<p>View and vote on polls.</p>
+<hr>
+<h3>Create a poll</h3>
+<div class="create-poll">
+  <p>Enter the name of the course.</p>
+  <form method="post" action="/poll/create">
+    <div class="form-group">
+      <input class="form-control" type="text" id="pollName" name="pollName" placeholder="Course Name">
+    </div>
+    <div class="form-group">
+      <button class="btn btn-default" type="submit" id="courseSubmit">Submit</button>
+    </div>
+  </form>
+</div>
+
+<hr>
+
+<div>
+  <a href="/poll/loadPolls">Show Polls</a>
+</div>
+<div>
+  <a onclick="hidePolls()">Hide Polls</a>
+</div>
+
+<div class="loadthesePolls">
+  {{# each poll }}
+  <div class="jumbotron">
+    <h3>{{ this.name }}<h3>
+  </div>
+  {{/each}}
+</div>
