@@ -124,4 +124,16 @@ router.post('/addFriend', function(req, res){
 	});
 });
 
+router.post('/acceptFriend', function(req, res){
+	var friendId = req.body.friendId;
+	console.log(req.user.id);
+	User.addFriend(req.user.id, friendId, function(err){
+		if (err) throw err;
+		else{
+			req.flash('success_msg', 'Friend request accepted.');
+			res.redirect('/');
+		}
+	});
+});
+
 module.exports = router;

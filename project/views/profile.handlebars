@@ -30,3 +30,27 @@
     {{/each}}
   {{/each}}
 </div>
+
+{{#ifCond user._id '==' currentUserId}}
+<div name="friendRequests" class="loadFriendRequests">
+  <h3>My Friend Requests</h3>
+  {{#ifCond friendRequestIds "!=" []}}
+  {{#each friendRequestIds }}
+    {{#each ../users}}
+      {{#ifCond ../this '==' this._id}}
+      <div>
+        <form method="post" action="/users/acceptFriend/">
+          <div class="form-group">
+          <input name="friendId" value="{{this._id}}" style="display:none"/>
+          <p><a href="/profile/{{this._id}}">{{ this.name }}</a>, <button class="badge badge-success" type= "submit" id="acceptFriend" name="acceptFriend">+Add Friend</button></p>
+          </div>
+        </form>
+      </div>
+      {{/ifCond}}
+    {{/each}}
+  {{/each}}
+  {{else}}
+  <p>No friend requests.</p>
+  {{/ifCond}}
+  {{/ifCond}}
+</div>

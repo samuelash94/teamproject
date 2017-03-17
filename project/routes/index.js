@@ -23,13 +23,15 @@ router.get('/profile/:userId', function(req, res, next){
 					var currentUserId = req.user.id;
 					var userFriends = doc.friends;
 					var friendIds = [];
+					var friendRequestIds = [];
 					userFriends.forEach(function (idk, err){
 						if (idk.status == "accepted"){
-							console.log(idk._id);
 							friendIds.push(idk._id + "");
+						}else if (idk.status == "pending"){
+							friendRequestIds.push(idk._id + "");
 						}
 					});
-					res.render('profile', {user: doc, currentUser: req.user, currentUserId:currentUserId, friendIds: friendIds, users: users});
+					res.render('profile', {user: doc, currentUser: req.user, currentUserId:currentUserId, friendIds: friendIds, friendRequestIds: friendRequestIds, users: users});
 				}else{
 					var userFriends = doc.friends;
 					var friendIds = [];
