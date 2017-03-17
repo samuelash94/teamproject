@@ -6,7 +6,7 @@ var bcrypt = require('bcryptjs');
 
 // Group Schema
 var GroupSchema = mongoose.Schema({
-	userId: {
+	ownerId: {
 		type: String
 	},
 	owner: {
@@ -20,6 +20,9 @@ var GroupSchema = mongoose.Schema({
 	},
 	privacy: {
 		type: String
+	},
+	members:{
+		type: Array
 	}
 });
 

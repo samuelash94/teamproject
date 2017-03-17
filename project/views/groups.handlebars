@@ -25,14 +25,33 @@
   <a href="/groups/loadGroups">Load Groups</a>
 </div>
 <div>
+  <div>
+    <a href="/groups/myGroups">My Groups</a>
+  </div>
+  <div>
   <a onclick="hideGroups()"> Hide Groups</a>
 </div>
 
 <div class="loadtheseGroups">
-  {{# each groups }}
+  {{# each myGroups }}
   <div class="jumbotron">
   <h3>{{ this.name }}<h3>
   <p>{{ this.description }}</p>
+  <input name="groupIdentif" value="{{this._id}}"  style="display:none" />
+</div>
+  {{/each}}
+
+  {{# each notMyGroups }}
+  <div class="jumbotron">
+  <h3>{{ this.name }}<h3>
+  <p>{{ this.description }}</p>
+  <p> You are not part of this group</p>
+  <form method="post" action="/groups/joinGroup/">
+  <div class="form-group">
+    <input name="groupIdentif" value="{{this._id}}"  style="display:none" />
+    <button type= "submit" class="btn btn-warning" >Join Group</button>
+  </div>
+  </form>
 </div>
   {{/each}}
 </div>

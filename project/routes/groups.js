@@ -2,7 +2,8 @@ var express = require('express');
 var router = express.Router();
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
-var mongo = require('mongodb');
+var mongo = require('mongodb').MongoClient;
+var objectId = require('mongodb').ObjectID;
 
 var url = 'mongodb://localhost/4770TeamProject';
 
@@ -29,12 +30,15 @@ router.post('/create', function(req, res){
 			errors:errors
 		});
 	} else {
+		var memberArr = [];
+		memberArr.push(req.user.id);
 		var newGroup = new Group({
-			userId: userId,
+			ownerId: req.user.id,
 			owner: owner,
 			name: name,
 			description: description,
-			privacy : privacy
+			privacy : privacy,
+			members: memberArr
 		});
 
 		Group.createGroup(newGroup, function(err, user){
@@ -48,10 +52,10 @@ router.post('/create', function(req, res){
 	}
 });
 
-router.get('/loadGroups', function(req, res, next) {
+router.get('/myGroups', function(req, res, next) {
 	var resultArray = [];
 	mongo.connect(url, function(err, db){
-		var cursor = db.collection('groups').find();
+		var cursor = db.collection('groups').find({ members: { "$in" : [req.user.id]} });
 		cursor.forEach(function(doc, err){
 			resultArray.push(doc);
 		}, function(){
@@ -60,6 +64,47 @@ router.get('/loadGroups', function(req, res, next) {
 		});
 	});
 	//res.redirect('/');
+});
+
+router.get('/loadGroups', function(req, res, next) {
+	var resultArray = [];
+	var res2 = [];
+	mongo.connect(url, function(err, db){
+		var cursor = db.collection('groups').find({ members: { "$in" : [req.user.id]} });
+		var notCursor = db.collection('groups').find({ members: { "$nin" : [req.user.id]} });
+		cursor.forEach(function(doc, err){
+			resultArray.push(doc);
+		}, function(){
+		});
+
+		notCursor.forEach(function(doc, err){
+			res2.push(doc);
+		}, function(){
+			db.close();
+			res.render('groups', {myGroups: resultArray, notMyGroups:res2});
+		});
+	});
+	//res.redirect('/');
+});
+
+router.post('/joinGroup', function(req, res){
+	var groupId = req.body.groupIdentif;
+	var userId = req.user.id;
+	mongo.connect(url, function(err, db){
+		var cursor = db.collection('groups').update(
+    { _id: objectId(groupId)},
+    { "$push":
+        {"members":
+            {
+                userId
+            }
+        }
+    }
+);
+		db.close();
+		req.flash('success_msg', 'You have successfully joined this group');
+	 	res.redirect('/');
+	});
 });
 
 module.exports = router;
