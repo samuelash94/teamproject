@@ -3,6 +3,7 @@
  */
  var mongoose = require('mongoose');
  var bcrypt = require('bcryptjs');
+ var objectId = require('mongodb').ObjectID;
 
  // Schedule Schema
  var pollSchema = mongoose.Schema({
@@ -12,12 +13,15 @@
  	userId: {
  		type: String
  	},
- 	rating: {
- 		type: [Number]
+ 	ratings: {
+ 		type: Array
  	},
  	name: {
  		type: String
- 	}
+ 	},
+  average:{
+    type: Number
+  }
  });
 
  var poll = module.exports = mongoose.model('poll', pollSchema);
@@ -31,12 +35,9 @@
  }
 
  module.exports.addRating = function(id, newRating, callback){
- 	poll.update({
-    _id: ObjectId(id)
-  },
-    {$push:
-      {rating: newRating}
-    }
+ 	poll.update(
+    {_id: objectId(id)},
+    {$push: {ratings: newRating} }
   );
  }
 

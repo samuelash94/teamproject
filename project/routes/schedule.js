@@ -2,7 +2,8 @@ var express = require('express');
 var router = express.Router();
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
-var mongo = require('mongodb');
+var mongo = require('mongodb').MongoClient;
+var objectId = require('mongodb').ObjectID;
 
 var url = 'mongodb://localhost/4770TeamProject';
 var schedule = require('../models/schedule');
@@ -13,15 +14,64 @@ router.get('/', function(req, res){
 
 router.post('/create', function(req, res){
 	var name = req.body.courseName;
-	var days = req.body.courseDays;
 	var slot = req.body.courseSlot;
-	var time = req.body.courseTime;
 	var userId = req.user.id;
+	var mon = req.body.monday;
+	var tues = req.body.tuesday;
+	var wed = req.body.wednesday;
+	var thurs = req.body.thursday;
+	var fri = req.body.friday;
+	var monTime = req.body.monTime;
+	var tuesTime = req.body.tuesTime;
+	var wedTime = req.body.wedTime;
+	var thursTime = req.body.thursTime;
+	var friTime = req.body.friTime;
+	var daysTimes = [];
+	if(typeof mon != 'undefined'){
+		if(typeof monTime != 'undefined'){
+			daysTimes.push(mon + " at " + monTime);
+		}
+		else{
+			daysTimes.push(mon);
+		}
+	}
+	if(typeof tues != 'undefined'){
+		if(typeof tuesTime != 'undefined'){
+			daysTimes.push(" " + tues + " at " + tuesTime);
+		}
+		else{
+			daysTimes.push(" " + tues);
+		}
+	}
+	if(typeof wed != 'undefined'){
+		if(typeof wed != 'undefined'){
+			daysTimes.push(" " + wed + " at " + wedTime);
+		}
+		else{
+			daysTimes.push(" " + wed);
+		}
+	}
+	if(typeof thurs != 'undefined'){
+		if(typeof thursTime != 'undefined'){
+			daysTimes.push(" " + thurs + " at " + thursTime);
+		}
+		else{
+			daysTimes.push(" " + thurs);
+		}
+	}
+	if(typeof fri != 'undefined'){
+		if(typeof friTime != 'undefined'){
+			daysTimes.push(" " + fri + " at " + friTime);
+		}
+		else{
+			daysTimes.push(" " + fri);
+		}
+	}
+
+
 
 	req.checkBody('courseName', 'Course name must not be empty').notEmpty();
-	req.checkBody('courseDays', 'Course days must not be empty').notEmpty();
 	req.checkBody('courseSlot', 'Course slot must not be empty').notEmpty();
-	req.checkBody('courseTime', 'Course time must not be empty').notEmpty();
 
 	var errors = req.validationErrors();
 
@@ -32,9 +82,8 @@ router.post('/create', function(req, res){
 	} else {
 		var newSchedule = new schedule({
 			name: name,
-			days: days,
+			daysTimes: daysTimes,
 			sloy: slot,
-			time: time,
 			userId : userId
 		});
 
@@ -52,7 +101,7 @@ router.post('/create', function(req, res){
 router.get('/loadCourses', function(req, res, next) {
 	var resultArray = [];
 	mongo.connect(url, function(err, db){
-		var cursor = db.collection('schedule').find();
+		var cursor = db.collection('schedules').find({userId: req.user.id});
 		cursor.forEach(function(doc, err){
 			resultArray.push(doc);
 		}, function(){
@@ -61,6 +110,16 @@ router.get('/loadCourses', function(req, res, next) {
 		});
 	});
 	//res.redirect('/');
+});
+
+router.post('/deleteCourse/', function(req, res) {
+		mongo.connect(url, function(err, db){
+			var newCouse = db.collection('schedules').deleteOne(
+	   { _id: objectId(req.body.schedId) });
+	db.close();
+	req.flash('success_msg', 'Course was deleted.');
+		 res.redirect('/schedule');
+		});
 });
 
 module.exports = router;

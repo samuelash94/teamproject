@@ -2,10 +2,10 @@ var express = require('express');
 var router = express.Router();
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
-var mongo = require('mongodb');
+var mongo = require('mongodb').MongoClient;
+var objectId = require('mongodb').ObjectID;
 
 var url = 'mongodb://localhost/4770TeamProject';
-
 var poll = require('../models/poll');
 
 router.get('/', function(req, res){
@@ -15,6 +15,7 @@ router.get('/', function(req, res){
 router.post('/create', function(req, res){
 	var name = req.body.pollName;
 	var userId = req.user.id;
+	var ratings = [];
 
 	req.checkBody('pollName', 'Course name must not be empty').notEmpty();
 
@@ -40,11 +41,38 @@ router.post('/create', function(req, res){
 		res.redirect('/poll');
 	}
 });
+router.post('/vote', function(req, res){
+	var vote = req.body.vote;
+	console.log(vote);
+
+	if(typeof vote != 'undefined'){
+		var pollId = req.body.pollId;
+		mongo.connect(url, function(err, db){
+			var cursor = db.collection("polls").update(
+   			{ _id: objectId(pollId)},
+   			{ "$push":
+					{
+					 "ratings": vote
+				 }
+			 }
+			)
+		});
+//		mongo.connect(url, function(err, db){
+//			var cursor = db.collection("polls").find(
+//   			{ _id: objectId(pollId), average},
+//			)
+//		});
+
+		db.close();
+	}
+	res.redirect('/poll');
+});
+
 
 router.get('/loadPolls', function(req, res, next) {
 	var resultArray = [];
 	mongo.connect(url, function(err, db){
-		var cursor = db.collection('poll').find();
+		var cursor = db.collection('polls').find();
 		cursor.forEach(function(doc, err){
 			resultArray.push(doc);
 		}, function(){

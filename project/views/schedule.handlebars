@@ -8,11 +8,45 @@
     <div class="form-group">
       <input class="form-control" type="text" id="courseName" name="courseName" placeholder="Course Name">
     </div>
-    <div class="form-group">
-      <input class="form-control" type="text" id="courseDays" name="courseDays" placeholder="Course Days">
+    <div>
+      <label class="checkbox-inline">
+        <input type="checkbox" id="mondayBox" name="monday" value="monday"> Monday
+      </label>
     </div>
     <div class="form-group">
-      <input class="form-control" type="text" id="courseTime" name="courseTime" placeholder="Course Time">
+      <input class="form-control" type="text" id="monTime" name="monTime" placeholder="Monday Time">
+    </div>
+    <div>
+      <label class="checkbox-inline">
+        <input type="checkbox" id="tuedayBox" name="tuesday" value="tuesday"> Tuesday
+      </label>
+    </div>
+    <div class="form-group">
+      <input class="form-control" type="text" id="tuesTime" name="tuesTime" placeholder="Tuesday Time">
+    </div>
+    <div>
+      <label class="checkbox-inline">
+        <input type="checkbox" id="wednesdayBox" name="wednesday" value="wednesday"> Wednesday
+      </label>
+    </div>
+    <div class="form-group">
+      <input class="form-control" type="text" id="wedTime" name="wedTime" placeholder="Wednesday Time">
+    </div>
+    <div>
+      <label class="checkbox-inline">
+        <input type="checkbox" id="thursdayBox" name="thursday" value="thursday"> Thursday
+      </label>
+    </div>
+    <div class="form-group">
+      <input class="form-control" type="text" id="thursTime" name="thursTime" placeholder="Thursday Time">
+    </div>
+    <div>
+      <label class="checkbox-inline">
+        <input type="checkbox" id="fridayBox" name="friday" value="friday"> friday
+      </label>
+    </div>
+    <div class="form-group">
+      <input class="form-control" type="text" id="friTime" name="friTime" placeholder="Friday Time">
     </div>
     <div class="form-group">
       <input class="form-control" type="text" id="courseSlot" name="courseSlot" placeholder="Course Slot">
@@ -30,16 +64,20 @@
   <a href="/schedule/loadCourses">Show Courses</a>
 </div>
 <div>
-  <a onclick="hideCourses()">Hide Courses</a>
+  <a href="/schedule">Hide Courses</a>
 </div>
 
 <div class="loadtheseCourses">
   {{# each schedule }}
   <div class="jumbotron">
-    <h3>{{ this.courseName }}<h3>
-    <p>{{ this.days }}</p>
+    <h3>{{ this.name }}<h3>
+    <input name="schedId" value="{{this._id}}" style="display:none"/>
+    <p>{{ this.daysTimes }}</p>
     <p>{{ this.time }}</p>
     <p>{{ this.slot }}</p>
+    <form method="post" action="/schedule/deleteCourse">
+      <button class="btn btn-default" type="submit" id="courseDelete">Delete</button>
+    </form>
   </div>
   {{/each}}
 </div>
