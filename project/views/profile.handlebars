@@ -14,6 +14,16 @@
 <a class="badge badge-success" href="mailto:{{user.email}}?body={{currentUser.email}}">{{user.email}}</a>
 <span class="badge badge-primary">{{user.campus}} campus</span>
 
+
+{{#ifCond user._id 'equals' currentUser._id}}
+<div>
+  <div>
+    <a href="/users/goToUpload/"> Upload a file</a>
+  </div>
+
+</div>
+{{/ifCond}}
+
 <div name="friendsList" class="loadFriendsList">
   {{#ifCond user._id '==' currentUserId}}
   <h3>My Friends</h3>
@@ -34,7 +44,7 @@
 {{#ifCond user._id '==' currentUserId}}
 <div name="friendRequests" class="loadFriendRequests">
   <h3>My Friend Requests</h3>
-  {{#ifCond friendRequestIds "!=" []}}
+  {{#if friendRequestIds}}
   {{#each friendRequestIds }}
     {{#each ../users}}
       {{#ifCond ../this '==' this._id}}
@@ -51,6 +61,6 @@
   {{/each}}
   {{else}}
   <p>No friend requests.</p>
-  {{/ifCond}}
+  {{/if}}
   {{/ifCond}}
 </div>

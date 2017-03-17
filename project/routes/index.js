@@ -2,7 +2,8 @@ var express = require('express');
 var router = express.Router();
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
-var mongo = require('mongodb');
+var mongo = require('mongodb').MongoClient;
+var objectId = require('mongodb').ObjectID;
 
 var url = 'mongodb://localhost/4770TeamProject';
 
@@ -13,7 +14,7 @@ router.get('/', ensureAuthenticated, function(req, res){
 
 router.get('/profile/:userId', function(req, res, next){
 	mongo.connect(url, function(err, db){
-		var cursor = db.collection('users').find();
+		var cursor = db.collection('users').find({ "_id": objectId(req.params.userId) });
 		var users = [];
 		cursor.forEach(function(doc, err){
 			users.push(doc);
@@ -24,21 +25,25 @@ router.get('/profile/:userId', function(req, res, next){
 					var userFriends = doc.friends;
 					var friendIds = [];
 					var friendRequestIds = [];
-					userFriends.forEach(function (idk, err){
-						if (idk.status == "accepted"){
-							friendIds.push(idk._id + "");
-						}else if (idk.status == "pending"){
-							friendRequestIds.push(idk._id + "");
+					userFriends.forEach(function (doc2, err){
+						if (doc2.status == "accepted"){
+							friendIds.push(doc2._id + "");
+						}else if (doc2.status == "pending"){
+							friendRequestIds.push(doc2._id + "");
 						}
 					});
-					res.render('profile', {user: doc, currentUser: req.user, currentUserId:currentUserId, friendIds: friendIds, friendRequestIds: friendRequestIds, users: users});
+					if (friendRequestIds != []){
+						res.render('profile', {user: doc, currentUser: req.user, currentUserId:currentUserId, friendIds: friendIds, friendRequestIds: friendRequestIds, users: users});
+					}else{
+						res.render('profile', {user: doc, currentUser: req.user, currentUserId:currentUserId, friendIds: friendIds, users: users});
+					}
+
 				}else{
 					var userFriends = doc.friends;
 					var friendIds = [];
-					userFriends.forEach(function (idk, err){
-						if (idk.status == "accepted"){
-							console.log(idk._id);
-							friendIds.push(idk._id + "");
+					userFriends.forEach(function (doc2, err){
+						if (doc2.status == "accepted"){
+							friendIds.push(doc2._id + "");
 						}
 					});
 					res.render('profile', {user: doc, friendIds: friendIds, users: users});
