@@ -51,6 +51,11 @@ body {
   font-size: 21px;
 }
 
+/*Group settings*/
+.groupsettings{
+  font-size: 10px;
+}
+
 /* Supporting marketing content */
 .marketing {
   margin: 40px 0;

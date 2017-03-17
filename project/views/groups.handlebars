@@ -31,8 +31,14 @@
 <div class="loadtheseGroups">
   {{# each groups }}
   <div class="jumbotron">
-  <h3>{{ this.name }}<h3>
-  <p>{{ this.description }}</p>
+    <div contenteditable="true" class="form-control">
+      <h3>{{ this.name }}<h3>
+      <p>{{ this.description }}</p>
+    </div>
+  <div class="groupsettings">
+    <a href="/groups/addUser">Join Group</a>
+    <a href="/groups/deleteGroup">Delete Group</a>
+  </div>
 </div>
   {{/each}}
 </div>

@@ -48,6 +48,10 @@ module.exports.editDescription = function(id, newDesc, callback){
 	//Group.save(callback);
 }
 
+module.exports.addUser = function(id, callback){
+	Group.save(callback);
+}
+
 module.exports.deleteGroup = function(id){
 	Group.remove({_id: ObjectId(id)});
 }

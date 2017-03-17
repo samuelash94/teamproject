@@ -62,4 +62,36 @@ router.get('/loadGroups', function(req, res, next) {
 	//res.redirect('/');
 });
 
+router.get('/deleteGroup', function(req, res) {
+	mongo.connect(url, function(err, db){
+		var cursor = db.collection('groups').find();
+		cursor.remove();
+			db.close();
+			res.render('groups', {groups: resultArray});
+		});
+	});
+	//res.redirect('/');
+});
+
+router.get('/addUser', function(req, res) {
+	var userId = req.user.id;
+	var newUser = new User({
+		userId: userId,
+	});
+	Group.getUserById(userId, function(err, user){
+		if(err) throw err;
+		console.log(user);
+	});
+	mongo.connect(url, function(err, db){
+		if(err) throw err;
+		else {
+			db.createUser(newUser, function(err, user){
+				if(err) throw err;
+				else {
+					db.collection('groups').insert()
+				}
+			});
+		}
+});
+
 module.exports = router;
