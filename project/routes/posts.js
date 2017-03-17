@@ -71,4 +71,59 @@ router.get('/loadPosts', function(req, res, next) {
 	//res.redirect('/');
 });
 
+router.post('/editPost/', function(req, res){
+
+	var newPostText = req.body.PostText;
+	var currentDate = Post.getCurrentDate();
+	req.checkBody('Post', 'post text must not be empty').notEmpty();
+
+	var errors = req.validationErrors();
+
+  if(errors){
+		res.render('index',{
+			errors:errors
+		});
+	}
+	else {
+		mongo.connect(url, function(err, db){
+			var newComment = db.collection('posts').update(
+	   { _id: objectId(req.body.postIdentif) },
+		 {
+	     $set:{
+	       'text': newPostText,
+	       'date': currentDate,
+	     }
+		 }
+	);
+	db.close();
+	req.flash('success_msg', 'post was edited.');
+		 res.redirect('/');
+
+		});
+
+	}
+});
+
+router.post('/editVisibility/', function(req, res){
+	var visibility = req.body.postVisibility;
+	var newVisibility = Number(visibility);
+
+	mongo.connect(url, function(err, db){
+		var newComment = db.collection('posts').update(
+	 { _id: objectId(req.body.postIdentif) },
+	 {
+		 $set:{
+			 'visibility': newVisibility,
+			 'date': currentDate,
+		 }
+	 }
+);
+db.close();
+req.flash('success_msg', 'post was edited.');
+	 res.redirect('/');
+
+	});
+
+});
+
 module.exports = router;

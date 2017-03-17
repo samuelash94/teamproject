@@ -42,6 +42,7 @@ router.post('/register', function(req, res){
 	req.checkBody('email', 'Email is required').notEmpty();
 	req.checkBody('student_id', 'Student number is required').notEmpty();
 	req.checkBody('student_id', 'Student number must be an Integer').isInt();
+	req.checkBody('student_id', 'Student number already in use').isStudentNumberUnique();
 	req.checkBody('email', 'Email is not valid').isEmail();
 	req.checkBody('email', 'Email must end in @mun.ca').endsWith('@mun.ca');
 	req.checkBody('username', 'Username is required').notEmpty();
