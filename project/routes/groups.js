@@ -52,19 +52,6 @@ router.post('/create', function(req, res){
 	}
 });
 
-router.get('/myGroups', function(req, res, next) {
-	var resultArray = [];
-	mongo.connect(url, function(err, db){
-		var cursor = db.collection('groups').find({ members: { "$in" : [req.user.id]} });
-		cursor.forEach(function(doc, err){
-			resultArray.push(doc);
-		}, function(){
-			db.close();
-			res.render('groups', {groups: resultArray});
-		});
-	});
-	//res.redirect('/');
-});
 
 router.get('/loadGroups', function(req, res, next) {
 	var resultArray = [];
@@ -102,5 +89,18 @@ router.post('/joinGroup', function(req, res){
 	 	res.redirect('/');
 	});
 });
+
+router.post('/deleteGroup/', function(req, res) {
+		mongo.connect(url, function(err, db){
+			var newComment = db.collection('groups').deleteOne(
+	   { _id: objectId(req.body.groupIdentif) });
+	db.close();
+	req.flash('success_msg', 'group was deleted.');
+		 res.redirect('/');
+
+		});
+});
+
+
 
 module.exports = router;
