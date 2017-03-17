@@ -171,6 +171,18 @@ router.post('/upload', function(req, res){
 req.flash('success_msg', 'File has been uploaded');
 	res.redirect('/');
 
+
+router.post('/acceptFriend', function(req, res){
+	var friendId = req.body.friendId;
+	console.log(req.user.id);
+	User.addFriend(req.user.id, friendId, function(err){
+		if (err) throw err;
+		else{
+			req.flash('success_msg', 'Friend request accepted.');
+			res.redirect('/');
+		}
+	});
+
 });
 
 module.exports = router;
