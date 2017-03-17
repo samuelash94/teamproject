@@ -63,3 +63,8 @@ module.exports.comparePassword = function(candidatePassword, hash, callback){
 module.exports.addFriend = function(user1id, user2id, callback){
 	User.requestFriend(user1id, user2id, callback);
 }
+
+//module.exports.getAcceptedFriends = function(callback){
+	//var query = {friends: [status = 'accepted']};
+	//User.find(query);
+//}

@@ -6,13 +6,13 @@
 <form method="post" action="/users/addFriend/">
   <div class="form-group">
   <input name="friendId" value="{{user._id}}" style="display:none"/>
-  <button class="badge badge-success" type= "submit" id="addFriend" name="addFriend">+Add Friend</button>
+  <button class="label label-primary" type= "submit" id="addFriend" name="addFriend">+Add Friend</button>
   </div>
 </form>
 {{/ifCond}}
 
-<a class="badge badge-success" href="mailto:{{user.email}}?body={{currentUser.email}}">{{user.email}}</a>
-<span class="badge badge-primary">{{user.campus}} campus</span>
+<a class="label label-warning" href="mailto:{{user.email}}?body={{currentUser.email}}">{{user.email}}</a>
+<span class="label label-danger">{{user.campus}} campus</span>
 
 
 {{#ifCond user._id 'equals' currentUser._id}}
@@ -24,29 +24,33 @@
 {{/ifCond}}
 
 <div name="friendsList" class="loadFriendsList">
-  {{#ifCond user._id '==' currentUserId}}
+  {{#ifCond user._id 'equals' currentUser._id}}
   <h3>My Friends</h3>
   {{else}}
   <h3>{{user.name}}'s Friends</h3>
   {{/ifCond}}
-  {{#each friendIds }}
-    {{#each ../users}}
-      {{#ifCond ../this '==' this._id}}
-      <div>
-        <p><a href="/profile/{{this._id}}">{{ this.name }}</a><p>
-      </div>
-      {{/ifCond}}
+  {{#if friends}}
+    {{#each friends }}
+      {{#each ../users}}
+        {{#ifCond ../this._id 'equals' this._id}}
+        <div>
+          <p><a href="/profile/{{this._id}}">{{ this.name }}</a><p>
+        </div>
+        {{/ifCond}}
+      {{/each}}
     {{/each}}
-  {{/each}}
+  {{else}}
+  <p>No friends to show.</p>
+  {{/if}}
 </div>
 
-{{#ifCond user._id '==' currentUserId}}
+{{#ifCond user._id 'equals' currentUser._id}}
 <div name="friendRequests" class="loadFriendRequests">
   <h3>My Friend Requests</h3>
-  {{#if friendRequestIds}}
-  {{#each friendRequestIds}}
+  {{#if friendRequests}}
+  {{#each friendRequests}}
     {{#each ../users}}
-      {{#ifCond ../this '==' this._id}}
+      {{#ifCond ../this._id 'equals' this._id}}
       <div>
         <form method="post" action="/users/acceptFriend/">
           <div class="form-group">
@@ -58,8 +62,9 @@
       {{/ifCond}}
     {{/each}}
   {{/each}}
-  {{/if}}
-  </div>
   {{else}}
   <p>No friend requests.</p>
-  {{/ifCond}}
+  {{/if}}
+  </div>
+
+{{/ifCond}}
