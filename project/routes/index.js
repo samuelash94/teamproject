@@ -2,7 +2,8 @@ var express = require('express');
 var router = express.Router();
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
-var mongo = require('mongodb');
+var mongo = require('mongodb').MongoClient;
+var objectId = require('mongodb').ObjectID;
 
 var url = 'mongodb://localhost/4770TeamProject';
 
@@ -13,7 +14,7 @@ router.get('/', ensureAuthenticated, function(req, res){
 
 router.get('/profile/:userId', function(req, res, next){
 	mongo.connect(url, function(err, db){
-		var cursor = db.collection('users').find();
+		var cursor = db.collection('users').find({ "_id": objectId(req.params.userId) });
 		cursor.forEach(function(doc, err){
 			if (err) throw err;
 			if (doc._id == req.params.userId){

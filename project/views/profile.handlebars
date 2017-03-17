@@ -8,3 +8,12 @@
 </form>
 <a class="badge badge-success" href="mailto:{{user.email}}?body={{currentUser.email}}">{{user.email}}</a>
 <span class="badge badge-primary">{{user.campus}} campus</span>
+
+{{#ifCond user._id 'equals' currentUser._id}}
+<div>
+  <div>
+    <a href="/users/goToUpload/"> Upload a file</a>
+  </div>
+
+</div>
+{{/ifCond}}
