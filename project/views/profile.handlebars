@@ -20,7 +20,6 @@
   <div>
     <a href="/users/goToUpload/"> Upload a file</a>
   </div>
-
 </div>
 {{/ifCond}}
 
@@ -44,8 +43,8 @@
 {{#ifCond user._id '==' currentUserId}}
 <div name="friendRequests" class="loadFriendRequests">
   <h3>My Friend Requests</h3>
-  {{#ifCond friendRequestIds "!=" []}}
-  {{#each friendRequestIds }}
+  {{#if friendRequestIds}}
+  {{#each friendRequestIds}}
     {{#each ../users}}
       {{#ifCond ../this '==' this._id}}
       <div>
@@ -59,8 +58,8 @@
       {{/ifCond}}
     {{/each}}
   {{/each}}
+  {{/if}}
+  </div>
   {{else}}
   <p>No friend requests.</p>
   {{/ifCond}}
-  {{/ifCond}}
-</div>
