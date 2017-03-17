@@ -50,7 +50,3 @@ module.exports.editDescription = function(id, newDesc, callback){
 	Group.save({_id: ObjectId(id), description : newDesc});
 	//Group.save(callback);
 }
-
-module.exports.deleteGroup = function(id){
-	Group.remove({_id: ObjectId(id)});
-}
