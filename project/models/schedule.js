@@ -9,11 +9,8 @@
  	slot: {
  		type: Number
  	},
- 	days: {
- 		type: String
- 	},
- 	time: {
- 		type: String
+ 	daysTimes: {
+ 		type: Array
  	},
  	name: {
  		type: String
