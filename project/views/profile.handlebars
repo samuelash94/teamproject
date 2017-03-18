@@ -6,7 +6,7 @@
 <form method="post" action="/users/addFriend/">
   <div class="form-group">
   <input name="friendId" value="{{user._id}}" style="display:none"/>
-  <button class="label label-primary" type= "submit" id="addFriend" name="addFriend">+Add Friend</button>
+  <a class="label label-primary" type= "submit" id="addFriend" name="addFriend">+Add Friend</a>
   </div>
 </form>
 {{/ifCond}}
@@ -16,11 +16,7 @@
 
 
 {{#ifCond user._id 'equals' currentUser._id}}
-<div>
-  <div>
-    <a href="/users/goToUpload/"> Upload a file</a>
-  </div>
-</div>
+    <a class="label label-success" href="/users/goToUpload/"> Upload a file</a>
 {{/ifCond}}
 
 <div name="friendsList" class="loadFriendsList">
@@ -55,7 +51,7 @@
         <form method="post" action="/users/acceptFriend/">
           <div class="form-group">
           <input name="friendId" value="{{this._id}}" style="display:none"/>
-          <p><a href="/profile/{{this._id}}">{{ this.name }}</a>, <button class="badge badge-success" type= "submit" id="acceptFriend" name="acceptFriend">+Add Friend</button></p>
+          <p><a href="/profile/{{this._id}}">{{ this.name }}</a> <a class="label label-primary" type= "submit" id="acceptFriend" name="acceptFriend">+Add Friend</a></p>
           </div>
         </form>
       </div>
