@@ -55,17 +55,18 @@ router.post('/vote', function(req, res){
 					 "ratings": vote
 				 }
 			 }
-			)
+		 );
+		 db.close();
+		 req.flash('success_msg', 'Vote was added successfully');
+		 res.redirect('/');
 		});
 //		mongo.connect(url, function(err, db){
 //			var cursor = db.collection("polls").find(
 //   			{ _id: objectId(pollId), average},
 //			)
 //		});
-
-		db.close();
 	}
-	res.redirect('/poll');
+
 });
 
 
