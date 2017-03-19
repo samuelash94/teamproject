@@ -2,7 +2,8 @@ var express = require('express');
 var router = express.Router();
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
-var mongo = require('mongodb');
+var mongo = require('mongodb').MongoClient;
+var objectId = require('mongodb').ObjectID;
 
 var url = 'mongodb://localhost/4770TeamProject';
 
@@ -71,11 +72,11 @@ router.get('/loadPosts', function(req, res, next) {
 	//res.redirect('/');
 });
 
-router.post('/editPost/', function(req, res){
+router.post('/editPost', function(req, res){
 
 	var newPostText = req.body.PostText;
 	var currentDate = Post.getCurrentDate();
-	req.checkBody('Post', 'post text must not be empty').notEmpty();
+	req.checkBody('PostText', 'post text must not be empty').notEmpty();
 
 	var errors = req.validationErrors();
 
