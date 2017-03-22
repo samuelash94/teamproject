@@ -9,7 +9,7 @@ var url = 'mongodb://localhost/4770TeamProject';
 var poll = require('../models/poll');
 
 router.get('/', function(req, res){
-	res.render('poll');
+	res.render('poll', {currentUser: req.user});
 });
 
 router.post('/create', function(req, res){

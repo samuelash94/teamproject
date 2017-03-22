@@ -6,7 +6,7 @@ var LocalStrategy = require('passport-local').Strategy;
 var lostItem = require('../models/lostItem');
 
 router.get('/', function(req, res){
-	res.render('lostandfound');
+	res.render('lostandfound', {currentUser: req.user});
 });
 
 router.post('/postItem', function(req, res){

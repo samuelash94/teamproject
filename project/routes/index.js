@@ -25,13 +25,15 @@ router.get('/profile/:userId', function(req, res, next){
 					var allFriends = doc.friends;
 					var userFriends = [];
 					var userFriendRequests = [];
-					allFriends.forEach(function(doc2, err){
-						if (doc2.status == "accepted"){
-							userFriends.push(doc2);
-						}else if (doc2.status == "pending"){
-							userFriendRequests.push(doc2);
-						}
-					});
+					if (allFriends){
+						allFriends.forEach(function(doc2, err){
+							if (doc2.status == "accepted"){
+								userFriends.push(doc2);
+							}else if (doc2.status == "pending"){
+								userFriendRequests.push(doc2);
+							}
+						});
+					}
 					if (userFriendRequests != []){
 						res.render('profile', {user: doc, currentUser: req.user, friends: userFriends, friendRequests: userFriendRequests, users: users});
 					}else{

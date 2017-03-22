@@ -9,7 +9,7 @@ var url = 'mongodb://localhost/4770TeamProject';
 var schedule = require('../models/schedule');
 
 router.get('/', function(req, res){
-	res.render('schedule');
+	res.render('schedule', {currentUser: req.user});
 });
 
 router.post('/create', function(req, res){

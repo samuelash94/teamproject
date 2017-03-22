@@ -10,7 +10,7 @@ var url = 'mongodb://localhost/4770TeamProject';
 var Group = require('../models/group');
 
 router.get('/', function(req, res){
-	res.render('groups');
+	res.render('groups', {currentUser: req.user});
 });
 
 router.post('/create', function(req, res){

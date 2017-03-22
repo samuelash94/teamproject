@@ -11,7 +11,7 @@ var objectId = require('mongodb').ObjectID;
 var url = 'mongodb://localhost/4770TeamProject';
 
 router.get('/', function(req, res){
-	res.render('index');
+	res.render('index', {currentUser: req.user});
 });
 
 router.post('/addComment/', function(req, res){

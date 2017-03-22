@@ -10,7 +10,7 @@ var url = 'mongodb://localhost/4770TeamProject';
 var Post = require('../models/post');
 
 router.get('/', function(req, res){
-	res.render('index');
+	res.render('index', {currentUser: req.user});
 });
 
 router.post('/post', function(req, res){
