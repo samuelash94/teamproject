@@ -32,13 +32,13 @@
 <div class="loadtheseGroups">
   {{# each myGroups }}
   <div class="jumbotron">
-  <h3>{{ this.name }}<h3>
+  <h3><a href="/group/{{this._id}}">{{ this.name }}</a><h3>
   <p>{{ this.description }}</p>
-  <input name="groupIdentif" value="{{this._id}}"  style="display:none" />
+  <input name="groupIdentif" value="{{this._id}}" style="display:none"/>
   <form method="post" action="/groups/deleteGroup/">
   <div class="form-group">
-    <input name="groupIdentif" value="{{this._id}}"  style="display:none" />
-    <button type= "submit" class="btn btn-danger" >Delete Group</button>
+    <input name="groupIdentif" value="{{this._id}}" style="display:none"/>
+    <button type= "submit" class="btn btn-danger">Delete Group</button>
   </div>
   </form>
 </div>

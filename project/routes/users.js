@@ -122,10 +122,8 @@ router.get('/logout', function(req, res){
 	res.redirect('/users/login');
 });
 
-router.post('/addFriend', function(req, res){
-	var friendId = req.body.friendId;
-	console.log(req.user.id);
-	User.addFriend(req.user.id, friendId, function(err){
+router.get('/addFriend/:userId', function(req, res){
+	User.addFriend(req.user.id, req.params.userId, function(err){
 		if (err) throw err;
 		else{
 			req.flash('success_msg', 'Friend request sent.');
@@ -175,10 +173,8 @@ req.flash('success_msg', 'File has been uploaded');
 });
 
 
-router.post('/acceptFriend', function(req, res){
-	var friendId = req.body.friendId;
-	console.log(req.user.id);
-	User.addFriend(req.user.id, friendId, function(err){
+router.get('/acceptFriend/:userId', function(req, res){
+	User.addFriend(req.user.id, req.params.userId, function(err){
 		if (err) throw err;
 		else{
 			req.flash('success_msg', 'Friend request accepted.');

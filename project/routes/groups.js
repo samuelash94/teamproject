@@ -90,6 +90,20 @@ router.post('/joinGroup', function(req, res){
 	});
 });
 
+router.get('/joinGroup/:groupId', function(req, res){
+	var addArray = [];
+	addArray.push(req.user.id);
+	mongo.connect(url, function(err, db){
+		var cursor = db.collection('groups').update(
+   { _id: objectId(req.params.groupId) },
+   { $addToSet: { members: req.user.id } }
+);
+		db.close();
+		req.flash('success_msg', 'You have successfully joined this group.');
+	 	res.redirect('/');
+	});
+});
+
 router.post('/deleteGroup/', function(req, res) {
 		mongo.connect(url, function(err, db){
 			var newComment = db.collection('groups').deleteOne(
