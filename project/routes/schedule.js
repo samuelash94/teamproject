@@ -77,7 +77,7 @@ router.post('/create', function(req, res){
 
 	if(errors){
 		res.render('schedule',{
-			errors:errors
+			errors:errors, currentUser: req.user
 		});
 	} else {
 		var newSchedule = new schedule({
@@ -106,7 +106,7 @@ router.get('/loadCourses', function(req, res, next) {
 			resultArray.push(doc);
 		}, function(){
 			db.close();
-			res.render('schedule', {schedule: resultArray});
+			res.render('schedule', {schedule: resultArray, currentUser: req.user});
 		});
 	});
 	//res.redirect('/');

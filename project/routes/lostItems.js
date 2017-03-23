@@ -22,7 +22,7 @@ router.post('/postItem', function(req, res){
 
 	if(errors){
 		res.render('lostandfound',{
-			errors:errors
+			errors:errors, currentUser: req.user
 		});
 	} else {
 		var newItem = new lostItem({

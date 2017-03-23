@@ -25,7 +25,7 @@ router.post('/post', function(req, res){
 
 	if(errors){
 		res.render('index',{
-			errors:errors
+			errors:errors, currentUser: req.user
 		});
 	} else {
 		var newPost = new Post({
@@ -65,7 +65,7 @@ router.get('/loadPosts', function(req, res, next) {
 			commentsArray.push(doc);
 		}, function(){
 			db.close();
-			res.render('index', {comments: commentsArray, posts:resultArray, myID: req.user.id});
+			res.render('index', {comments: commentsArray, posts:resultArray, myID: req.user.id, currentUser: req.user});
 		});
 
 	});
@@ -82,7 +82,7 @@ router.post('/editPost', function(req, res){
 
   if(errors){
 		res.render('index',{
-			errors:errors
+			errors:errors, currentUser: req.user
 		});
 	}
 	else {

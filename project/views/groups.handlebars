@@ -46,7 +46,7 @@
 
   {{# each notMyGroups }}
   <div class="jumbotron">
-  <h3>{{ this.name }}<h3>
+  <h3><a href="/group/{{this._id}}">{{ this.name }}</a><h3>
   <p>{{ this.description }}</p>
   <p> You are not part of this group</p>
   <form method="post" action="/groups/joinGroup/">
