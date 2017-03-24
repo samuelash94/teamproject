@@ -52,6 +52,21 @@ router.get('/profile/:userId', function(req, res, next){
 	});
 });
 
+router.post('/search', function(req, res){
+	var search = req.body.searchBar;
+	var regex = new RegExp(["^", search, "$"].join(""), "i");
+	var resultArray = [];
+	mongo.connect(url, function(err, db){
+		var cursor = db.collection('users').find({name: regex});
+		cursor.forEach(function(doc, err){
+			resultArray.push(doc);
+		}, function(){
+		});
+		db.close();
+	 	res.render('searchResults', {userResults: resultArray});
+	});
+});
+
 router.get('/group/:groupId', function(req, res, next){
 	mongo.connect(url, function(err, db){
 		var cursor = db.collection('groups').find();

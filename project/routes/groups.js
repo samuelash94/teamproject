@@ -77,8 +77,6 @@ router.get('/loadGroups', function(req, res, next) {
 router.post('/joinGroup', function(req, res){
 	var groupId = req.body.groupIdentif;
 	var userId = req.user.id;
-	var addArray = [];
-	addArray.push(userId);
 	mongo.connect(url, function(err, db){
 		var cursor = db.collection('groups').update(
    { _id: objectId(groupId) },
