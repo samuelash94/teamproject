@@ -23,6 +23,9 @@ var GroupSchema = mongoose.Schema({
 	},
 	members:{
 		type: Array
+	},
+	requests:{
+		type: Array
 	}
 });
 

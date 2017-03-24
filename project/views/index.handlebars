@@ -38,7 +38,7 @@
   <p>{{ this.date }}<p>
     <form method="post" action="/posts/editPost">
       <div class="form-group">
-        <textarea class="form-control" id="PostText"  name="PostText" rows="10" readonly>{{this.text}}</textarea>
+        <textarea class="form-control" id="PostText" name="PostText" rows="10" readonly>{{this.text}}</textarea>
         <button type="button" id="editPost" class="postEditButton btn btn-primary">Edit Post</button>
         <input name="postIdentif" value="{{this._id}}"  style="display:none" />
         </div>

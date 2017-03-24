@@ -31,19 +31,20 @@ router.post('/create', function(req, res){
 		});
 	} else {
 		var memberArr = [];
+		var requestArr = [];
 		memberArr.push(req.user.id);
 		var newGroup = new Group({
 			ownerId: req.user.id,
 			owner: owner,
 			name: name,
 			description: description,
-			privacy : privacy,
-			members: memberArr
+			privacy: privacy,
+			members: memberArr,
+			requests: requestArr
 		});
 
 		Group.createGroup(newGroup, function(err, user){
 			if(err) throw err;
-			console.log(user);
 		});
 
 		req.flash('success_msg', 'Group created successfully.');
@@ -56,11 +57,18 @@ router.post('/create', function(req, res){
 router.get('/loadGroups', function(req, res, next) {
 	var resultArray = [];
 	var res2 = [];
+	var res3 = [];
 	mongo.connect(url, function(err, db){
 		var cursor = db.collection('groups').find({ members: { "$in" : [req.user.id]} });
 		var notCursor = db.collection('groups').find({ members: { "$nin" : [req.user.id]} });
+		var requested = db.collection('groups').find({ requests: { "$in" : [req.user.id]} });
 		cursor.forEach(function(doc, err){
 			resultArray.push(doc);
+		}, function(){
+		});
+
+		requested.forEach(function(doc, err){
+			res3.push(doc);
 		}, function(){
 		});
 
@@ -68,7 +76,7 @@ router.get('/loadGroups', function(req, res, next) {
 			res2.push(doc);
 		}, function(){
 			db.close();
-			res.render('groups', {myGroups: resultArray, notMyGroups:res2, currentUser: req.user});
+			res.render('groups', {myGroups: resultArray, notMyGroups:res2, currentUser: req.user, requestedGroups: res3});
 		});
 	});
 	//res.redirect('/');
@@ -89,8 +97,6 @@ router.post('/joinGroup', function(req, res){
 });
 
 router.get('/joinGroup/:groupId', function(req, res){
-	var addArray = [];
-	addArray.push(req.user.id);
 	mongo.connect(url, function(err, db){
 		var cursor = db.collection('groups').update(
    { _id: objectId(req.params.groupId) },
@@ -100,6 +106,51 @@ router.get('/joinGroup/:groupId', function(req, res){
 		req.flash('success_msg', 'You have successfully joined this group.');
 	 	res.redirect('/');
 	});
+});
+
+router.post('/requestJoinGroup', function(req, res){
+	var groupId = req.body.groupIdentif;
+	var userId = req.user.id;
+	mongo.connect(url, function(err, db){
+		var cursor = db.collection('groups').update(
+   { _id: objectId(groupId) },
+   { $addToSet: { requests: req.user.id } }
+);
+		db.close();
+		req.flash('success_msg', 'You have requested to join this group.');
+	 	res.redirect('/');
+	});
+});
+
+router.post('/requestJoinGroup/:groupId', function(req, res){
+	mongo.connect(url, function(err, db){
+		var cursor = db.collection('groups').update(
+   { _id: objectId(req.params.groupId) },
+   { $addToSet: { requests: req.user.id } }
+);
+		db.close();
+		req.flash('success_msg', 'You have requested to join this group.');
+	 	res.redirect('/');
+	});
+});
+
+router.get('/acceptRequest/:groupId/:userId', function(req, res){
+	mongo.connect(url, function(err, db){
+		var cursor = db.collection('groups').update(
+   { _id: objectId(req.params.groupId) },
+   { $addToSet: { members: req.params.userId } }
+);
+		var removeReq = db.collection('groups').update(
+	 { _id: objectId(req.params.groupId) },
+	 { $pull: { requests: req.params.userId } }
+);
+
+ 		db.close();
+
+		req.flash('success_msg', 'Group join request accepted.');
+		res.redirect('/');
+	});
+
 });
 
 router.post('/deleteGroup/', function(req, res) {

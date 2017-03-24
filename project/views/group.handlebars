@@ -1,13 +1,17 @@
 <h2 class="page-header">{{group.name}}</h2>
 
 {{#if currentUser}}
-  {{#ifCond currentUser._id '==' group.userId}}
+  {{#ifCond currentUser._id '==' group.ownerId}}
     <span class="label label-warning">You own this Group</span>
   {{else}}
     {{#ifCond isMember '==' true}}
       <span class="label label-info">You're in this Group</span>
     {{else}}
-      <a class="label label-primary" id="joinGroup" name="joinGroup" href="/groups/joinGroup/{{../group._id}}">+Join Group</a>
+      {{#ifCond hasRequested '==' true}}
+        <span class="label label-success">Requested</span>
+      {{else}}
+        <a class="label label-primary" id="joinGroup" name="joinGroup" href="/groups/joinGroup/{{../group._id}}">+Join Group</a>
+      {{/ifCond}}
     {{/ifCond}}
   {{/ifCond}}
 {{/if}}
@@ -24,3 +28,20 @@
     {{/each}}
   {{/each}}
 </div>
+
+{{#ifCond group.privacy '==' "private"}}
+  {{#ifCond currentUser._id '==' group.ownerId}}
+    <div name="requestList" class="loadRequestList">
+      <h3>{{group.name}}'s Join Requests</h3>
+      {{#each group.requests}}
+        {{#each ../users}}
+          {{#ifCond ../this '==' this._id}}
+            <div>
+              <p><a href="/profile/{{this._id}}">{{this.name}} <a class="label label-primary" id="acceptFriend" name="acceptFriend" href="/groups/acceptRequest/{{../../group._id}}/{{this._id}}">+Accept Join Request</a></a><p>
+              </div>
+          {{/ifCond}}
+        {{/each}}
+      {{/each}}
+    </div>
+  {{/ifCond}}
+{{/ifCond}}

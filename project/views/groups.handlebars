@@ -9,12 +9,12 @@
   <div class="form-group">
     <textarea class="form-control" rows=4 cols=50 id="groupDesc" name="groupDesc" style="display:none" placeholder="Group Description..."></textarea>
   </div>
-  <div class="form-group" style="display:none">
-    <select id="groupPrivacy" class="form-control" name="groupPrivacy">
+  <div class="form-group">
+    <select id="groupPrivacy" class="form-control" name="groupPrivacy" style="display:none">
   	<option value="public">Public</option>
-  	<option value="invite">Invite Only</option>
-  	<option value="private">Private (& Invite Only)</option>
+  	<option value="private">Private</option>
 	</select>
+  <p id="groupNote" name="groupNote" style="display:none">*Note that making a group private means that users must request to join or be invited to join by you, the owner, or by other users you specify who may send invites.</p>
   </div>
   <div class="form-group">
   <button class="btn btn-default" type="submit" id="groupSubmit" style="display:none">Submit</button>
@@ -48,12 +48,36 @@
   <h3><a href="/group/{{this._id}}">{{ this.name }}</a><h3>
   <p>{{ this.description }}</p>
   <p> You are not part of this group</p>
-  <form method="post" action="/groups/joinGroup/">
-  <div class="form-group">
-    <input name="groupIdentif" value="{{this._id}}"  style="display:none" />
-    <button type= "submit" class="btn btn-warning" >Join Group</button>
-  </div>
-  </form>
+    {{#ifCond this.privacy '==' "public"}}
+      <form method="post" action="/groups/joinGroup/">
+      <div class="form-group">
+        <input name="groupIdentif" value="{{this._id}}"  style="display:none" />
+        <button type= "submit" class="btn btn-warning">Join Group</button>
+      </div>
+      </form>
+    {{else}}
+      {{#if requestedGroups}}
+        {{#each ../requestedGroups}}
+          {{#ifCond ../this._id 'equals' this._id}}
+            <span class="label label-success">Requested</span>
+          {{else}}
+            <form method="post" action="/groups/requestJoinGroup/">
+            <div class="form-group">
+              <input name="groupIdentif" value="{{this._id}}"  style="display:none" />
+              <button type= "submit" class="btn btn-warning">Request to Join</button>
+            </div>
+            </form>
+          {{/ifCond}}
+        {{/each}}
+      {{else}}
+        <form method="post" action="/groups/requestJoinGroup/">
+        <div class="form-group">
+          <input name="groupIdentif" value="{{this._id}}"  style="display:none" />
+          <button type= "submit" class="btn btn-warning">Request to Join</button>
+        </div>
+        </form>
+      {{/if}}
+    {{/ifCond}}
 </div>
   {{/each}}
 </div>

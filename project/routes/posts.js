@@ -76,13 +76,11 @@ router.get('/loadPosts/:userId', function(req, res, next) {
 	var users = [];
 	var isFriend = false;
 	mongo.connect(url, function(err, db){
-		var cursor = db.collection('posts').find();
+		var cursor = db.collection('posts').find({userId : req.params.userId});
 		var cursorComments = db.collection('comments').find();
 		var cursorUsers = db.collection('users').find();
 		cursor.forEach(function(doc, err){
-			if (doc.userId == req.params.userId){
 				resultArray.push(doc);
-			}
 		}, function(){
 			//db.close();
 			//res.render('index', {posts: resultArray});
@@ -132,6 +130,7 @@ router.post('/editPost', function(req, res){
 	var newPostText = req.body.PostText;
 	var currentDate = Post.getCurrentDate();
 	req.checkBody('PostText', 'post text must not be empty').notEmpty();
+	console.log("ye");
 
 	var errors = req.validationErrors();
 

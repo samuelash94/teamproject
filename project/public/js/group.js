@@ -3,6 +3,7 @@ function displayGroupFields(){
 	document.getElementById("groupDesc").style.display = 'block';
 	document.getElementById("groupPrivacy").style.display = 'block';
 	document.getElementById("groupSubmit").style.display = 'block';
+	document.getElementById("groupNote").style.display = 'block';
 }
 
 function hideGroups(){

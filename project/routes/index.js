@@ -74,6 +74,7 @@ router.get('/group/:groupId', function(req, res, next){
 		var groups = [];
 		var users = [];
 		var isMember = false;
+		var hasRequested = false;
 		cursor2.forEach(function(doc, err){
 			users.push(doc);
 		});
@@ -83,12 +84,20 @@ router.get('/group/:groupId', function(req, res, next){
 			if (doc._id == req.params.groupId){
 				if (req.user){
 					var members = doc.members;
+					var requests = doc.requests;
 					members.forEach(function(doc2,err){
 						if (doc2 == req.user.id){
 							isMember = true;
 						}
 					});
-					res.render('group', {group: doc, currentUser: req.user, groups: groups, users: users, isMember: isMember});
+					if (requests){
+						requests.forEach(function(doc2,err){
+							if (doc2 == req.user.id){
+								hasRequested = true;
+							}
+						});
+					}
+					res.render('group', {group: doc, currentUser: req.user, groups: groups, users: users, isMember: isMember, hasRequested: hasRequested});
 				}else{
 					res.render('group', {group: doc, groups: groups, users: users});
 				}
