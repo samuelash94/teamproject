@@ -24,7 +24,7 @@ router.post('/create', function(req, res){
 
 	if(errors){
 		res.render('poll',{
-			errors:errors
+			errors:errors, currentUser: req.user
 		});
 	} else {
 		var newPoll = new poll({
@@ -75,7 +75,7 @@ router.get('/loadPolls', function(req, res, next) {
 			resultArray.push(doc);
 		}, function(){
 			db.close();
-			res.render('poll', {poll: resultArray});
+			res.render('poll', {poll: resultArray, currentUser: req.user});
 		});
 	});
 	//res.redirect('/');

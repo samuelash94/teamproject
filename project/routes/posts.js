@@ -25,7 +25,7 @@ router.post('/post', function(req, res){
 
 	if(errors){
 		res.render('index',{
-			errors:errors
+			errors:errors, currentUser: req.user
 		});
 	} else {
 		var newPost = new Post({
@@ -63,9 +63,66 @@ router.get('/loadPosts', function(req, res, next) {
 			commentsArray.push(doc);
 		}, function(){
 			db.close();
-			res.render('index', {comments: commentsArray, posts:resultArray, myID: req.user.id});
+			res.render('index', {comments: commentsArray, posts:resultArray, myID: req.user.id, currentUser: req.user});
 		});
 
+	});
+	//res.redirect('/');
+});
+
+router.get('/loadPosts/:userId', function(req, res, next) {
+	var resultArray = [];
+	var commentsArray = [];
+	var users = [];
+	var isFriend = false;
+	mongo.connect(url, function(err, db){
+		var cursor = db.collection('posts').find();
+		var cursorComments = db.collection('comments').find();
+		var cursorUsers = db.collection('users').find();
+		cursor.forEach(function(doc, err){
+			if (doc.userId == req.params.userId){
+				resultArray.push(doc);
+			}
+		}, function(){
+			//db.close();
+			//res.render('index', {posts: resultArray});
+		});
+
+		cursorComments.forEach(function(doc, err){
+			commentsArray.push(doc);
+		}, function(){
+			//db.close();
+			//res.render('/profile/:userId', {comments: commentsArray, posts:resultArray, user: user, currentUser: req.user, friends: userFriends, friendRequests: userFriendRequests, users: users, isFriend: isFriend});
+		});
+
+		cursorUsers.forEach(function(doc, err){
+			users.push(doc);
+			if (err) throw err;
+			if (doc._id == req.params.userId){
+				if (req.user){
+					var allFriends = doc.friends;
+					var userFriends = [];
+					var userFriendRequests = [];
+					if (allFriends){
+						allFriends.forEach(function(doc2, err){
+							if (doc2.status == "accepted"){
+								userFriends.push(doc2);
+							}else if (doc2.status == "pending"){
+								userFriendRequests.push(doc2);
+							}
+							if (doc2._id == req.user.id){
+								isFriend = true;
+							}
+						});
+					}
+					res.render('profile', {comments: commentsArray, posts:resultArray, user: doc, currentUser: req.user, friends: userFriends, friendRequests: userFriendRequests, users: users, isFriend: isFriend});
+
+				}else{
+					var userFriends = doc.friends;
+					res.render('profile', {comments: commentsArray, posts:resultArray, user: doc, friends: userFriends, users: users});
+				}
+			}
+		});
 	});
 	//res.redirect('/');
 });
@@ -80,7 +137,7 @@ router.post('/editPost', function(req, res){
 
   if(errors){
 		res.render('index',{
-			errors:errors
+			errors:errors, currentUser: req.user
 		});
 	}
 	else {

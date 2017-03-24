@@ -27,7 +27,7 @@ router.post('/create', function(req, res){
 
 	if(errors){
 		res.render('groups',{
-			errors:errors
+			errors:errors, currentUser: req.user
 		});
 	} else {
 		var memberArr = [];
@@ -68,7 +68,7 @@ router.get('/loadGroups', function(req, res, next) {
 			res2.push(doc);
 		}, function(){
 			db.close();
-			res.render('groups', {myGroups: resultArray, notMyGroups:res2});
+			res.render('groups', {myGroups: resultArray, notMyGroups:res2, currentUser: req.user});
 		});
 	});
 	//res.redirect('/');

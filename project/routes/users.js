@@ -133,7 +133,7 @@ router.get('/addFriend/:userId', function(req, res){
 });
 
 router.get('/goToUpload', function(req, res){
-	res.render('upload', {user:req.user});
+	res.render('upload', {currentUser:req.user});
 });
 
 router.post('/upload', function(req, res){

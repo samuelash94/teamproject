@@ -1,14 +1,24 @@
 <h2 class="page-header">{{group.name}}</h2>
 
-<a class="label label-primary" id="joinGroup" name="joinGroup" href="/groups/joinGroup/{{group._id}}">+Join Group</a>
+{{#if currentUser}}
+  {{#ifCond currentUser._id '==' group.userId}}
+    <span class="label label-warning">You own this Group</span>
+  {{else}}
+    {{#ifCond isMember '==' true}}
+      <span class="label label-info">You're in this Group</span>
+    {{else}}
+      <a class="label label-primary" id="joinGroup" name="joinGroup" href="/groups/joinGroup/{{../group._id}}">+Join Group</a>
+    {{/ifCond}}
+  {{/ifCond}}
+{{/if}}
 
 <div name="memberList" class="loadMemberList">
   <h3>{{group.name}}'s Members</h3>
-  {{#each group.members }}
+  {{#each group.members}}
     {{#each ../users}}
       {{#ifCond ../this '==' this._id}}
         <div>
-          <p><a href="/profile/{{this._id}}">{{ this.name }}</a><p>
+          <p><a href="/profile/{{this._id}}">{{this.name}}</a><p>
           </div>
       {{/ifCond}}
     {{/each}}

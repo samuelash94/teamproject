@@ -17,6 +17,7 @@ router.get('/profile/:userId', function(req, res, next){
 	mongo.connect(url, function(err, db){
 		var cursor = db.collection('users').find();
 		var users = [];
+		var isFriend = false;
 		cursor.forEach(function(doc, err){
 			users.push(doc);
 			if (err) throw err;
@@ -32,9 +33,12 @@ router.get('/profile/:userId', function(req, res, next){
 							}else if (doc2.status == "pending"){
 								userFriendRequests.push(doc2);
 							}
+							if (doc2._id == req.user.id){
+								isFriend = true;
+							}
 						});
 					}
-					res.render('profile', {user: doc, currentUser: req.user, friends: userFriends, friendRequests: userFriendRequests, users: users});
+					res.render('profile', {user: doc, currentUser: req.user, friends: userFriends, friendRequests: userFriendRequests, users: users, isFriend: isFriend});
 
 				}else{
 					var userFriends = doc.friends;
@@ -54,6 +58,7 @@ router.get('/group/:groupId', function(req, res, next){
 		var cursor2 = db.collection('users').find();
 		var groups = [];
 		var users = [];
+		var isMember = false;
 		cursor2.forEach(function(doc, err){
 			users.push(doc);
 		});
@@ -62,7 +67,13 @@ router.get('/group/:groupId', function(req, res, next){
 			if (err) throw err;
 			if (doc._id == req.params.groupId){
 				if (req.user){
-					res.render('group', {group: doc, currentUser: req.user, groups: groups, users: users});
+					var members = doc.members;
+					members.forEach(function(doc2,err){
+						if (doc2 == req.user.id){
+							isMember = true;
+						}
+					});
+					res.render('group', {group: doc, currentUser: req.user, groups: groups, users: users, isMember: isMember});
 				}else{
 					res.render('group', {group: doc, groups: groups, users: users});
 				}

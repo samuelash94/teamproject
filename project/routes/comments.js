@@ -24,7 +24,7 @@ router.post('/addComment/', function(req, res){
 
   if(errors){
 		res.render('index',{
-			errors:errors
+			errors:errors, currentUser: req.user
 		});
 	} else {
 		var newComment = new comment({
@@ -58,7 +58,7 @@ router.post('/editComment/', function(req, res){
 
   if(errors){
 		res.render('index',{
-			errors:errors
+			errors:errors, currentUser: req.user
 		});
 	}
 	else {
