@@ -56,7 +56,8 @@
       </div>
       </form>
     {{else}}
-      {{#if requestedGroups}}
+      {{#if ../requestedGroups}}
+        <p>Yes</p>
         {{#each ../requestedGroups}}
           {{#ifCond ../this._id 'equals' this._id}}
             <span class="label label-success">Requested</span>
