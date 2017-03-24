@@ -1,10 +1,10 @@
 {{#ifCond user._id 'equals' currentUser._id}}
-<h2 class="page-header">My Profile</h2>
+  <h2 class="page-header">My Profile</h2>
 {{else}}
-<h2 class="page-header">{{user.name}}'s Profile</h2>
-
-
-<a class="label label-primary" id="addFriend" name="addFriend" href="/users/addFriend/{{user._id}}">+Add Friend</a>
+  <h2 class="page-header">{{user.name}}'s Profile</h2>
+  {{#ifCond isFriend '==' false}}
+    <a class="label label-primary" id="addFriend" name="addFriend" href="/users/addFriend/{{user._id}}">+Add Friend</a>
+  {{/ifCond}}
 
 {{/ifCond}}
 
