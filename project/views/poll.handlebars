@@ -40,7 +40,8 @@
         <input name="pollId" value="{{this._id}}" style="display:none"/>
       </div>
     </form>
-    <p> Author: {{this.author}}</p>
+    <p> Author: <a href="/profile/{{this.userId}}">{{ this.author }}</a></p>
+    <p> Total number of votes: {{#voteCount this.ratings}} {{/voteCount}}</p>
     <p>
     Average rating:  {{#ratingsAverage this.ratings}}
       {{/ratingsAverage}} stars

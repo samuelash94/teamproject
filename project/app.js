@@ -73,6 +73,10 @@ handlebars.registerHelper('ratingsAverage', function(v1){
   return average;
 });
 
+handlebars.registerHelper('voteCount', function(v1){
+  return v1.length;
+});
+
 // BodyParser Middleware
 
 app.use(bodyParser.json());
