@@ -7,9 +7,6 @@
 
  // Schedule Schema
  var pollSchema = mongoose.Schema({
- 	groupId: {
- 		type: String
- 	},
  	userId: {
  		type: String
  	},
@@ -19,8 +16,8 @@
  	name: {
  		type: String
  	},
-  average:{
-    type: Number
+  author:{
+    type: String
   }
  });
 
@@ -40,7 +37,3 @@
     {$push: {ratings: newRating} }
   );
  }
-
-//module.exports.getRating = function(id, callback){
-//  return //average
-//}

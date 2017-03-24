@@ -63,6 +63,16 @@ handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
     }
 });
 
+handlebars.registerHelper('ratingsAverage', function(v1){
+  var sum = 0;
+  var average = 0;
+  for(var i = 0; i< v1.length; i++){
+    sum += parseInt(v1[i]);
+  }
+  average = sum/v1.length;
+  return average;
+});
+
 // BodyParser Middleware
 
 app.use(bodyParser.json());

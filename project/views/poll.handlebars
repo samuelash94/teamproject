@@ -40,8 +40,12 @@
         <input name="pollId" value="{{this._id}}" style="display:none"/>
       </div>
     </form>
+    <p> Author: {{this.author}}</p>
+    <p>
+    Average rating:  {{#ratingsAverage this.ratings}}
+      {{/ratingsAverage}} stars
+    </p>
 
-    <p>{{ this.ratings }}</p>
   </div>
   {{/each}}
 </div>

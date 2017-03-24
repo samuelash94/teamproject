@@ -15,6 +15,7 @@ router.get('/', function(req, res){
 router.post('/create', function(req, res){
 	var name = req.body.pollName;
 	var userId = req.user.id;
+	var author = req.user.name;
 	var ratings = [];
 
 	req.checkBody('pollName', 'Course name must not be empty').notEmpty();
@@ -28,7 +29,8 @@ router.post('/create', function(req, res){
 	} else {
 		var newPoll = new poll({
 			userId: userId,
-			name: name
+			name: name,
+			author : author
 		});
 
 		poll.createPoll(newPoll, function(err, user){
@@ -43,12 +45,11 @@ router.post('/create', function(req, res){
 });
 router.post('/vote', function(req, res){
 	var vote = req.body.vote;
-	console.log(vote);
 
 	if(typeof vote != 'undefined'){
 		var pollId = req.body.pollId;
 		mongo.connect(url, function(err, db){
-			var cursor = db.collection("polls").update(
+			var cursor = db.collection('polls').update(
    			{ _id: objectId(pollId)},
    			{ "$push":
 					{
@@ -56,15 +57,11 @@ router.post('/vote', function(req, res){
 				 }
 			 }
 		 );
+
 		 db.close();
 		 req.flash('success_msg', 'Vote was added successfully');
-		 res.redirect('/');
+		 res.redirect('/poll');
 		});
-//		mongo.connect(url, function(err, db){
-//			var cursor = db.collection("polls").find(
-//   			{ _id: objectId(pollId), average},
-//			)
-//		});
 	}
 
 });

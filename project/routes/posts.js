@@ -57,8 +57,6 @@ router.get('/loadPosts', function(req, res, next) {
 		cursor.forEach(function(doc, err){
 			resultArray.push(doc);
 		}, function(){
-			//db.close();
-			//res.render('index', {posts: resultArray});
 		});
 
 		cursorComments.forEach(function(doc, err){
