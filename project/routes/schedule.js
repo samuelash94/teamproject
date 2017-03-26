@@ -113,13 +113,14 @@ router.get('/loadCourses', function(req, res, next) {
 });
 
 router.post('/deleteCourse/', function(req, res) {
-		mongo.connect(url, function(err, db){
-			var newCouse = db.collection('schedules').deleteOne(
-	   { _id: objectId(req.body.schedId) });
-	db.close();
-	req.flash('success_msg', 'Course was deleted.');
-		 res.redirect('/schedule');
-		});
+	mongo.connect(url, function(err, db){
+		var newComment = db.collection('schedules').deleteOne(
+	 	{ _id: objectId(req.body.schedId) });
+		db.close();
+	req.flash('success_msg', 'course was deleted.');
+	 res.redirect('/schedule');
+
+	});
 });
 
 module.exports = router;

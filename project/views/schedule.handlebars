@@ -71,11 +71,11 @@
   {{# each schedule }}
   <div class="jumbotron">
     <h3>{{ this.name }}<h3>
-    <input name="schedId" value="{{this._id}}" style="display:none"/>
     <p>{{ this.daysTimes }}</p>
     <p>{{ this.time }}</p>
     <p>{{ this.slot }}</p>
     <form method="post" action="/schedule/deleteCourse">
+      <input name="schedId" value="{{this._id}}" style="display:none"/>
       <button class="btn btn-default" type="submit" id="courseDelete">Delete</button>
     </form>
   </div>
