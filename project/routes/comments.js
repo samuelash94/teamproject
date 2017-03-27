@@ -50,37 +50,42 @@ router.post('/addComment/', function(req, res){
 
 router.post('/editComment/', function(req, res){
 
-	var newCommentText = req.body.commentText;
-	var currentDate = comment.getCurrentDate();
-	req.checkBody('commentText', 'comment text must not be empty').notEmpty();
-
-	var errors = req.validationErrors();
-
-  if(errors){
-		res.render('index',{
-			errors:errors, currentUser: req.user
-		});
+	if(req.body.userIdentif != req.user.id){
+		req.flash('error', 'You are not the author of this comment');
+		res.redirect('/');
 	}
-	else {
-		mongo.connect(url, function(err, db){
-			var oldComment = db.collection('comments').findOne({_id : objectId(req.body.commentIdentif)});
-    		db.collection('oldComments').insert(oldComment);
-			var newComment = db.collection('comments').update(
-	   { _id: objectId(req.body.commentIdentif) },
-		 {
-	     $set:{
-	       'text': newCommentText,
-	       'date': currentDate,
-				 'isEdited': true,
-	     }
-		 }
-	);
-	db.close();
-	req.flash('success_msg', 'comment was edited.');
-		 res.redirect('/');
 
-		});
+	else{
+		var newCommentText = req.body.commentText;
+		var currentDate = comment.getCurrentDate();
+		req.checkBody('commentText', 'comment text must not be empty').notEmpty();
 
+		var errors = req.validationErrors();
+
+	  if(errors){
+			res.render('index',{
+				errors:errors, currentUser: req.user
+			});
+		}
+		else {
+			mongo.connect(url, function(err, db){
+				var oldComment = db.collection('comments').findOne({_id : objectId(req.body.commentIdentif)});
+	    		db.collection('oldComments').insert(oldComment);
+				var newComment = db.collection('comments').update(
+		   { _id: objectId(req.body.commentIdentif) },
+			 {
+		     $set:{
+		       'text': newCommentText,
+		       'date': currentDate,
+					 'isEdited': true,
+		     }
+			 }
+		);
+		db.close();
+		req.flash('success_msg', 'comment was edited.');
+			 res.redirect('/');
+			});
+		}
 	}
 });
 
@@ -88,6 +93,11 @@ router.post('/editComment/', function(req, res){
 
 
 router.post('/deleteComment/', function(req, res) {
+	if(req.body.userIdentif != req.user.id){
+		req.flash('error', 'You are not the author of this comment');
+		res.redirect('/');
+	}
+	else{
 		mongo.connect(url, function(err, db){
 			var newComment = db.collection('comments').deleteOne(
 	   { _id: objectId(req.body.commentIdentif) });
@@ -96,6 +106,8 @@ router.post('/deleteComment/', function(req, res) {
 		 res.redirect('/');
 
 		});
+	}
+
 });
 
 

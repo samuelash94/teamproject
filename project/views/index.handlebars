@@ -39,17 +39,23 @@
     <form method="post" action="/posts/editPost">
       <div class="form-group">
         <textarea class="form-control" id="PostText" name="PostText" rows="10" readonly>{{this.text}}</textarea>
+        {{#ifCond this.userId '==' ../currentUser._id}}
         <button type="button" id="editPost" class="postEditButton btn btn-primary">Edit Post</button>
+        {{/ifCond}}
         <input name="postIdentif" value="{{this._id}}"  style="display:none" />
         </div>
     <div class="form-group">
+      {{#ifCond this.userId '==' ../currentUser._id}}
       <button type= "submit" class="saveButton btn btn-warning" >Save</button>
+      {{/ifCond}}
     </div>
     <p></p>
   </form>
-  <form method="post" action="/comments/deletePost/">
+  <form method="post" action="/posts/deletePost/">
     <div class="form-group">
+      {{#ifCond this.userId '==' ../currentUser._id}}
       <button class="btn btn-danger" type="submit">Delete Post</button>
+      {{/ifCond}}
       <input name="postIdentif" value="{{this._id}}"  style="display:none" />
     </div>
   </form>
@@ -76,6 +82,7 @@
           <textarea class="form-control" id="commentText"  name="commentText" readonly>{{this.text}}</textarea>
           <button type="button" class="commentEditButton btn btn-primary">Edit Comment</button>
           <input name="commentIdentif" value="{{this._id}}"  style="display:none" />
+          <input name="userIdentif" value="{{this.userId}}"  style="display:none" />
           </div>
       <div class="form-group">
         <button type= "submit" class="saveButton btn btn-warning" >Save</button>
@@ -86,6 +93,7 @@
       <div class="form-group">
         <button class="btn btn-danger" type="submit">Delete Comment</button>
         <input name="commentIdentif" value="{{this._id}}"  style="display:none" />
+        <input name="userIdentif" value="{{this.userId}}"  style="display:none" />
       </div>
     </form>
     </div>

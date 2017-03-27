@@ -181,4 +181,15 @@ req.flash('success_msg', 'post was edited.');
 
 });
 
+router.post('/deletePost/', function(req, res) {
+		mongo.connect(url, function(err, db){
+			var newComment = db.collection('posts').deleteOne(
+	   { _id: objectId(req.body.postIdentif) });
+	db.close();
+	req.flash('success_msg', 'post was deleted.');
+		 res.redirect('/');
+
+		});
+});
+
 module.exports = router;
