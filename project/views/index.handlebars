@@ -33,7 +33,7 @@
 
 <div class="loadthesePosts">
   {{# each posts }}
-
+  <div class="jumbotron">
   <p><a href="/profile/{{this.userId}}">{{ this.author }}</a><p>
   <p>{{ this.date }}<p>
     <form method="post" action="/posts/editPost">
@@ -59,20 +59,8 @@
       <input name="postIdentif" value="{{this._id}}"  style="display:none" />
     </div>
   </form>
-
-
-
-<form method="post" action="/comments/addComment/">
-  Add a comment
-  <div class="form-group">
-    <textarea class="form-control" rows = "" id="commentTextField" name ="commentTextField" placeholder="Add Comment Here......"></textarea>
-    <input name="postIdentif" value="{{this._id}}"  style="display:none" />
-
   </div>
-  <div class="form-group">
-  <button type="submit" class = "btn btn-default">Submit</button>
-  </div>
-  </form>
+
     {{#each ../comments}}
     {{#ifCond ../this._id '==' this.postId}}
     <div class="comment">
@@ -99,6 +87,16 @@
     </div>
       {{/ifCond}}
     {{/each}}
+    <form method="post" action="/comments/addComment/">
+      Add a comment
+      <div class="form-group">
+        <textarea class="form-control" rows = "" id="commentTextField" name ="commentTextField" placeholder="Add Comment Here......"></textarea>
+        <input name="postIdentif" value="{{this._id}}"  style="display:none" />
 
+      </div>
+      <div class="form-group">
+      <button type="submit" class = "btn btn-default">Submit</button>
+      </div>
+      </form>
   {{/each}}
 </div>

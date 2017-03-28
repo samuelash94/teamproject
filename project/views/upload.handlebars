@@ -1,3 +1,4 @@
+<h3>Upload a Resume</h3>
 
 <div class="container">
     <div class="row">
@@ -10,7 +11,14 @@
             <div class="progress">
               <div class="progress-bar" role="progressbar"></div>
             </div>
-            <input name="userId" value="{{currentUser._id}}" style="display:none"/>
+            <form method="post" action="/users/upload">
+              <label class="radio-inline">
+                <input type="radio" name="UploadOptions" id="Resume" value="resume"> Resume
+              </label>
+              <label class="radio-inline">
+                <input type="radio" name="UploadOptions" id="Profile" value="profile"> Profile Picture
+              </label>
+            </form>
               <button class="btn btn-lg upload-btn" type="submit">Upload File</button>
 
 
