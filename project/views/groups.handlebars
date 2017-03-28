@@ -56,29 +56,24 @@
       </div>
       </form>
     {{else}}
-      {{#if ../requestedGroups}}
-        <p>Yes</p>
-        {{#each ../requestedGroups}}
-          {{#ifCond ../this._id 'equals' this._id}}
-            <span class="label label-success">Requested</span>
-          {{else}}
-            <form method="post" action="/groups/requestJoinGroup/">
-            <div class="form-group">
-              <input name="groupIdentif" value="{{this._id}}"  style="display:none" />
-              <button type= "submit" class="btn btn-warning">Request to Join</button>
-            </div>
-            </form>
-          {{/ifCond}}
-        {{/each}}
-      {{else}}
-        <form method="post" action="/groups/requestJoinGroup/">
-        <div class="form-group">
-          <input name="groupIdentif" value="{{this._id}}"  style="display:none" />
-          <button type= "submit" class="btn btn-warning">Request to Join</button>
-        </div>
-        </form>
-      {{/if}}
+      <form method="post" action="/groups/requestJoinGroup/">
+      <div class="form-group">
+        <input name="groupIdentif" value="{{../this._id}}"  style="display:none" />
+        <button type= "submit" class="btn btn-warning">Request to Join</button>
+      </div>
+      </form>
     {{/ifCond}}
-</div>
+    </div>
   {{/each}}
+
+  {{#if requestedGroups}}
+    {{#each requestedGroups}}
+    <div class="jumbotron">
+    <h3><a href="/group/{{this._id}}">{{ this.name }}</a><h3>
+    <p>{{ this.description }}</p>
+    <p> You are not part of this group</p>
+    <span class="label label-success">Requested</span>
+    </div>
+    {{/each}}
+  {{/if}}
 </div>

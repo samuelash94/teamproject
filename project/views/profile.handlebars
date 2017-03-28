@@ -37,8 +37,8 @@
   {{/if}}
 </div>
 
-{{#ifCond user._id 'equals' currentUser._id}}
 <div name="friendRequests" class="loadFriendRequests">
+{{#ifCond user._id 'equals' currentUser._id}}
   <h3>My Friend Requests</h3>
   {{#if friendRequests}}
   {{#each friendRequests}}
@@ -56,6 +56,29 @@
   {{/each}}
   {{else}}
   <p>No friend requests.</p>
+  {{/if}}
+  </div>
+{{/ifCond}}
+
+<div name="groupRequests" class="loadGroupRequests">
+{{#ifCond user._id 'equals' currentUser._id}}
+  <h3>My Group Requests</h3>
+  {{#if groupInvites}}
+  {{#each groupInvites}}
+    {{#each ../groups}}
+      {{#ifCond ../this '==' this._id}}
+      <div>
+        <form method="post" action="/groups/joinGroup/{{this._id}}">
+          <div class="form-group">
+          <p><a href="/group/{{this._id}}">{{ this.name }}</a> <a class="label label-primary" id="acceptInvite" name="acceptInvite" href="/groups/joinGroup/{{this._id}}">+Join Group</a></p>
+          </div>
+        </form>
+      </div>
+      {{/ifCond}}
+    {{/each}}
+  {{/each}}
+  {{else}}
+  <p>No group invites.</p>
   {{/if}}
   </div>
 {{/ifCond}}

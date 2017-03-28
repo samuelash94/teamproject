@@ -29,6 +29,9 @@ var UserSchema = mongoose.Schema({
 	},
 	campus: {
 		type: String
+	},
+	invites: {
+		type: Array
 	}
 });
 

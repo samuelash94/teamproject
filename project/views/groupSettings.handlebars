@@ -1,0 +1,134 @@
+{{#ifCond currentUser._id '==' group.ownerId}}
+  <h2 class="page-header">Owner Settings - {{group.name}}</h2>
+{{else}}
+  {{#if adminNotOwner}}
+    {{#each adminNotOwner}}
+      {{#ifCond ../currentUser._id '==' this}}
+        <h2 class="page-header">Admin Settings - {{../group.name}}</h2>
+      {{else}}
+      <h2 class="page-header">You do not have access to this page.</h2>
+      {{/ifCond}}
+    {{/each}}
+  {{else}}
+  <h2 class="page-header">You do not have access to this page.</h2>
+  {{/if}}
+
+{{/ifCond}}
+
+{{#if adminNotOwner}}
+  {{#each adminNotOwner}}
+    {{#ifCond ../currentUser._id '==' this}}
+
+      {{#ifCond group.privacy '==' "private"}}
+        <h3> Invite friends to join {{../group.name}}.</h3>
+      {{else}}
+        <h3> Add friends to {{../group.name}}.</h3>
+      {{/ifCond}}
+
+      {{#if ../nonMemberFriends}}
+
+      <form method="post" action="/groups/invite/{{../group._id}}">
+        <div class="form-group">
+          <select size="" name="adminFriendList" multiple>
+              {{#each ../nonMemberFriends}}
+                {{#each ../../users}}
+                  {{#ifCond ../this._id 'equals' this._id}}
+                    <option value="{{this._id}}">{{this.name}}
+                  {{/ifCond}}
+                {{/each}}
+              {{/each}}
+          </select>
+        </div>
+        {{#ifCond ../group.privacy '==' "private"}}
+          <button type="submit" class="btn btn-default">Invite</button>
+        {{else}}
+          <button type="submit" class="btn btn-default">Add to Group</button>
+        {{/ifCond}}
+      </form>
+      {{else}}
+      <p>No non-member friends to show.</p>
+      {{/if}}
+      <br>
+
+    {{/ifCond}}
+  {{/each}}
+{{/if}}
+
+{{#ifCond currentUser._id '==' group.ownerId}}
+
+  <h3> Promote admins in {{group.name}}. Admins can send invites to join.</h3>
+
+  {{#if nonAdmin}}
+
+  <form method="post" action="/groups/promote/{{group._id}}">
+    <div class="form-group">
+      <select size="" name="memberList" multiple>
+          {{#each nonAdmin}}
+            {{#each ../users}}
+              {{#ifCond this._id '==' ../this}}
+                <option value="{{../this}}">{{this.name}}
+              {{/ifCond}}
+            {{/each}}
+          {{/each}}
+      </select>
+    </div>
+    <button type="submit" class="btn btn-default">Promote</button>
+  </form>
+  {{else}}
+  <p>No non-admin members to show.</p>
+  {{/if}}
+  <br>
+
+  <h3> Demote admins in {{group.name}}.</h3>
+
+  {{#if adminNotOwner}}
+
+  <form method="post" action="/groups/demote/{{group._id}}">
+    <div class="form-group">
+      <select size="" name="memberList" multiple>
+          {{#each adminNotOwner}}
+            {{#each ../users}}
+              {{#ifCond this._id '==' ../this}}
+                <option value="{{../this}}">{{this.name}}
+              {{/ifCond}}
+            {{/each}}
+          {{/each}}
+      </select>
+    </div>
+    <button type="submit" class="btn btn-default">Demote</button>
+  </form>
+  {{else}}
+  <p>No admin to show.</p>
+  {{/if}}
+  <br>
+
+  <h3> Remove members from {{group.name}}.</h3>
+
+  {{#if membersNotOwner}}
+
+  <form method="post" action="/groups/remove/{{group._id}}">
+    <div class="form-group">
+      <select size="" name="memberList" multiple>
+          {{#each membersNotOwner}}
+            {{#each ../users}}
+              {{#ifCond this._id '==' ../this}}
+                <option value="{{../this}}">{{this.name}}
+              {{/ifCond}}
+            {{/each}}
+          {{/each}}
+      </select>
+    </div>
+    <button type="submit" class="btn btn-default">Remove</button>
+  </form>
+  {{else}}
+  <p>No members to show.</p>
+  {{/if}}
+  <br>
+
+  <form method="post" action="/groups/deleteGroup/">
+  <div class="form-group">
+    <input name="groupIdentif" value="{{group._id}}" style="display:none"/>
+    <button type= "submit" class="btn btn-danger">Delete Group</button>
+  </div>
+  </form>
+{{/ifCond}}

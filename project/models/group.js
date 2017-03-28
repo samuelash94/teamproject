@@ -24,7 +24,13 @@ var GroupSchema = mongoose.Schema({
 	members:{
 		type: Array
 	},
+	admin:{
+		type:Array
+	},
 	requests:{
+		type: Array
+	},
+	invites:{
 		type: Array
 	}
 });
