@@ -102,7 +102,7 @@ router.get('/group/:groupId', function(req, res, next){
 							}
 						});
 					}
-					res.render('group', {group: doc, currentUser: req.user, groups: groups, users: users, isMember: isMember, hasRequested: hasRequested, invites: req.user.invites});
+					res.render('group', {group: doc, currentUser: req.user, groups: groups, users: users, isMember: isMember, hasRequested: hasRequested, invites: req.user.invites, admin: doc.admin});
 				}else{
 					res.render('group', {group: doc, groups: groups, users: users});
 				}
@@ -127,7 +127,7 @@ router.get('/groupSettings/:groupId', function(req, res, next){
 			}
 		});
 		cursor.forEach(function(doc, err){
-			if (doc._id == req.params.groupId && req.user && doc.ownerId == req.user.id){
+			if (doc._id == req.params.groupId && req.user){
 				var a = doc.admin;		//admin who aren't the owner
 				var b = doc.members;	//members who aren't admin
 				var c = friends;			//friends who aren't members

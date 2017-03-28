@@ -7,6 +7,13 @@
   {{else}}
     {{#ifCond isMember '==' true}}
       <span class="label label-info">You're in this Group</span>
+      {{#if admin}}
+        {{#each admin}}
+          {{#ifCond ../currentUser._id '==' this}}
+            <a class="label label-danger" id="groupSettings" name="groupSettings" href="/groupSettings/{{../group._id}}">Settings</a>
+          {{/ifCond}}
+        {{/each}}
+      {{/if}}
     {{else}}
       {{#ifCond hasRequested '==' true}}
         <span class="label label-success">Requested</span>
