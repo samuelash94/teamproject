@@ -36,6 +36,7 @@ router.post('/register', function(req, res){
 	var student_id = req.body.student_id;
 	var gender = req.body.gender;
 	var campus = req.body.campus;
+	var invites = [];
 
 	// Validation
 	req.checkBody('name', 'Name is required').notEmpty();
@@ -63,7 +64,8 @@ router.post('/register', function(req, res){
 			password: password,
 			student_id: student_id,
 			gender: gender,
-			campus: campus
+			campus: campus,
+			invites: invites
 		});
 
 		User.createUser(newUser, function(err, user){
