@@ -57,7 +57,7 @@ router.post('/create', function(req, res){
 	}
 
 	if(typeof wed != 'undefined'){
-		var wedTime = "wednesday at ";
+		var wedTime = "Wednesday at ";
 		var wedStartHour = req.body.wednesdayStartHour;
 		wedTime += wedStartHour + ":";
 		var wedStartMin = req.body.wednesdayStartMinutes;
@@ -73,7 +73,7 @@ router.post('/create', function(req, res){
 		daysTimes.push(wedTime);
 	}
 	if(typeof thurs != 'undefined'){
-		var thursTime = "thursday at ";
+		var thursTime = "Thursday at ";
 		var thursStartHour = req.body.thursdayStartHour;
 		thursTime += thursStartHour + ":";
 		var thursStartMin = req.body.thursdayStartMinutes;
@@ -89,7 +89,7 @@ router.post('/create', function(req, res){
 		daysTimes.push(thursTime);
 	}
 	if(typeof fri != 'undefined'){
-		var friTime = "friday at ";
+		var friTime = "Friday at ";
 		var friStartHour = req.body.fridayStartHour;
 		friTime += friStartHour + ":";
 		var friStartMin = req.body.fridayStartMinutes;
