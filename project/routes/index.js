@@ -20,6 +20,11 @@ router.get('/profile/:userId', function(req, res, next){
 		cursor2.forEach(function(doc, err){
 			groups.push(doc);
 		});
+		var cursor3 = db.collection('schedules').find();
+		var schedule = [];
+		cursor3.forEach(function(doc, err){
+			schedule.push(doc);
+		});
 		var cursor = db.collection('users').find();
 		var users = [];
 		var isFriend = false;
@@ -43,7 +48,7 @@ router.get('/profile/:userId', function(req, res, next){
 							}
 						});
 					}
-					res.render('profile', {user: doc, currentUser: req.user, friends: userFriends, friendRequests: userFriendRequests, users: users, isFriend: isFriend, groupInvites: doc.invites, groups: groups});
+					res.render('profile', {user: doc, currentUser: req.user, friends: userFriends, friendRequests: userFriendRequests, users: users, isFriend: isFriend, groupInvites: doc.invites, groups: groups, schedule: schedule});
 
 				}else{
 					var userFriends = doc.friends;
