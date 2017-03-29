@@ -418,7 +418,11 @@
   {{# each schedule }}
   <div class="jumbotron">
     <h3>{{ this.name }}<h3>
-    <p>{{ this.daysTimes }}</p>
+    <p>{{ this.monday }}</p>
+    <p>{{ this.tuesday }}</p>
+    <p>{{ this.wednesday }}</p>
+    <p>{{ this.thursday }}</p>
+    <p>{{ this.friday }}</p>
     <p>{{ this.slot }}</p>
     <form method="post" action="/schedule/deleteCourse">
       <input name="schedId" value="{{this._id}}" style="display:none"/>
