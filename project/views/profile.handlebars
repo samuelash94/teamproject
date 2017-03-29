@@ -83,6 +83,33 @@
   </div>
 {{/ifCond}}
 
+<div name="courseList" class="loadCourses">
+  {{#ifCond user._id 'equals' currentUser._id}}
+    <h3>My Schedule</h3>
+  {{else}}
+    <h3>{{user.name}}'s Schedule</h3>
+  {{/ifCond}}
+  {{#if schedule}}
+    {{#each schedule }}
+      {{#ifCond ../user._id '==' this.userId}}
+        <div class="jumbotron">
+          <h3>{{ this.name }}</h3>
+          <p>{{ this.monday }}</p>
+          <p>{{ this.tuesday }}</p>
+          <p>{{ this.wednesday }}</p>
+          <p>{{ this.thursday }}</p>
+          <p>{{ this.friday }}</p>
+          <p>{{ this.slot }}</p>
+        </div>
+      {{/ifCond}}
+    {{/each}}
+  {{else}}
+    <p>No courses to show.</p>
+  {{/if}}
+</div>
+
+
+
 <div>
   <a href="/posts/loadPosts/{{user._id}}">Load Posts</a>
 </div>
