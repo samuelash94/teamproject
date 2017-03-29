@@ -9,9 +9,22 @@
  	slot: {
  		type: Number
  	},
- 	daysTimes: {
- 		type: Array
- 	},
+ 	monday: {
+    type: String
+  },
+  tuesday: {
+    type: String
+  },
+  wednesday: {
+    type: String
+  },
+  thursday: {
+    type: String
+  },
+  friday: {
+    type: String
+  },
+
  	name: {
  		type: String
  	},
