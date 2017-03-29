@@ -155,12 +155,24 @@ if (!fs.existsSync(dir)) {
 		fs.mkdirSync(dir + '/profile', 0744);
 		fs.mkdirSync(dir + '/resume', 0744);
 }
+else{
+	fs.readdir(dir + '/profile', (err, files) => {
+  if (err) throw error;
+
+  for (const file of files) {
+    fs.unlink(path.join(dir + '/profile', file), err => {
+      if (err) throw error;
+    });
+  }
+});
+}
 form.uploadDir = path.join(__dirname, '/uploads/'+ req.user.id + '/profile');
 
   // every time a file has been uploaded successfully,
   // rename it to it's orignal name
   form.on('file', function(field, file) {
-    fs.rename(file.path, path.join(form.uploadDir, file.name));
+		var extension = file.name.split('.').pop();
+    fs.rename(file.path, path.join(form.uploadDir, req.user.id + '.' + extension));
   });
 
   // log any errors that occur
@@ -175,6 +187,18 @@ form.uploadDir = path.join(__dirname, '/uploads/'+ req.user.id + '/profile');
 
   // parse the incoming request containing the form data
   form.parse(req);
+
+	mongo.connect(url, function(err, db){
+		var newComment = db.collection('users').update(
+	 { _id: objectId(req.user.id) },
+	 {
+		 $set:{
+			 'hasProfile': true,
+		 }
+	 }
+);
+db.close();
+	});
 
 });
 
@@ -195,12 +219,25 @@ if (!fs.existsSync(dir)) {
 		fs.mkdirSync(dir + '/profile', 0744);
 		fs.mkdirSync(dir + '/resume', 0744);
 }
+
+else{
+	fs.readdir(dir + '/resume', (err, files) => {
+  if (err) throw error;
+
+  for (const file of files) {
+    fs.unlink(path.join(dir + '/resume', file), err => {
+      if (err) throw error;
+    });
+  }
+});
+}
 form.uploadDir = path.join(__dirname, '/uploads/'+ req.user.id + '/resume');
 
   // every time a file has been uploaded successfully,
   // rename it to it's orignal name
   form.on('file', function(field, file) {
-    fs.rename(file.path, path.join(form.uploadDir, file.name));
+		var extension = file.name.split('.').pop();
+    fs.rename(file.path, path.join(form.uploadDir, req.user.id + '.' + extension));
   });
 
   // log any errors that occur
@@ -215,6 +252,18 @@ form.uploadDir = path.join(__dirname, '/uploads/'+ req.user.id + '/resume');
 
   // parse the incoming request containing the form data
   form.parse(req);
+
+	mongo.connect(url, function(err, db){
+		var newComment = db.collection('users').update(
+	 { _id: objectId(req.user.id) },
+	 {
+		 $set:{
+			 'hasResume': true,
+		 }
+	 }
+);
+db.close();
+	});
 
 });
 

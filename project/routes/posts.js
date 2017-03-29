@@ -130,7 +130,6 @@ router.post('/editPost', function(req, res){
 	var newPostText = req.body.PostText;
 	var currentDate = Post.getCurrentDate();
 	req.checkBody('PostText', 'post text must not be empty').notEmpty();
-	console.log("ye");
 
 	var errors = req.validationErrors();
 
