@@ -1,0 +1,72 @@
+{{#ifCond currentUser._id 'equals' user._id}}
+  <h2 class="page-header">My Profile Settings</h2>
+{{else}}
+  <h2 class="page-header">You do not have access to this page.</h2>
+{{/ifCond}}
+
+{{#ifCond currentUser._id 'equals' user._id}}
+
+<h3> Set default post visibility. </h3>
+
+<form method="post" action="/users/setDefaultVisibility/{{user._id}}">
+  <div class="form-group">
+    <select class="form-control" name="visibility">
+        <option value="0">Visible to Everyone</option>
+        <option value="1">Visible to My Friends</option>
+        <option value="2">Visible to Only Me</option>
+        <option value="3">Visible to List of Friends</option>
+    </select>
+  </div>
+  <button type="submit" class="btn btn-default">Submit</button>
+</form>
+<br>
+
+{{#ifCond postDefault '==' 3}}
+<h3> Select list of friends who may view your posts. </h3>
+<form method="post" action="/users/visibilityList/{{user._id}}">
+  <div class="form-group">
+    <select size="" name="friendsList" multiple>
+        {{#each friends}}
+          {{#each ../users}}
+            {{#ifCond this._id 'equals' ../this._id}}
+              <option value="{{this._id}}">{{this.name}}
+            {{/ifCond}}
+          {{/each}}
+        {{/each}}
+    </select>
+  </div>
+  <button type="submit" class="btn btn-default">Remove</button>
+</form>
+{{/ifCond}}
+<br>
+
+<h3> Remove friends.</h3>
+
+  {{#if friends}}
+  <form method="post" action="/users/removeFriend/{{user._id}}">
+    <div class="form-group">
+      <select size="" name="friendsList" multiple>
+          {{#each friends}}
+            {{#each ../users}}
+              {{#ifCond this._id 'equals' ../this._id}}
+                <option value="{{this._id}}">{{this.name}}
+              {{/ifCond}}
+            {{/each}}
+          {{/each}}
+      </select>
+    </div>
+    <button type="submit" class="btn btn-default">Remove</button>
+  </form>
+  {{else}}
+  <p>No friends to show.</p>
+  {{/if}}
+  <br>
+
+  <form method="post" action="/users/deleteAccount/">
+  <div class="form-group">
+    <p> WARNING: Deleting your account is final. Your profile picture, posts, comments, resume, schedule, friends list, and any groups you own will also be deleted.</p>
+    <input name="userIdentif" value="{{user._id}}" style="display:none"/>
+    <button type= "submit" class="btn btn-danger">Delete My Account</button>
+  </div>
+  </form>
+{{/ifCond}}

@@ -8,12 +8,17 @@
 
 {{/ifCond}}
 
+{{#ifCond user.hasProfile '==' true}}
+<img src="/uploads/{{user._id}}/profile/{{user._id}}.{{user.profExt}}" class="img-responsive" alt="My Profile Pic">
+{{/ifCond}}
+
 <a class="label label-warning" href="mailto:{{user.email}}?body={{currentUser.email}}">{{user.email}}</a>
 <span class="label label-danger">{{user.campus}} campus</span>
 
 
 {{#ifCond user._id 'equals' currentUser._id}}
     <a class="label label-success" href="/users/goToUpload/"> Upload a file</a>
+    <a class="label label-danger" id="profileSettings" name="profileSettings" href="/profileSettings/{{user._id}}">Settings</a>
 {{/ifCond}}
 
 <div name="friendsList" class="loadFriendsList">
@@ -82,6 +87,33 @@
   {{/if}}
   </div>
 {{/ifCond}}
+
+<div name="courseList" class="loadCourses">
+  {{#ifCond user._id 'equals' currentUser._id}}
+    <h3>My Schedule</h3>
+  {{else}}
+    <h3>{{user.name}}'s Schedule</h3>
+  {{/ifCond}}
+  {{#if schedule}}
+    {{#each schedule }}
+      {{#ifCond ../user._id '==' this.userId}}
+        <div class="jumbotron">
+          <h3>{{ this.name }}</h3>
+          <p>{{ this.monday }}</p>
+          <p>{{ this.tuesday }}</p>
+          <p>{{ this.wednesday }}</p>
+          <p>{{ this.thursday }}</p>
+          <p>{{ this.friday }}</p>
+          <p>{{ this.slot }}</p>
+        </div>
+      {{/ifCond}}
+    {{/each}}
+  {{else}}
+    <p>No courses to show.</p>
+  {{/if}}
+</div>
+
+
 
 <div>
   <a href="/posts/loadPosts/{{user._id}}">Load Posts</a>

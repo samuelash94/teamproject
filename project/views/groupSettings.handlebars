@@ -19,7 +19,7 @@
   {{#each adminNotOwner}}
     {{#ifCond ../currentUser._id '==' this}}
 
-      {{#ifCond group.privacy '==' "private"}}
+      {{#ifCond ../group.privacy '==' "private"}}
         <h3> Invite friends to join {{../group.name}}.</h3>
       {{else}}
         <h3> Add friends to {{../group.name}}.</h3>
@@ -55,6 +55,37 @@
 {{/if}}
 
 {{#ifCond currentUser._id '==' group.ownerId}}
+
+{{#ifCond group.privacy '==' "private"}}
+  <h3> Invite friends to join {{group.name}}.</h3>
+{{else}}
+  <h3> Add friends to {{group.name}}.</h3>
+{{/ifCond}}
+
+{{#if nonMemberFriends}}
+
+<form method="post" action="/groups/invite/{{group._id}}">
+  <div class="form-group">
+    <select size="" name="adminFriendList" multiple>
+        {{#each nonMemberFriends}}
+          {{#each ../users}}
+            {{#ifCond ../this._id 'equals' this._id}}
+              <option value="{{this._id}}">{{this.name}}
+            {{/ifCond}}
+          {{/each}}
+        {{/each}}
+    </select>
+  </div>
+  {{#ifCond group.privacy '==' "private"}}
+    <button type="submit" class="btn btn-default">Invite</button>
+  {{else}}
+    <button type="submit" class="btn btn-default">Add to Group</button>
+  {{/ifCond}}
+</form>
+{{else}}
+<p>No non-member friends to show.</p>
+{{/if}}
+<br>
 
   <h3> Promote admins in {{group.name}}. Admins can send invites to join.</h3>
 

@@ -20,6 +20,11 @@ router.get('/profile/:userId', function(req, res, next){
 		cursor2.forEach(function(doc, err){
 			groups.push(doc);
 		});
+		var cursor3 = db.collection('schedules').find();
+		var schedule = [];
+		cursor3.forEach(function(doc, err){
+			schedule.push(doc);
+		});
 		var cursor = db.collection('users').find();
 		var users = [];
 		var isFriend = false;
@@ -43,12 +48,46 @@ router.get('/profile/:userId', function(req, res, next){
 							}
 						});
 					}
-					res.render('profile', {user: doc, currentUser: req.user, friends: userFriends, friendRequests: userFriendRequests, users: users, isFriend: isFriend, groupInvites: doc.invites, groups: groups});
+					res.render('profile', {user: doc, currentUser: req.user, friends: userFriends, friendRequests: userFriendRequests, users: users, isFriend: isFriend, groupInvites: doc.invites, groups: groups, schedule: schedule});
 
 				}else{
 					var userFriends = doc.friends;
 					res.render('profile', {user: doc, friends: userFriends, users: users});
 				}
+			}
+		});
+		//if (db.collection('users').find({_id : req.params.userId}) > 0){
+			//res.render('profile', {output: req.params.userId});
+		//}
+	});
+});
+
+router.get('/profileSettings/:userId', function(req, res, next){
+	mongo.connect(url, function(err, db){
+		var cursor2 = db.collection('groups').find();
+		var groups = [];
+		cursor2.forEach(function(doc, err){
+			groups.push(doc);
+		});
+		var cursor = db.collection('users').find();
+		var users = [];
+		cursor.forEach(function(doc, err){
+			users.push(doc);
+			if (err) throw err;
+				if (doc._id == req.params.userId){
+				var allFriends = doc.friends;
+				var userFriends = [];
+				var userFriendRequests = [];
+				if (allFriends){
+					allFriends.forEach(function(doc2, err){
+						if (doc2.status == "accepted"){
+							userFriends.push(doc2);
+						}else if (doc2.status == "pending"){
+							userFriendRequests.push(doc2);
+						}
+					});
+				}
+				res.render('profileSettings', {user: doc, currentUser: req.user, friends: userFriends, friendRequests: userFriendRequests, users: users, groupInvites: doc.invites, groups: groups, postDefault: doc.postDefault});
 			}
 		});
 		//if (db.collection('users').find({_id : req.params.userId}) > 0){
@@ -132,7 +171,7 @@ router.get('/groupSettings/:groupId', function(req, res, next){
 				var b = doc.members;	//members who aren't admin
 				var c = friends;			//friends who aren't members
 				var d = doc.invites;	//anybody invited to group
-				var e = doc.members;	//members who aren't the owner
+				var e = [];	//members who aren't the owner
 				for (var i=0; i<b.length; i++){
 					if (b[i]){
 						for (var j=0; j<c.length; j++){
@@ -170,13 +209,12 @@ router.get('/groupSettings/:groupId', function(req, res, next){
 						}
 					}
 				}
-				for (var i=0; i<e.length; i++){
-					if (e[i]){
-						if (e[i] == doc.ownerId){
-							e.splice(i, 1);
-						}
-					}
-				}
+				a.forEach(function(doc2, err){
+					e.push(doc2);
+				});
+				b.forEach(function(doc2, err){
+					e.push(doc2);
+				});
 
 				res.render('groupSettings', {group: doc, currentUser: req.user, users: users, nonAdmin: b, nonMemberFriends: c, adminNotOwner: a, membersNotOwner: e});
 			}

@@ -37,6 +37,8 @@ router.post('/register', function(req, res){
 	var gender = req.body.gender;
 	var campus = req.body.campus;
 	var invites = [];
+	var postDefault = "0";
+	var visibilityList = [];
 
 	// Validation
 	req.checkBody('name', 'Name is required').notEmpty();
@@ -65,7 +67,9 @@ router.post('/register', function(req, res){
 			student_id: student_id,
 			gender: gender,
 			campus: campus,
-			invites: invites
+			invites: invites,
+			postDefault: postDefault,
+			visibilityList: visibilityList
 		});
 
 		User.createUser(newUser, function(err, user){
@@ -172,6 +176,17 @@ form.uploadDir = path.join(__dirname, '/uploads/'+ req.user.id + '/profile');
   // rename it to it's orignal name
   form.on('file', function(field, file) {
 		var extension = file.name.split('.').pop();
+		mongo.connect(url, function(err, db){
+			var newComment = db.collection('users').update(
+		 { _id: objectId(req.user.id) },
+		 {
+			 $set:{
+				 'profExt': extension,
+			 }
+		 }
+	);
+	db.close();
+		});
     fs.rename(file.path, path.join(form.uploadDir, req.user.id + '.' + extension));
   });
 
@@ -237,6 +252,17 @@ form.uploadDir = path.join(__dirname, '/uploads/'+ req.user.id + '/resume');
   // rename it to it's orignal name
   form.on('file', function(field, file) {
 		var extension = file.name.split('.').pop();
+		mongo.connect(url, function(err, db){
+			var newComment = db.collection('users').update(
+		 { _id: objectId(req.user.id) },
+		 {
+			 $set:{
+				 'resExt': extension,
+			 }
+		 }
+	);
+	db.close();
+		});
     fs.rename(file.path, path.join(form.uploadDir, req.user.id + '.' + extension));
   });
 
@@ -277,6 +303,52 @@ router.get('/acceptFriend/:userId', function(req, res){
 		}
 	});
 
+});
+
+router.post('/setDefaultVisibility/:userId', function(req, res){
+	mongo.connect(url, function(err, db){
+		var cursor = db.collection('users').update(
+		{ _id: objectId(req.params.userId) },
+		{ $set:{ visibilityList: [] }});
+		var cursor2 = db.collection('users').update(
+	 	{ _id: objectId(req.params.userId) },
+	 	{
+		 	$set:{
+			 	'postDefault': req.body.visibility
+		 	}
+	 	});
+		req.flash('success_msg', 'Default post visibility updated.');
+		res.redirect('/');
+		db.close();
+	});
+});
+
+router.post('/visibilityList/:userId', function(req, res){
+	mongo.connect(url, function(err, db){
+		var cursor = db.collection('users').update(
+		{ _id: objectId(req.params.userId) },
+		{ $set:{ visibilityList: [] }});
+		var friendsToAdd = req.body.friendsList;
+		if (Array.isArray(friendsToAdd)){
+			friendsToAdd.forEach(function(doc, err){
+				console.log(doc);
+				var cursor2 = db.collection('users').update(
+			 	{ _id: objectId(req.params.userId) },
+			 	{ $addToSet:{ visibilityList: doc }});
+			});
+			req.flash('success_msg', 'List of friends who can view your posts updated.');
+			res.redirect('/');
+			db.close();
+		}else{
+			console.log(friendsToAdd);
+			var cursor3 = db.collection('users').update(
+			{ _id: objectId(req.params.userId) },
+			{ $addToSet:{ visibilityList: friendsToAdd }});
+			req.flash('success_msg', 'List of friends who can view your posts updated.');
+			res.redirect('/');
+			db.close();
+		}
+	});
 });
 
 module.exports = router;

@@ -32,6 +32,12 @@ var UserSchema = mongoose.Schema({
 	},
 	invites: {
 		type: Array
+	},
+	postDefault: {
+		type: Number
+	},
+	visibilityList: {
+		type: Array
 	}
 });
 
