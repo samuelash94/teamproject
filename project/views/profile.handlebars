@@ -8,6 +8,10 @@
 
 {{/ifCond}}
 
+{{#ifCond user.hasProfile '==' true}}
+<img src="/uploads/{{user._id}}/profile/{{user._id}}.{{user.profExt}}" class="img-responsive" alt="My Profile Pic">
+{{/ifCond}}
+
 <a class="label label-warning" href="mailto:{{user.email}}?body={{currentUser.email}}">{{user.email}}</a>
 <span class="label label-danger">{{user.campus}} campus</span>
 

@@ -172,6 +172,17 @@ form.uploadDir = path.join(__dirname, '/uploads/'+ req.user.id + '/profile');
   // rename it to it's orignal name
   form.on('file', function(field, file) {
 		var extension = file.name.split('.').pop();
+		mongo.connect(url, function(err, db){
+			var newComment = db.collection('users').update(
+		 { _id: objectId(req.user.id) },
+		 {
+			 $set:{
+				 'profExt': extension,
+			 }
+		 }
+	);
+	db.close();
+		});
     fs.rename(file.path, path.join(form.uploadDir, req.user.id + '.' + extension));
   });
 
@@ -237,6 +248,17 @@ form.uploadDir = path.join(__dirname, '/uploads/'+ req.user.id + '/resume');
   // rename it to it's orignal name
   form.on('file', function(field, file) {
 		var extension = file.name.split('.').pop();
+		mongo.connect(url, function(err, db){
+			var newComment = db.collection('users').update(
+		 { _id: objectId(req.user.id) },
+		 {
+			 $set:{
+				 'resExt': extension,
+			 }
+		 }
+	);
+	db.close();
+		});
     fs.rename(file.path, path.join(form.uploadDir, req.user.id + '.' + extension));
   });
 
