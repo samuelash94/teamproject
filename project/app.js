@@ -85,6 +85,7 @@ app.use(cookieParser());
 
 // Set Static Folder
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static('routes'));
 
 // Express Session
 app.use(session({

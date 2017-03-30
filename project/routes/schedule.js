@@ -22,6 +22,7 @@ router.post('/create', function(req, res){
 	var thurs = req.body.thursday;
 	var fri = req.body.friday;
 	var daysTimes = [];
+
 	if(typeof mon != 'undefined'){
 		var monTime = "Monday at ";
 		var monStartHour = req.body.mondayStartHour;
@@ -36,7 +37,7 @@ router.post('/create', function(req, res){
 		monTime += monEndMin + " ";
 		var monEndAP = req.body.mondayEndAMPM;
 		monTime += monEndAP;
-		daysTimes.push(monTime);
+		//daysTimes.push(monTime);
 	}
 
 	if(typeof tues != 'undefined'){
@@ -53,7 +54,7 @@ router.post('/create', function(req, res){
 		tuesTime += tuesEndMin + " ";
 		var tuesEndAP = req.body.tuesdayEndAMPM;
 		tuesTime += tuesEndAP;
-		daysTimes.push(tuesTime);
+		//daysTimes.push(tuesTime);
 	}
 
 	if(typeof wed != 'undefined'){
@@ -70,7 +71,7 @@ router.post('/create', function(req, res){
 		wedTime += wedEndMin + " ";
 		var wedEndAP = req.body.wednesdayEndAMPM;
 		wedTime += wedEndAP;
-		daysTimes.push(wedTime);
+		//daysTimes.push(wedTime);
 	}
 	if(typeof thurs != 'undefined'){
 		var thursTime = "Thursday at ";
@@ -86,7 +87,7 @@ router.post('/create', function(req, res){
 		thursTime += thursEndMin + " ";
 		var thursEndAP = req.body.thursdayEndAMPM;
 		thursTime += thursEndAP;
-		daysTimes.push(thursTime);
+		//daysTimes.push(thursTime);
 	}
 	if(typeof fri != 'undefined'){
 		var friTime = "Friday at ";
@@ -102,7 +103,7 @@ router.post('/create', function(req, res){
 		friTime += friEndMin + " ";
 		var friEndAP = req.body.fridayEndAMPM;
 		friTime += friEndAP;
-		daysTimes.push(friTime);
+		//daysTimes.push(friTime);
 	}
 
 	req.checkBody('courseName', 'Course name must not be empty').notEmpty();
@@ -117,7 +118,12 @@ router.post('/create', function(req, res){
 	} else {
 		var newSchedule = new schedule({
 			name: name,
-			daysTimes: daysTimes,
+			//daysTimes: daysTimes,
+			monday: monTime,
+			tuesday: tuesTime,
+			wednesday: wedTime,
+			thursday: thursTime,
+			friday: friTime,
 			slot: slot,
 			userId : userId
 		});
