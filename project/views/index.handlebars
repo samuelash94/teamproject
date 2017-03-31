@@ -16,6 +16,45 @@
   <textarea class="form-control" rows="3" id="postField" name="postField" style="display:none"></textarea>
   </div>
   <div class="form-group">
+    <select class="form-control" id="visibility" name="visibility" style="display:none" onchange="selectCheck(this);">
+      {{#ifCond currentUser.postDefault '==' "0"}}
+        <option selected="selected" value="0">Visible to Everyone</option>
+      {{else}}
+        <option value="0">Visible to Everyone</option>
+      {{/ifCond}}
+      {{#ifCond currentUser.postDefault '==' "1"}}
+        <option selected="selected" value="1">Visible to My Friends</option>
+      {{else}}
+        <option value="1">Visible to My Friends</option>
+      {{/ifCond}}
+      {{#ifCond currentUser.postDefault '==' "2"}}
+        <option selected="selected" value="2">Visible to Only Me</option>
+      {{else}}
+        <option value="2">Visible to Only Me</option>
+      {{/ifCond}}
+      {{#ifCond currentUser.postDefault '==' "3"}}
+        <option id="listOnly" selected="selected" value="3">Visible to List of Friends</option>
+      {{else}}
+        <option id="listOnly" value="3">Visible to List of Friends</option>
+      {{/ifCond}}
+    </select>
+  </div>
+  <div class="form-group" id="friendListDiv" style="display:none">
+    {{#if friends}}
+      <select size="" name="friendsList" multiple>
+          {{#each friends}}
+            {{#each ../users}}
+              {{#ifCond this._id 'equals' ../this._id}}
+                <option value="{{this._id}}">{{this.name}}
+              {{/ifCond}}
+            {{/each}}
+          {{/each}}
+      </select>
+    {{else}}
+      <p>No friends to show.</p>
+    {{/if}}
+  </div>
+  <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
       <button type="submit" class="btn btn-default" id="postSubmit" style="display:none">Submit</button>
     </div>

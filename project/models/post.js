@@ -23,6 +23,9 @@ var PostSchema = mongoose.Schema({
 	},
 	visible: {
 		type: Number
+	},
+	friendsList: {
+		type: Array
 	}
 });
 

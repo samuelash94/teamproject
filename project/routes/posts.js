@@ -10,7 +10,25 @@ var url = 'mongodb://localhost/4770TeamProject';
 var Post = require('../models/post');
 
 router.get('/', function(req, res){
-	res.render('index', {currentUser: req.user});
+	var allFriends;
+	var acceptedFriends = [];
+	var users = [];
+	mongo.connect(url, function(err, db){
+		var cursor = db.collection('users').find();
+		cursor.forEach(function(doc, err){
+			users.push(doc);
+			if (doc._id == req.user.id){
+				allFriends = doc.friends;
+				allFriends.forEach(function(doc, err){
+					if (doc.status == "accepted"){
+						acceptedFriends.push(doc);
+					}
+				});
+				res.render('index', {currentUser: req.user, friends: acceptedFriends, users: users});
+			}
+		});
+		db.close();
+	});
 });
 
 router.post('/post', function(req, res){
@@ -19,6 +37,17 @@ router.post('/post', function(req, res){
 	var image = 0;
 	var userId = req.user.id;
 	var author = req.user.name;
+	var visibility = req.body.visibility;
+	var friendsList;
+	if (req.body.friendsList){
+		friendsList = req.body.friendsList;
+	}else{
+		if (visibility == 3){
+			friendsList = req.user.visibilityList;
+		}else{
+			friendsList = [];
+		}
+	}
 	req.checkBody('postField', 'Post must not be empty').notEmpty();
 
 	var errors = req.validationErrors();
@@ -34,7 +63,8 @@ router.post('/post', function(req, res){
 			text: text,
 			date: date,
 			image: image,
-			visible: 0,
+			visible: visibility,
+			friendsList: friendsList
 		});
 
 		Post.createPost(newPost, function(err, post){
@@ -51,22 +81,73 @@ router.post('/post', function(req, res){
 router.get('/loadPosts', function(req, res, next) {
 	var resultArray = [];
 	var commentsArray = [];
+	var users = [];
 	mongo.connect(url, function(err, db){
 		var cursor = db.collection('posts').find();
-		var cursorComments = db.collection('comments').find();
+		var cursorUsers = db.collection('users').find();
+		cursorUsers.forEach(function(doc, err){
+			console.log(doc.name);
+			users.push(doc);
+		}, function(){
+		});
 		cursor.forEach(function(doc, err){
-			resultArray.push(doc);
-		}, function(){
+			if (doc.userId == req.user.id){
+				resultArray.push(doc);
+			}else{
+				if (doc.visible == 0){
+					resultArray.push(doc);
+				}else if (doc.visible == 1 || doc.visible == 3){
+					for (var i=0; i<users.length; i++){
+						if (doc.userId == users[i]._id){
+							var visible = doc.friendsList;
+							var friends = users[i].friends;
+							if (doc.visible == 1){
+								for (var j=0; j<friends.length; j++){
+									if (friends[j]._id == req.user.id){
+										resultArray.push(doc);
+									}
+								}
+							}else if (doc.visible == 3){
+								console.log(visible.length);
+								for (var j=0; j<visible.length; j++){
+									console.log(visible[j]);
+									console.log(req.user.id);
+									if (visible[j] == req.user.id){
+										resultArray.push(doc);
+									}
+								}
+							}
+						}
+					}
+				}
+			}
 		});
-
-		cursorComments.forEach(function(doc, err){
-			commentsArray.push(doc);
-		}, function(){
-			db.close();
-			res.render('index', {comments: commentsArray, posts:resultArray, myID: req.user.id, currentUser: req.user});
-		});
-
+		db.close();
 	});
+		mongo.connect(url, function(err, db){
+			var cursorComments = db.collection('comments').find();
+			cursorComments.forEach(function(doc, err){
+				commentsArray.push(doc);
+			}, function(){
+				var allFriends;
+				var acceptedFriends = [];
+				var users = [];
+					var cursor = db.collection('users').find();
+					cursor.forEach(function(doc, err){
+						users.push(doc);
+						if (doc._id == req.user.id){
+							allFriends = doc.friends;
+							allFriends.forEach(function(doc, err){
+								if (doc.status == "accepted"){
+									acceptedFriends.push(doc);
+								}
+							});
+							res.render('index', {comments: commentsArray, posts:resultArray, myID: req.user.id, currentUser: req.user, friends: acceptedFriends});
+						}
+					});
+					db.close();
+				});
+			});
 	//res.redirect('/');
 });
 
