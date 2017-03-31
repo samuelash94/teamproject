@@ -15,6 +15,7 @@ var url = 'mongodb://localhost/4770TeamProject';
 var formidable = require('formidable');
 var fs = require('fs');
 var path = require('path');
+var msopdf = require('node-msoffice-pdf');
 
 // Register
 router.get('/register', function(req, res){
@@ -148,7 +149,7 @@ router.post('/upload/profile', function(req, res){
   var form = new formidable.IncomingForm();
 
   // specify that we want to allow the user to upload multiple files in a single request
-  form.multiples = true;
+  form.multiples = false;
 
   // store all uploads in the /uploads directory
   form.uploadDir = path.join(__dirname, '/uploads');
@@ -223,7 +224,7 @@ router.post('/upload/resume', function(req, res){
   var form = new formidable.IncomingForm();
 
   // specify that we want to allow the user to upload multiple files in a single request
-  form.multiples = true;
+  form.multiples = false;
 
   // store all uploads in the /uploads directory
   form.uploadDir = path.join(__dirname, '/uploads');
@@ -264,6 +265,20 @@ form.uploadDir = path.join(__dirname, '/uploads/'+ req.user.id + '/resume');
 	db.close();
 		});
     fs.rename(file.path, path.join(form.uploadDir, req.user.id + '.' + extension));
+		if(extension == 'docx' || extension == 'doc'){
+			msopdf(null, function(error, office) {
+				office.word({input: __dirname +  '/uploads/'+ req.user.id + '/resume/' + req.user.id + '.' + extension, output: __dirname +  '/uploads/'+ req.user.id + '/resume/' + req.user.id + '.pdf'}, function(error, pdf) {
+      if (error) {
+           console.log("Woops", error);
+       }
+   });
+	 office.close(null, function(error) {
+	        if (error) {
+	            console.log("Woops", error);
+	        }
+	    });
+ });
+	}
   });
 
   // log any errors that occur

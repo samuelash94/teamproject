@@ -88,6 +88,30 @@
   </div>
 {{/ifCond}}
 
+{{#ifCond user.hasResume '==' true}}
+{{#ifCond user._id 'equals' currentUser._id}}
+<h3>My Resume</h3>
+
+{{#ifCond user.resExt 'contains' 'doc'}}
+
+<iframe class = "resume" src="/uploads/{{user._id}}/resume/{{user._id}}.pdf" width="500" height="500"></iframe>
+{{else}}
+<iframe class = "resume" src="/uploads/{{user._id}}/resume/{{user._id}}.{{user.resExt}}" width="500" height="500"></iframe>
+{{/ifCond}}
+
+
+{{else}}
+<h3>{{user.name}}'s Resume</h3>
+{{#ifCond user.resExt 'contains' 'doc'}}
+
+<iframe class = "resume" src="/uploads/{{user._id}}/resume/{{user._id}}.pdf" width="500" height="500"></iframe>
+{{else}}
+<iframe class = "resume" src="/uploads/{{user._id}}/resume/{{user._id}}.{{user.resExt}}" width="500" height="500"></iframe>
+{{/ifCond}}
+
+{{/ifCond}}
+{{/ifCond}}
+
 <div name="courseList" class="loadCourses">
   {{#ifCond user._id 'equals' currentUser._id}}
     <h3>My Schedule</h3>
