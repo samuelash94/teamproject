@@ -12,7 +12,7 @@ var transporter = nodemailer.createTransport({
     // remember to implement a config file before using this
 });
 
-module.exports.sendInitialEmail = function (receiver){
+module.exports.sendInitialEmail = function (receiver, Username){
 // setup e-mail data with unicode symbols
 
   var mailOptions = {
@@ -20,7 +20,7 @@ module.exports.sendInitialEmail = function (receiver){
       to: receiver, // list of receivers
       subject: 'Welcome to our application!', // Subject line
       text: 'Hello World', // plaintext body
-      html: '<b>This is a test ?</b>' // html body
+      html: '<b>You are now successfully registered into our application. Your Username is: </b>' // html body
   };
 
   // send mail with defined transport object
@@ -31,3 +31,9 @@ module.exports.sendInitialEmail = function (receiver){
       console.log('Message sent: ' + info.response);
   });
 }
+
+/*
+module.exports.resetPassword = function (receiver, url){
+
+}
+*/
