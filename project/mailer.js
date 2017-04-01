@@ -12,7 +12,7 @@ var transporter = nodemailer.createTransport({
     // remember to implement a config file before using this
 });
 
-module.exports.sendInitialEmail = function (receiver, Username){
+module.exports.sendInitialEmail = function (receiver, user){
 // setup e-mail data with unicode symbols
 
   var mailOptions = {

@@ -50,8 +50,6 @@ router.post('/resetPassword', function(req, res){
 		req.flash('success_msg', 'Your password is now reset');
 
 		res.redirect('/users/login');
-
-		res.render('resetPassword');
 	}
 
 });
