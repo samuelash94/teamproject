@@ -11,10 +11,26 @@
 <form method="post" action="/users/setDefaultVisibility/{{user._id}}">
   <div class="form-group">
     <select class="form-control" name="visibility">
+      {{#ifCond postDefault '==' 0}}
+        <option selected="selected" value="0">Visible to Everyone</option>
+      {{else}}
         <option value="0">Visible to Everyone</option>
+      {{/ifCond}}
+      {{#ifCond postDefault '==' 1}}
+        <option selected="selected" value="1">Visible to My Friends</option>
+      {{else}}
         <option value="1">Visible to My Friends</option>
+      {{/ifCond}}
+      {{#ifCond postDefault '==' 2}}
+        <option selected="selected" value="2">Visible to Only Me</option>
+      {{else}}
         <option value="2">Visible to Only Me</option>
-        <option value="3">Visible to List of Friends</option>
+      {{/ifCond}}
+      {{#ifCond postDefault '==' 3}}
+        <option id="listOnly" selected="selected" value="3">Visible to List of Friends</option>
+      {{else}}
+        <option id="listOnly" value="3">Visible to List of Friends</option>
+      {{/ifCond}}
     </select>
   </div>
   <button type="submit" class="btn btn-default">Submit</button>
@@ -40,6 +56,57 @@
 {{/ifCond}}
 <br>
 
+<h3> Set who can post on your profile. </h3>
+
+<form method="post" action="/users/setWhoCanPost/{{user._id}}">
+  <div class="form-group">
+    <select class="form-control" name="posters">
+      {{#ifCond whoCanPost '==' 0}}
+        <option selected="selected" value="0">Everyone</option>
+      {{else}}
+        <option value="0">Everyone</option>
+      {{/ifCond}}
+      {{#ifCond whoCanPost '==' 1}}
+        <option selected="selected" value="1">My Friends</option>
+      {{else}}
+        <option value="1">My Friends</option>
+      {{/ifCond}}
+      {{#ifCond whoCanPost '==' 2}}
+        <option selected="selected" value="2">Nobody (Only your posts will appear)</option>
+      {{else}}
+        <option value="2">Nobody (Only your posts will appear)</option>
+      {{/ifCond}}
+      {{#ifCond whoCanPost '==' 3}}
+        <option id="listOnly" selected="selected" value="3">List of Friends</option>
+      {{else}}
+        <option id="listOnly" value="3">List of Friends</option>
+      {{/ifCond}}
+    </select>
+  </div>
+  <button type="submit" class="btn btn-default">Submit</button>
+</form>
+<br>
+
+{{#ifCond whoCanPost '==' 3}}
+<h3> Select list of friends who may post on your profile. </h3>
+<form method="post" action="/users/whoCanPostList/{{user._id}}">
+  <div class="form-group">
+    <select size="" name="friendsList" multiple>
+        {{#each friends}}
+          {{#each ../users}}
+            {{#ifCond this._id 'equals' ../this._id}}
+              <option value="{{this._id}}">{{this.name}}
+            {{/ifCond}}
+          {{/each}}
+        {{/each}}
+    </select>
+  </div>
+  <button type="submit" class="btn btn-default">Submit</button>
+</form>
+{{/ifCond}}
+<br>
+
+
 <h3> Remove friends.</h3>
 
   {{#if friends}}
@@ -62,11 +129,4 @@
   {{/if}}
   <br>
 
-  <form method="post" action="/users/deleteAccount/">
-  <div class="form-group">
-    <p> WARNING: Deleting your account is final. Your profile picture, posts, comments, resume, schedule, friends list, and any groups you own will also be deleted.</p>
-    <input name="userIdentif" value="{{user._id}}" style="display:none"/>
-    <button type= "submit" class="btn btn-danger">Delete My Account</button>
-  </div>
-  </form>
 {{/ifCond}}

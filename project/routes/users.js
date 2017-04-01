@@ -393,4 +393,50 @@ router.post('/visibilityList/:userId', function(req, res){
 	});
 });
 
+router.post('/setWhoCanPost/:userId', function(req, res){
+	mongo.connect(url, function(err, db){
+		var cursor = db.collection('users').update(
+		{ _id: objectId(req.params.userId) },
+		{ $set:{ whoCanPostList: [] }});
+		var cursor2 = db.collection('users').update(
+	 	{ _id: objectId(req.params.userId) },
+	 	{
+		 	$set:{
+			 	'whoCanPost': req.body.posters
+		 	}
+	 	});
+		req.flash('success_msg', 'Who can post on your profile updated.');
+		res.redirect('/');
+		db.close();
+	});
+});
+
+router.post('/whoCanPostList/:userId', function(req, res){
+	mongo.connect(url, function(err, db){
+		var cursor = db.collection('users').update(
+		{ _id: objectId(req.params.userId) },
+		{ $set:{ whoCanPostList: [] }});
+		var friendsToAdd = req.body.friendsList;
+		if (Array.isArray(friendsToAdd)){
+			friendsToAdd.forEach(function(doc, err){
+				console.log(doc);
+				var cursor2 = db.collection('users').update(
+			 	{ _id: objectId(req.params.userId) },
+			 	{ $addToSet:{ whoCanPostList: doc }});
+			});
+			req.flash('success_msg', 'List of friends who can post on your profile updated.');
+			res.redirect('/');
+			db.close();
+		}else{
+			console.log(friendsToAdd);
+			var cursor3 = db.collection('users').update(
+			{ _id: objectId(req.params.userId) },
+			{ $addToSet:{ whoCanPostList: friendsToAdd }});
+			req.flash('success_msg', 'List of friends who can post on your profile updated.');
+			res.redirect('/');
+			db.close();
+		}
+	});
+});
+
 module.exports = router;
