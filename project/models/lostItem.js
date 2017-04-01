@@ -17,6 +17,9 @@ var lostItemSchema = mongoose.Schema({
 	},
 	poster: {
 		type: String
+	},
+	hasImage: {
+		type: Boolean
 	}
 });
 

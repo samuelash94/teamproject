@@ -1,0 +1,36 @@
+<h3>Please upload a photo of the lost item</h3>
+
+<div class="container">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <span class="glyphicon glyphicon-cloud-upload"></span>
+            <h2>File Uploader</h2>
+            <h4>4770 Team Project</h4>
+            <div class="progress">
+              <div class="progress-bar" role="progressbar"></div>
+            </div>
+            <form method="post" action="/lostItems/upload/{{lostItem._id}}">
+              <label class="radio-inline">
+                <input type="radio" name="UploadOptions" id="lostItem" value="lostItem" checked="checked"> Lost and Found
+              </label>
+              <div class="form-group">
+                <input name = "itemId" value = "{{lostItem._id}}" style="display:none" />
+              </div>
+              <p></p>
+              <p></p>
+            </form>
+              <button class="btn btn-lg upload-btn" type="submit">Upload File</button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p> Each time you upload a image, the existing file will be overwritten. You can only have one Image at a time for the lost item.</p>
+
+<input class="btn btn-default" id="upload-input" type="file" name="uploads[]"></br>
+
+<p> Once you are done, <a href="/lostItems/loadItems">Click here to view all lost items</a> </p>

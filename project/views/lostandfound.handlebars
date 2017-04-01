@@ -1,15 +1,27 @@
 <h2 class="page-header">Lost and Found</h2>
-<p>Browse the lost and found and post found items.</p>
-<button type="submit" class="btn btn-info" onclick="displayItemFields()">Post Found Item</button>
-<br><br>
+{{#if errors}}
+      {{#each errors}}
+        <div class="alert alert-danger">{{msg}}</div>
+      {{/each}}
+{{/if}}
 <form method="post" action="/lostItems/postItem">
-  <div class="form-group">
-    <textarea class="form-control" rows=4 cols=50 id="itemDesc" name="itemDesc" style="display:none" placeholder="Item Description..."></textarea>
-  </div>
-  <div class="form-group">
-    <input class="form-control" type="text" id="foundLocation" name="foundLocation" style="display:none" placeholder="Location Found">
-  </div>
-  <div class="form-group">
-  <button class="btn btn-default" type="submit" id="itemSubmit" style="display:none">Submit</button>
-  </div>
+<div class="form-group">
+  <textarea class="form-control" rows=4 cols=50 id="itemDesc" name="itemDesc" placeholder="Item Description..."></textarea>
+</div>
+
+<div class="form-group">
+  <input class="form-control" type="text" id="lostAddress" name="Address" placeholder="Address" />
+</div>
+
+<div class="form-group">
+  <select class="selectpicker" id = "lostRegion" name = "region" title="Region Found">
+    <option value="St. John's">St John's</option>
+    <option value = "Gander">Gander</option>
+    <option value = "UK">UK</option>
+  </select>
+</div>
+
+  <button type="submit" class="btn btn-default">Submit</button>
 </form>
+
+<a href = "/lostItems/viewItems">Click here to view lost items</a>

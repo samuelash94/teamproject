@@ -5,6 +5,10 @@ $(document).ready(function () {
 	$('.dropdown-toggle').dropdown('toggle');
 	$('.dropdown-toggle').dropdown('toggle');
 
+	$('.selectpicker').selectpicker('toggle');
+
+
+
 	function divClicked() {
 	    var divHtml = $(this).prev('textarea').html(); //select's the contents of div immediately previous to the button
 	    var editableText = $("<textarea class='form-control' name = 'commentText' />");
@@ -57,9 +61,16 @@ $(document).ready(function () {
 		    $('.progress-bar').width('0%');
 		});
 
-		function sendMyAjax(option, formData){
+		function sendMyAjax(option, itemId, formData){
+			var theUrl;
+			switch (option) {
+				case 'lostItem':
+					theUrl = "/lostItems/upload/" + itemId;
+					break;
+				default: theUrl = '/users/upload/' + option;
+			}
 			$.ajax({
-				url: '/users/upload/' + option,
+				url: theUrl,
 				type: 'POST',
 				data: formData,
 				processData: false,
@@ -115,10 +126,11 @@ $(document).ready(function () {
 		    }
 
 				var theOption = $('input[name=UploadOptions]:checked').val();
+				var itemId = $('input[name=itemId]').val();
 
 				// my function goes here
 
-				sendMyAjax(theOption, formData);
+				sendMyAjax(theOption, itemId, formData);
 
 		  }
 		});
