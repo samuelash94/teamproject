@@ -15,7 +15,7 @@ var url = 'mongodb://localhost/4770TeamProject';
 var formidable = require('formidable');
 var fs = require('fs');
 var path = require('path');
-var msopdf = require('node-msoffice-pdf');
+//var msopdf = require('node-msoffice-pdf');
 
 // Register
 router.get('/register', function(req, res){
@@ -27,32 +27,90 @@ router.get('/login', function(req, res){
 	res.render('login');
 });
 
-// Reset Password
-router.post('/resetPassword', function(req, res){
-	var password = req.body.password;
+router.get('/goToReset', function(req, res){
+	res.render('reset');
+});
 
-	req.checkBody('password', 'Password is required').notEmpty();
+
+// Reset request page
+router.post('/reset', function(req, res){
+	var email = req.body.email;
+
+	req.checkBody('email', 'Email is required').notEmpty();
+	var errors = req.validationErrors();
+
+	if(errors){
+		res.render('reset',{
+			errors:errors
+		});
+	} else {
+		var resultArray = [];
+
+		mongo.connect(url, function(err, db){
+			var cursor = db.collection('users').find({email: email});
+			var resetLink = req.protocol + "://" + req.get('host')  + '/users/resetPassword/';
+			cursor.forEach(function (doc,err){
+				if(doc._email = email){
+					//resultArray.push(doc._id);
+					resetLink = resetLink + doc._id;
+					mailer.resetPasswordEmail(email, resetLink);
+				}
+				else {
+					console.log("Did not find a user with that email");
+				}
+				db.close();
+				});
+
+		});
+		req.flash('success_msg', 'We have sent you an email to reset your password');
+
+		res.redirect('/users/login');
+
+		}
+	});
+
+
+//reset Password
+	router.get('/resetPassword/:userId', function(req, res){
+		var userId = req.params.userId;
+		res.render('resetPassword', {userId: userId});
+	});
+
+
+
+	// Change Password
+router.post('/changePassword/:userId', function(req, res){
+	var password = req.body.newpassword;
+	var userId = req.params.userId;
+	//var password2 = req.body.password2;
+
+	req.checkBody('newpassword', 'Password is required').notEmpty();
+	//req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
+
 	var errors = req.validationErrors();
 
 	if(errors){
 		res.render('resetPassword',{
-			errors:errors
+			errors:errors, userId: userId
 		});
 	} else {
-		/* Not sure about the code here
 
-		User.resetPassword(newUser, function(err, user){
-			if(err) throw err;
-			console.log(user);
-		});
+			mongo.connect(url, function(err, db){
 
-		*/
-		req.flash('success_msg', 'Your password is now reset');
+						var cursor = db.collection('users').update(
+					 		{ _id: objectId(userId) },
+					 			{
+						 			$set:{
+							 			'password': password,
+						 			}
+					 			});
+					db.close();
+				});
+		};
+		req.flash('success_msg', 'Your Password is now reset');
 
 		res.redirect('/users/login');
-	}
-
-});
+	});
 
 // Register User
 router.post('/register', function(req, res){
