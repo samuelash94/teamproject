@@ -27,7 +27,7 @@ router.post('/create', function(req, res){
 
 	if(errors){
 		res.render('groups',{
-			errors:errors, currentUser: req.user
+			errors:errors, currentUser: req.user, invites: req.user.invites
 		});
 	} else {
 		var memberArr = [];

@@ -11,7 +11,25 @@ var objectId = require('mongodb').ObjectID;
 var url = 'mongodb://localhost/4770TeamProject';
 
 router.get('/', function(req, res){
-	res.render('index', {currentUser: req.user});
+	var allFriends;
+	var acceptedFriends = [];
+	var users = [];
+	mongo.connect(url, function(err, db){
+		var cursor = db.collection('users').find();
+		cursor.forEach(function(doc, err){
+			users.push(doc);
+			if (doc._id == req.user.id){
+				allFriends = doc.friends;
+				allFriends.forEach(function(doc, err){
+					if (doc.status == "accepted"){
+						acceptedFriends.push(doc);
+					}
+				});
+				res.render('index', {currentUser: req.user, friends: acceptedFriends, users: users});
+			}
+		});
+		db.close();
+	});
 });
 
 router.post('/addComment/', function(req, res){
@@ -23,8 +41,24 @@ router.post('/addComment/', function(req, res){
 	var errors = req.validationErrors();
 
   if(errors){
-		res.render('index',{
-			errors:errors, currentUser: req.user
+		var allFriends;
+		var acceptedFriends = [];
+		var users = [];
+		mongo.connect(url, function(err, db){
+			var cursor = db.collection('users').find();
+			cursor.forEach(function(doc, err){
+				users.push(doc);
+				if (doc._id == req.user.id){
+					allFriends = doc.friends;
+					allFriends.forEach(function(doc, err){
+						if (doc.status == "accepted"){
+							acceptedFriends.push(doc);
+						}
+					});
+					res.render('index', {currentUser: req.user, friends: acceptedFriends, users: users});
+				}
+			});
+			db.close();
 		});
 	} else {
 		var newComment = new comment({
@@ -63,8 +97,24 @@ router.post('/editComment/', function(req, res){
 		var errors = req.validationErrors();
 
 	  if(errors){
-			res.render('index',{
-				errors:errors, currentUser: req.user
+			var allFriends;
+			var acceptedFriends = [];
+			var users = [];
+			mongo.connect(url, function(err, db){
+				var cursor = db.collection('users').find();
+				cursor.forEach(function(doc, err){
+					users.push(doc);
+					if (doc._id == req.user.id){
+						allFriends = doc.friends;
+						allFriends.forEach(function(doc, err){
+							if (doc.status == "accepted"){
+								acceptedFriends.push(doc);
+							}
+						});
+						res.render('index', {currentUser: req.user, friends: acceptedFriends, users: users});
+					}
+				});
+				db.close();
 			});
 		}
 		else {

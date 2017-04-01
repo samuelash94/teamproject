@@ -73,6 +73,12 @@ module.exports.addFriend = function(user1id, user2id, callback){
 	User.requestFriend(user1id, user2id, callback);
 }
 
+/* Not sure about this
+module.exports.resetPassword = function(){
+
+}
+*/
+
 //module.exports.getAcceptedFriends = function(callback){
 	//var query = {friends: [status = 'accepted']};
 	//User.find(query);

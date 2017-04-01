@@ -140,6 +140,7 @@ function displayPostField(){
 	document.getElementById("postField").style.display = 'block';
 	document.getElementById("postHeader").style.display = 'block';
 	document.getElementById("postSubmit").style.display = 'block';
+	document.getElementById("visibility").style.display = 'block';
 }
 
 function displayCommentField(){
@@ -147,6 +148,22 @@ function displayCommentField(){
   document.getElementById("commentTextField").style.display = 'block';
 	document.getElementById("commentSubmit").style.display = 'block';
 
+}
+
+function selectCheck(select){
+    console.log(select);
+    if(select){
+        optionValue = document.getElementById("listOnly").value;
+        if(optionValue == select.value){
+            document.getElementById("friendListDiv").style.display = "block";
+        }
+        else{
+            document.getElementById("friendListDiv").style.display = "none";
+        }
+    }
+    else{
+        document.getElementById("friendListDiv").style.display = "none";
+    }
 }
 
 function hidePosts(){

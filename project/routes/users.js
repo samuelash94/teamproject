@@ -27,6 +27,33 @@ router.get('/login', function(req, res){
 	res.render('login');
 });
 
+// Reset Password
+router.post('/resetPassword', function(req, res){
+	var password = req.body.password;
+
+	req.checkBody('password', 'Password is required').notEmpty();
+	var errors = req.validationErrors();
+
+	if(errors){
+		res.render('resetPassword',{
+			errors:errors
+		});
+	} else {
+		/* Not sure about the code here
+
+		User.resetPassword(newUser, function(err, user){
+			if(err) throw err;
+			console.log(user);
+		});
+
+		*/
+		req.flash('success_msg', 'Your password is now reset');
+
+		res.redirect('/users/login');
+	}
+
+});
+
 // Register User
 router.post('/register', function(req, res){
 	var name = req.body.name;
@@ -82,7 +109,7 @@ router.post('/register', function(req, res){
 
 		res.redirect('/users/login');
 
-		mailer.sendInitialEmail(newUser.email);
+		mailer.sendInitialEmail(newUser.email, newUser.username);
 	}
 });
 
