@@ -97,7 +97,9 @@ router.post('/register', function(req, res){
 			campus: campus,
 			invites: invites,
 			postDefault: postDefault,
-			visibilityList: visibilityList
+			visibilityList: visibilityList,
+			whoCanPost: 0,
+			whoCanPostList: []
 		});
 
 		User.createUser(newUser, function(err, user){
