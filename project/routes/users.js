@@ -15,6 +15,7 @@ var url = 'mongodb://localhost/4770TeamProject';
 var formidable = require('formidable');
 var fs = require('fs');
 var path = require('path');
+var bcrypt = require('bcryptjs');
 //var msopdf = require('node-msoffice-pdf');
 
 // Register
@@ -94,6 +95,7 @@ router.post('/changePassword/:userId', function(req, res){
 			errors:errors, userId: userId
 		});
 	} else {
+		var hash = bcrypt.hashSync(password, 10);
 
 			mongo.connect(url, function(err, db){
 
@@ -101,7 +103,7 @@ router.post('/changePassword/:userId', function(req, res){
 					 		{ _id: objectId(userId) },
 					 			{
 						 			$set:{
-							 			'password': password,
+							 			'password': hash,
 						 			}
 					 			});
 					db.close();
