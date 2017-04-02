@@ -20,6 +20,12 @@ var lostItemSchema = mongoose.Schema({
 	},
 	hasImage: {
 		type: Boolean
+	},
+	phoneNumber: {
+		type: Number
+	},
+	claimed: {
+		type: Boolean
 	}
 });
 
