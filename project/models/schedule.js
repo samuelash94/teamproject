@@ -7,7 +7,7 @@
  // Schedule Schema
  var scheduleSchema = mongoose.Schema({
  	slot: {
- 		type: Number
+ 		type: String
  	},
  	monday: {
     type: String

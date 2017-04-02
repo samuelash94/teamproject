@@ -105,7 +105,7 @@ router.get('/profileSettings/:userId', function(req, res, next){
 						}
 					});
 				}
-				res.render('profileSettings', {user: doc, currentUser: req.user, friends: userFriends, friendRequests: userFriendRequests, users: users, groupInvites: doc.invites, groups: groups, postDefault: doc.postDefault});
+				res.render('profileSettings', {user: doc, currentUser: req.user, friends: userFriends, friendRequests: userFriendRequests, users: users, groupInvites: doc.invites, groups: groups, postDefault: doc.postDefault, whoCanPost: doc.whoCanPost});
 			}
 		});
 		//if (db.collection('users').find({_id : req.params.userId}) > 0){

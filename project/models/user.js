@@ -38,6 +38,12 @@ var UserSchema = mongoose.Schema({
 	},
 	visibilityList: {
 		type: Array
+	},
+	whoCanPost: {
+		type: Number
+	},
+	whoCanPostList: {
+		type: Array
 	}
 });
 

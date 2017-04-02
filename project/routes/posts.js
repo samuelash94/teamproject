@@ -78,6 +78,103 @@ router.post('/post', function(req, res){
 	}
 });
 
+router.post('/post/:userId', function(req, res){
+	var text = req.body.postField;
+	var date = Post.getCurrentDate();
+	var image = 0;
+	var userId = req.user.id;
+	var author = req.user.name;
+	var user;
+	mongo.connect(url, function(err, db){
+		var cursor = db.collection('users').find();
+		cursor.forEach(function(doc, err){
+			if (doc._id == req.params.userId){
+
+				user = doc;
+
+				req.checkBody('postField', 'Post must not be empty').notEmpty();
+
+				var errors = req.validationErrors();
+
+				if(errors){
+					res.render('index',{
+						errors:errors, currentUser: req.user
+					});
+				} else {
+					var newPost = new Post({
+						userId: userId,
+						author: author,
+						text: text,
+						date: date,
+						image: image,
+						visible: 0,
+						friendsList: [],
+						userPage: req.params.userId
+					});
+					if (user.whoCanPost == 0){
+						Post.createPost(newPost, function(err, post){
+							if(err) throw err;
+							console.log(post);
+						});
+						req.flash('success_msg', 'Post was posted.');
+						res.redirect('/');
+					}else if (user.whoCanPost == 1){
+						var posted = false;
+						var friendsList = user.friends;
+						if (friendsList){
+							for (var i=0; i<friendsList.length; i++){
+								if (friendsList[i]._id == userId){
+									Post.createPost(newPost, function(err, post){
+										if(err) throw err;
+										console.log(post);
+									});
+									posted = true;
+									req.flash('success_msg', 'Post was posted.');
+									res.redirect('/');
+								}
+							}
+							if (!posted){
+								req.flash('error_msg', 'Error: Post was not posted. You do not have permission to post on this page.');
+								res.redirect('/');
+							}
+						}else{
+							req.flash('error_msg', 'Error: Post was not posted. You do not have permission to post on this page.');
+							res.redirect('/');
+						}
+					}else if (user.whoCanPost == 3){
+						var posted = false;
+						var whoCanPostList = user.whoCanPostList;
+						if (whoCanPostList){
+							for (var i=0; i<whoCanPostList.length; i++){
+								if (whoCanPostList[i] == userId){
+									Post.createPost(newPost, function(err, post){
+										if(err) throw err;
+										console.log(post);
+									});
+									posted = true;
+									req.flash('success_msg', 'Post was posted.');
+									res.redirect('/');
+								}
+							}
+							if (!posted){
+								req.flash('error_msg', 'Error: Post was not posted. You do not have permission to post on this page.');
+								res.redirect('/');
+							}
+						}else{
+							req.flash('error_msg', 'Error: Post was not posted. You do not have permission to post on this page.');
+							res.redirect('/');
+						}
+					}else{
+						req.flash('error_msg', 'Error: Post was not posted. You do not have permission to post on this page.');
+						res.redirect('/');
+					}
+				}
+			}
+		});
+		db.close();
+	});
+});
+
 router.get('/loadPosts', function(req, res, next) {
 	var resultArray = [];
 	var commentsArray = [];
@@ -91,29 +188,33 @@ router.get('/loadPosts', function(req, res, next) {
 		}, function(){
 		});
 		cursor.forEach(function(doc, err){
-			if (doc.userId == req.user.id){
-				resultArray.push(doc);
+			if (doc.userPage){
+				//do nothing! If the post is meant for a user's page do not load it in the dashboard
 			}else{
-				if (doc.visible == 0){
+				if (doc.userId == req.user.id){
 					resultArray.push(doc);
-				}else if (doc.visible == 1 || doc.visible == 3){
-					for (var i=0; i<users.length; i++){
-						if (doc.userId == users[i]._id){
-							var visible = doc.friendsList;
-							var friends = users[i].friends;
-							if (doc.visible == 1){
-								for (var j=0; j<friends.length; j++){
-									if (friends[j]._id == req.user.id){
-										resultArray.push(doc);
+				}else{
+					if (doc.visible == 0){
+						resultArray.push(doc);
+					}else if (doc.visible == 1 || doc.visible == 3){
+						for (var i=0; i<users.length; i++){
+							if (doc.userId == users[i]._id){
+								var visible = doc.friendsList;
+								var friends = users[i].friends;
+								if (doc.visible == 1){
+									for (var j=0; j<friends.length; j++){
+										if (friends[j]._id == req.user.id){
+											resultArray.push(doc);
+										}
 									}
-								}
-							}else if (doc.visible == 3){
-								console.log(visible.length);
-								for (var j=0; j<visible.length; j++){
-									console.log(visible[j]);
-									console.log(req.user.id);
-									if (visible[j] == req.user.id){
-										resultArray.push(doc);
+								}else if (doc.visible == 3){
+									console.log(visible.length);
+									for (var j=0; j<visible.length; j++){
+										console.log(visible[j]);
+										console.log(req.user.id);
+										if (visible[j] == req.user.id){
+											resultArray.push(doc);
+										}
 									}
 								}
 							}
@@ -157,11 +258,15 @@ router.get('/loadPosts/:userId', function(req, res, next) {
 	var users = [];
 	var isFriend = false;
 	mongo.connect(url, function(err, db){
-		var cursor = db.collection('posts').find({userId : req.params.userId});
+		var cursor = db.collection('posts').find();
 		var cursorComments = db.collection('comments').find();
 		var cursorUsers = db.collection('users').find();
 		cursor.forEach(function(doc, err){
+			if (doc.userId == req.params.userId){
 				resultArray.push(doc);
+			}else if (doc.userPage == req.params.userId){
+				resultArray.push(doc);
+			}
 		}, function(){
 			//db.close();
 			//res.render('index', {posts: resultArray});

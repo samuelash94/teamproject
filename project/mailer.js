@@ -32,8 +32,23 @@ module.exports.sendInitialEmail = function (receiver, user){
   });
 }
 
-/*
-module.exports.resetPassword = function (receiver, url){
 
+//email to reset password
+module.exports.resetPasswordEmail = function (receiver, link){
+
+  var mailOptions = {
+      from: '<4770GroupB@gmail.com>', // sender address
+      to: receiver, // list of receivers
+      subject: 'Reset Email!', // Subject line
+      text: 'Hello World', // plaintext body
+      html: 'Click here to reset ' + link // html body
+  };
+
+  // send mail with defined transport object
+  transporter.sendMail(mailOptions, function(error, info){
+      if(error){
+          return console.log(error);
+      }
+      console.log('Message sent: ' + info.response);
+  });
 }
-*/

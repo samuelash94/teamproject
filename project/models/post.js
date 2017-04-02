@@ -26,6 +26,9 @@ var PostSchema = mongoose.Schema({
 	},
 	friendsList: {
 		type: Array
+	},
+	userPage: {
+		type: String
 	}
 });
 

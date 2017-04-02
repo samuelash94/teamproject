@@ -1,12 +1,51 @@
 <h2 class="page-header">Schedule</h2>
 <p>View and manage your schedule.</p>
 <hr>
-<h3>Add a Course</h3>
-<div class="create-schedule">
+<button type="submit" class="btn btn-info" onclick="displayScheduleFields()">Add a Course</button>
+<br><br>
+<div class="create-schedule" id="createSchedule" style="display:none">
   <p>Enter information about a course to add to your schedule.</p>
   <form method="post" action="/schedule/create">
     <div class="form-group">
-      <input class="form-control" type="text" id="courseName" name="courseName" placeholder="Course Name">
+      <select class="selectpicker" id = "courseName" name = "courseName" title="Course">
+        <option value="COMP 1000">COMP 1000</option>
+        <option value="COMP 1001">COMP 1001</option>
+        <option value="COMP 1002">COMP 1002</option>
+        <option value="COMP 1400">COMP 1400</option>
+        <option value="COMP 1510">COMP 1510</option>
+        <option value="COMP 1600">COMP 1600</option>
+        <option value="COMP 1710">COMP 1710</option>
+        <option value="COMP 2001">COMP 2001</option>
+        <option value="COMP 2510">COMP 2510</option>
+        <option value="COMP 2711">COMP 2711</option>
+        <option value="COMP 2718">COMP 2718</option>
+        <option value="COMP 3700">COMP 3700</option>
+        <option value="COMP 3715">COMP 3715</option>
+        <option value="COMP 3718">COMP 3718</option>
+        <option value="COMP 3719">COMP 3719</option>
+        <option value="COMP 3724">COMP 3724</option>
+        <option value="COMP 3725">COMP 3725</option>
+        <option value="COMP 3754">COMP 3754</option>
+        <option value="COMP 4712">COMP 4712</option>
+        <option value="COMP 4734">COMP 4734</option>
+        <option value="COMP 4740">COMP 4740</option>
+        <option value="COMP 4752">COMP 4752</option>
+        <option value="COMP 4759">COMP 4759</option>
+        <option value="COMP 4768">COMP 4768</option>
+        <option value="COMP 4770">COMP 4770</option>
+        <option value="COMP 4780">COMP 4780</option>
+        <option value="COMP 610W">COMP 610W</option>
+        <option value="COMP 6902">COMP 6902</option>
+        <option value="COMP 6904">COMP 6904</option>
+        <option value="COMP 6907">COMP 6907</option>
+        <option value="COMP 6908">COMP 6908</option>
+        <option value="COMP 6909">COMP 6909</option>
+        <option value="COMP 690B">COMP 690B</option>
+        <option value="COMP 6922">COMP 6922</option>
+        <option value="COMP 6931">COMP 6931</option>
+        <option value="COMP 6999">COMP 6999</option>
+        <option value="COMP 9000">COMP 9000</option>
+      </select>
     </div>
     <hr>
     <div>
@@ -14,8 +53,9 @@
         <input type="checkbox" id="mondayBox" name="monday" value="monday"> Monday
       </label>
     </div>
+    <h4>Monday Start Time</h4>
     <div class="form-group">
-      <select id="mondayStartHour" class="col-xs-2" name="mondayStartHour">
+      <select class="selectpicker" id = "mondayStartHour" name = "mondayStartHour" title="Hour">
       	<option value="1">1</option>
         <option value="2">2</option>
         <option value="3">3</option>
@@ -29,27 +69,24 @@
         <option value="11">11</option>
         <option value="12">12</option>
   	  </select>
-      <p>Start Hour</p>
     </div>
     <div class="form-group">
-      <select id="mondayStartMinutes" class="col-xs-2" name="mondayStartMinutes">
+      <select class="selectpicker" id = "mondayStartMinutes" name = "mondayStartMinutes" title="Minutes">
         <option value="00">00</option>
         <option value="15">15</option>
         <option value="30">30</option>
         <option value="45">45</option>
       </select>
-      <p>Start Minutes</p>
     </div>
     <div class="form-group">
-      <select id="mondayStartAMPM" class="col-xs-2" name="mondayStartAMPM">
+      <select class="selectpicker" id = "mondayStartAMPM" name = "mondayStartAMPM" title="AM/PM">
         <option value="AM">AM</option>
         <option value="PM">PM</option>
       </select>
-      <p>Start AM/PM</p>
     </div>
-
+    <h4>Monday End Time</h4>
     <div class="form-group">
-      <select id="mondayEndHour" class="col-xs-2" name="mondayEndHour">
+      <select class="selectpicker" id = "mondayEndHour" name = "mondayEndHour" title="Hour">
       	<option value="1">1</option>
         <option value="2">2</option>
         <option value="3">3</option>
@@ -63,24 +100,21 @@
         <option value="11">11</option>
         <option value="12">12</option>
   	  </select>
-      <p>End Hour</p>
     </div>
     <div class="form-group">
-      <select id="mondayEndMinutes" class="col-xs-2" name="mondayEndMinutes">
+      <select class="selectpicker" id = "mondayEndMinutes" name = "mondayEndMinutes" title="Minutes">
         <option value="00">00</option>
         <option value="15">15</option>
         <option value="30">30</option>
         <option value="45">45</option>
         <option value="50">50</option>
       </select>
-      <p>End Minutes</p>
     </div>
     <div class="form-group">
-      <select id="mondayEndMinutes" class="col-xs-2" name="mondayEndAMPM">
+      <select class="selectpicker" id = "mondayEndAMPM" name = "mondayEndAMPM" title="AM/PM">
         <option value="AM">AM</option>
         <option value="PM">PM</option>
       </select>
-      <p>End AM/PM</p>
     </div>
 
     <hr>
@@ -90,8 +124,9 @@
         <input type="checkbox" id="tuesdayBox" name="tuesday" value="tuesday"> Tuesday
       </label>
     </div>
+    <h4>Tuesday Start Time</h4>
     <div class="form-group">
-      <select id="tuesdayStartHour" class="col-xs-2" name="tuesdayStartHour">
+      <select class="selectpicker" id = "tuesdayStartHour" name = "tuesdayStartHour" title="Hour">
         <option value="1">1</option>
         <option value="2">2</option>
         <option value="3">3</option>
@@ -105,26 +140,24 @@
         <option value="11">11</option>
         <option value="12">12</option>
       </select>
-      <p>Start Hour</p>
     </div>
     <div class="form-group">
-      <select id="tuesdayStartMinutes" class="col-xs-2" name="tuesdayStartMinutes">
+      <select class="selectpicker" id = "tuesdayStartMinutes" name = "tuesdayStartMinutes" title="Minutes">
         <option value="00">00</option>
         <option value="15">15</option>
         <option value="30">30</option>
         <option value="45">45</option>
       </select>
-      <p>Start Minutes</p>
     </div>
     <div class="form-group">
-      <select id="tuesdayStartANPM" class="col-xs-2" name="tuesdayStartAMPM">
+      <select class="selectpicker" id = "tuesdayStartAMPM" name = "tuesdayStartAMPM" title="AM/PM">
         <option value="AM">AM</option>
         <option value="PM">PM</option>
       </select>
-      <p>Start AM/PM</p>
     </div>
+    <h4>Tuesday End Time</h4>
     <div class="form-group">
-      <select id="tuesdayEndHour" class="col-xs-2" name="tuesdayEndHour">
+      <select class="selectpicker" id = "tuesdayEndHour" name = "tuesdayEndHour" title="Hour">
         <option value="1">1</option>
         <option value="2">2</option>
         <option value="3">3</option>
@@ -138,24 +171,21 @@
         <option value="11">11</option>
         <option value="12">12</option>
       </select>
-      <p>End Hour</p>
     </div>
     <div class="form-group">
-      <select id="tuesdayEndMinutes" class="col-xs-2" name="tuesdayEndMinutes">
+      <select class="selectpicker" id = "tuesdayEndMinutes" name = "tuesdayEndMinutes" title="Minutes">
         <option value="00">00</option>
         <option value="15">15</option>
         <option value="30">30</option>
         <option value="45">45</option>
         <option value="50">50</option>
       </select>
-      <p>End Minutes</p>
     </div>
     <div class="form-group">
-      <select id="tuesdayEndAMPM" class="col-xs-2" name="tuesdayEndAMPM">
+      <select class="selectpicker" id = "tuesdayEndAMPM" name = "tuesdayEndAMPM" title="AM/PM">
         <option value="AM">AM</option>
         <option value="PM">PM</option>
       </select>
-      <p>End AM/PM</p>
     </div>
     <hr>
 
@@ -164,8 +194,9 @@
         <input type="checkbox" id="wednesdayBox" name="wednesday" value="wednesday"> Wednesday
       </label>
     </div>
+    <h4>Wednesday Start Time</h4>
     <div class="form-group">
-      <select id="wednesdayStartHour" class="col-xs-2" name="wednesdayStartHour">
+      <select class="selectpicker" id = "wednesdayStartHour" name = "wednesdayStartHour" title="Hour">
         <option value="1">1</option>
         <option value="2">2</option>
         <option value="3">3</option>
@@ -179,29 +210,26 @@
         <option value="11">11</option>
         <option value="12">12</option>
       </select>
-      <p>Start Hour</p>
     </div>
     <div class="form-group">
-      <select id="wednesdayStartMinutes" class="col-xs-2" name="wednesdayStartMinutes">
+      <select class="selectpicker" id = "wednesdayStartMinutes" name = "wednesdayStartMinutes" title="Minutes">
         <option value="00">00</option>
         <option value="15">15</option>
         <option value="30">30</option>
         <option value="45">45</option>
       </select>
-      <p>Start Minutes</p>
     </div>
     <div class="form-group">
-      <select id="wednesdayStartAMPM" class="col-xs-2" name="wednesdayStartAMPM">
+      <select class="selectpicker" id = "wednesdayStartAMPM" name = "wednesdayStartAMPM" title="AM/PM">
         <option value="AM">AM</option>
         <option value="PM">PM</option>
       </select>
-      <p>Start AM/PM</p>
     </div>
 
-
+    <h4>Wednesday End Time</h4>
 
     <div class="form-group">
-      <select id="wednesdayEndHour" class="col-xs-2" name="wednesdayEndHour">
+      <select class="selectpicker" id = "wednesdayEndHour" name = "wednesdayEndHour" title="Hour">
         <option value="1">1</option>
         <option value="2">2</option>
         <option value="3">3</option>
@@ -215,24 +243,21 @@
         <option value="11">11</option>
         <option value="12">12</option>
       </select>
-      <p>End Hour</p>
     </div>
     <div class="form-group">
-      <select id="wednesdayEndMinutes" class="col-xs-2" name="wednesdayEndMinutes">
+      <select class="selectpicker" id = "wednesdayEndMinutes" name = "wednesdayEndMinutes" title="Minutes">
         <option value="00">00</option>
         <option value="15">15</option>
         <option value="30">30</option>
         <option value="45">45</option>
         <option value="50">50</option>
       </select>
-      <p>End Minutes</p>
     </div>
     <div class="form-group">
-      <select id="wednesdayEndAMPM" class="col-xs-2" name="wednesdayEndAMPM">
+      <select class="selectpicker" id = "wednesdayEndAMPM" name = "wednesdayEndAMPM" title="AM/PM">
         <option value="AM">AM</option>
         <option value="PM">PM</option>
       </select>
-      <p>End AM/PM</p>
     </div>
 
     <hr>
@@ -243,11 +268,11 @@
       </label>
     </div>
 
-
+    <h4>Thursday Start Time</h4>
 
 
     <div class="form-group">
-      <select id="thursdayStartHour" class="col-xs-2" name="thursdayStartHour">
+      <select class="selectpicker" id = "thursdayStartHour" name = "thursdayStartHour" title="Hour">
         <option value="1">1</option>
         <option value="2">2</option>
         <option value="3">3</option>
@@ -261,27 +286,25 @@
         <option value="11">11</option>
         <option value="12">12</option>
       </select>
-      <p>Start Hour</p>
     </div>
     <div class="form-group">
-      <select id="thursdayStartMinutes" class="col-xs-2" name="thursdayStartMinutes">
+      <select class="selectpicker" id = "thursdayStartMinutes" name = "thursdayStartMinutes" title="Minutes">
         <option value="00">00</option>
         <option value="15">15</option>
         <option value="30">30</option>
         <option value="45">45</option>
       </select>
-      <p>Start Minutes</p>
     </div>
     <div class="form-group">
-      <select id="thursdayStartAMPM" class="col-xs-2" name="thursdayStartAMPM">
+      <select class="selectpicker" id = "thursdayStartAMPM" name = "thursdayStartAMPM" title="AM/PM">
         <option value="AM">AM</option>
         <option value="PM">PM</option>
       </select>
       <p>Start AM/PM</p>
     </div>
-
+    <h4>Thursday End Time</h4>
     <div class="form-group">
-      <select id="thursdayEndHour" class="col-xs-2" name="thursdayEndHour">
+      <select class="selectpicker" id = "thursdayEndHour" name = "thursdayEndHour" title="Hour">
         <option value="1">1</option>
         <option value="2">2</option>
         <option value="3">3</option>
@@ -295,24 +318,21 @@
         <option value="11">11</option>
         <option value="12">12</option>
       </select>
-      <p>End Hour</p>
     </div>
     <div class="form-group">
-      <select id="thursdayEndMinutes" class="col-xs-2" name="thursdayEndMinutes">
+      <select class="selectpicker" id = "thursdayEndMinutes" name = "thursdayEndMinutes" title="Minutes">
         <option value="00">00</option>
         <option value="15">15</option>
         <option value="30">30</option>
         <option value="45">45</option>
         <option value="50">50</option>
       </select>
-      <p>End Minutes</p>
     </div>
     <div class="form-group">
-      <select id="thursdayEndAMPM" class="col-xs-2" name="thursdayEndAMPM">
+      <select class="selectpicker" id = "thursdayEndAMPM" name = "thursdayEndAMPM" title="AM/PM">
         <option value="AM">AM</option>
         <option value="PM">PM</option>
       </select>
-      <p>End AM/PM</p>
     </div>
 
 
@@ -323,8 +343,9 @@
         <input type="checkbox" id="fridayBox" name="friday" value="friday"> Friday
       </label>
     </div>
+    <h4>Friday Start Time</h4>
     <div class="form-group">
-      <select id="fridayStartHour" class="col-xs-2" name="fridayStartHour">
+      <select class="selectpicker" id = "fridayStartHour" name = "fridayStartHour" title="Hour">
         <option value="1">1</option>
         <option value="2">2</option>
         <option value="3">3</option>
@@ -338,26 +359,24 @@
         <option value="11">11</option>
         <option value="12">12</option>
       </select>
-      <p>Start Hour</p>
     </div>
     <div class="form-group">
-      <select id="fridayStartMinutes" class="col-xs-2" name="fridayStartMinutes">
+      <select class="selectpicker" id = "fridayStartMinutes" name = "fridayStartMinutes" title="Minutes">
         <option value="00">00</option>
         <option value="15">15</option>
         <option value="30">30</option>
         <option value="45">45</option>
       </select>
-      <p>Start Minutes</p>
     </div>
     <div class="form-group">
-      <select id="fridayStartAMPM" class="col-xs-2" name="fridayStartAMPM">
+      <select class="selectpicker" id = "fridayStartAMPM" name = "fridayStartAMPM" title="AM/PM">
         <option value="AM">AM</option>
         <option value="PM">PM</option>
       </select>
-      <p>Start AM/PM</p>
     </div>
+    <h4>Friday End Time</h4>
     <div class="form-group">
-      <select id="fridayEndHour" class="col-xs-2" name="fridayEndHour">
+      <select class="selectpicker" id = "fridayEndHour" name = "fridayEndHour" title="Hour">
         <option value="1">1</option>
         <option value="2">2</option>
         <option value="3">3</option>
@@ -371,24 +390,21 @@
         <option value="11">11</option>
         <option value="12">12</option>
       </select>
-      <p>End Hour</p>
     </div>
     <div class="form-group">
-      <select id="fridayEndMinutes" class="col-xs-2" name="fridayEndMinutes">
+      <select class="selectpicker" id = "fridayEndMinutes" name = "fridayEndMinutes" title="Minutes">
         <option value="00">00</option>
         <option value="15">15</option>
         <option value="30">30</option>
         <option value="45">45</option>
         <option value="50">50</option>
       </select>
-      <p>End Minutes</p>
     </div>
     <div class="form-group">
-      <select id="fridayEndAMPM" class="col-xs-2" name="fridayEndAMPM">
+      <select class="selectpicker" id = "fridayEndAMPM" name = "fridayEndAMPM" title="AM/PM">
         <option value="AM">AM</option>
         <option value="PM">PM</option>
       </select>
-      <p>End AM/PM</p>
     </div>
 
     <hr>
@@ -396,7 +412,13 @@
 
 
     <div class="form-group">
-      <input class="form-control" type="text" id="courseSlot" name="courseSlot" placeholder="Course Slot">
+      <select class="selectpicker" id = "courseSlot" name = "courseSlot" title="Slot">
+        <option value="001">001</option>
+        <option value="002">002</option>
+        <option value="003">003</option>
+        <option value="004">004</option>
+        <option value="005">005</option>
+      </select>
     </div>
     <div class="form-group">
       <button class="btn btn-default" type="submit" id="courseSubmit">Submit</button>
@@ -423,7 +445,7 @@
     <p>{{ this.wednesday }}</p>
     <p>{{ this.thursday }}</p>
     <p>{{ this.friday }}</p>
-    <p>{{ this.slot }}</p>
+    <p>Slot: {{ this.slot }}</p>
     <form method="post" action="/schedule/deleteCourse">
       <input name="schedId" value="{{this._id}}" style="display:none"/>
       <button class="btn btn-default" type="submit" id="courseDelete">Delete</button>

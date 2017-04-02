@@ -6,7 +6,7 @@ $(document).ready(function () {
 	$('.dropdown-toggle').dropdown('toggle');
 
 	$('.selectpicker').selectpicker('toggle');
-
+	$(document).scrollTop(0);
 
 
 	function divClicked() {
@@ -147,6 +147,12 @@ function displayCommentField(){
 
   document.getElementById("commentTextField").style.display = 'block';
 	document.getElementById("commentSubmit").style.display = 'block';
+
+}
+
+function displayScheduleFields(){
+
+	document.getElementById("createSchedule").style.display = 'block';
 
 }
 
