@@ -1,7 +1,7 @@
 PRE-PRESENTATION
 
 create two users with the same name
-create and login OTHER USER and THIRD USER (information doesn't matter)
+crete and login OTHER USER and THIRD USER (information doesn't matter)
 
 
 LOGIN
@@ -92,6 +92,9 @@ UPLOAD A FILE
 MAIN USER upload an image as profile pic
 MAIN USER view profile to see uploaded image
 OTHER USER view MAIN USER's profile to see image (optional)
+MAIN USER upload a new profile pic
+MAIN USER view profile to see new image
+OTHER USER view MAIN USER's profile to see new image (optional)
 
 SEARCH BAR
 
