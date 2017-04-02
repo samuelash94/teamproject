@@ -36,6 +36,7 @@ router.post('/addComment/', function(req, res){
 	var postIdentif = req.body.postIdentif;
   var commentText = req.body.commentTextField;
   var date = comment.getCurrentDate();
+	var mongoDate = new Date();
   req.checkBody('commentTextField', 'comment text must not be empty').notEmpty();
 
 	var errors = req.validationErrors();
@@ -66,6 +67,7 @@ router.post('/addComment/', function(req, res){
       userId: req.user.id,
 			text: commentText,
 			date: date,
+			mongoDate: mongoDate,
 			author: req.user.name,
 			isEdited: false
 		});
@@ -127,6 +129,7 @@ router.post('/editComment/', function(req, res){
 		     $set:{
 		       'text': newCommentText,
 		       'date': currentDate,
+					 'mongoDate': new Date(),
 					 'isEdited': true,
 		     }
 			 }

@@ -44,18 +44,28 @@ router.get('/profile/:userId', function(req, res, next){
 			schedule.push(doc);
 		});
 		var cursor = db.collection('users').find();
+		var cursorUsers = db.collection('users').find();
 		var users = [];
 		var isFriend = false;
-		cursor.forEach(function(doc, err){
+		cursorUsers.forEach(function(doc, err){
 			users.push(doc);
+		});
+		cursor.forEach(function(doc, err){
 			if (err) throw err;
 			if (doc._id == req.params.userId){
 				if (req.user){
 					var allFriends = doc.friends;
 					var userFriends = [];
 					var userFriendRequests = [];
+					var suggestedFriends = users;
+					var tenSuggestedFriends = [];
 					if (allFriends){
 						allFriends.forEach(function(doc2, err){
+							for (var i=0; i<suggestedFriends.length; i++){
+								if (doc2._id.equals(suggestedFriends[i]._id) || suggestedFriends[i]._id == req.user.id){
+									suggestedFriends.splice(i, 1);
+								}
+							}
 							if (doc2.status == "accepted"){
 								userFriends.push(doc2);
 							}else if (doc2.status == "pending"){
@@ -65,8 +75,14 @@ router.get('/profile/:userId', function(req, res, next){
 								isFriend = true;
 							}
 						});
+						for (var i=0; i<10; i++){
+							if (suggestedFriends[i]){
+								tenSuggestedFriends.push(suggestedFriends[i]);
+							}
+						}
 					}
-					res.render('profile', {user: doc, currentUser: req.user, friends: userFriends, friendRequests: userFriendRequests, users: users, isFriend: isFriend, groupInvites: doc.invites, groups: groups, schedule: schedule});
+					console.log(tenSuggestedFriends);
+					res.render('profile', {user: doc, currentUser: req.user, friends: userFriends, friendRequests: userFriendRequests, users: users, isFriend: isFriend, groupInvites: doc.invites, groups: groups, schedule: schedule, suggestedFriends: tenSuggestedFriends});
 
 				}else{
 					var userFriends = doc.friends;

@@ -34,6 +34,7 @@ router.get('/', function(req, res){
 router.post('/post', function(req, res){
 	var text = req.body.postField;
 	var date = Post.getCurrentDate();
+	var mongoDate = new Date();
 	var image = 0;
 	var userId = req.user.id;
 	var author = req.user.name;
@@ -62,6 +63,7 @@ router.post('/post', function(req, res){
 			author: author,
 			text: text,
 			date: date,
+			mongoDate: mongoDate,
 			image: image,
 			visible: visibility,
 			friendsList: friendsList
@@ -78,9 +80,10 @@ router.post('/post', function(req, res){
 	}
 });
 
-router.post('/post/:userId', function(req, res){
+router.post('/post/profile/:userId', function(req, res){
 	var text = req.body.postField;
 	var date = Post.getCurrentDate();
+	var mongoDate = new Date();
 	var image = 0;
 	var userId = req.user.id;
 	var author = req.user.name;
@@ -106,6 +109,7 @@ router.post('/post/:userId', function(req, res){
 						author: author,
 						text: text,
 						date: date,
+						mongoDate: mongoDate,
 						image: image,
 						visible: 0,
 						friendsList: [],
@@ -175,12 +179,73 @@ router.post('/post/:userId', function(req, res){
 	});
 });
 
+router.post('/post/group/:groupId', function(req, res){
+	var text = req.body.postField;
+	var date = Post.getCurrentDate();
+	var mongoDate = new Date();
+	var image = 0;
+	var userId = req.user.id;
+	var author = req.user.name;
+	var group;
+	mongo.connect(url, function(err, db){
+		var cursor = db.collection('groups').find();
+		cursor.forEach(function(doc, err){
+			if (doc._id == req.params.groupId){
+
+				group = doc;
+
+				req.checkBody('postField', 'Post must not be empty').notEmpty();
+
+				var errors = req.validationErrors();
+
+				if(errors){
+					res.render('index',{
+						errors:errors, currentUser: req.user
+					});
+				} else {
+					var newPost = new Post({
+						userId: userId,
+						author: author,
+						text: text,
+						date: date,
+						mongoDate: mongoDate,
+						image: image,
+						visible: 0,
+						friendsList: [],
+						groupPage: req.params.groupId
+					});
+					console.log("here.");
+					var posted = false;
+					var members = doc.members;
+					for (var i=0; i<members.length; i++){
+						console.log("here..");
+						if (members[i] == userId){
+							Post.createPost(newPost, function(err, post){
+								if(err) throw err;
+								console.log(post);
+							});
+						posted = true;
+						req.flash('success_msg', 'Post was posted.');
+						res.redirect('/');
+						}
+					}
+					if (!posted){
+						req.flash('error_msg', 'Error: Post was not posted. You do not have permission to post on this page.');
+						res.redirect('/');
+					}
+				}
+			}
+		});
+		db.close();
+	});
+});
+
 router.get('/loadPosts', function(req, res, next) {
 	var resultArray = [];
 	var commentsArray = [];
 	var users = [];
 	mongo.connect(url, function(err, db){
-		var cursor = db.collection('posts').find();
+		var cursor = db.collection('posts').find().sort({mongoDate: -1});
 		var cursorUsers = db.collection('users').find();
 		cursorUsers.forEach(function(doc, err){
 			console.log(doc.name);
@@ -243,6 +308,7 @@ router.get('/loadPosts', function(req, res, next) {
 									acceptedFriends.push(doc);
 								}
 							});
+							resultArray.sort();
 							res.render('index', {comments: commentsArray, posts:resultArray, myID: req.user.id, currentUser: req.user, friends: acceptedFriends});
 						}
 					});
@@ -252,13 +318,13 @@ router.get('/loadPosts', function(req, res, next) {
 	//res.redirect('/');
 });
 
-router.get('/loadPosts/:userId', function(req, res, next) {
+router.get('/loadPosts/profile/:userId', function(req, res, next) {
 	var resultArray = [];
 	var commentsArray = [];
 	var users = [];
 	var isFriend = false;
 	mongo.connect(url, function(err, db){
-		var cursor = db.collection('posts').find();
+		var cursor = db.collection('posts').find().sort({mongoDate: -1});;
 		var cursorComments = db.collection('comments').find();
 		var cursorUsers = db.collection('users').find();
 		cursor.forEach(function(doc, err){
@@ -311,6 +377,68 @@ router.get('/loadPosts/:userId', function(req, res, next) {
 	//res.redirect('/');
 });
 
+router.get('/loadPosts/group/:groupId', function(req, res, next) {
+	var resultArray = [];
+	var commentsArray = [];
+	var users = [];
+	var groups = [];
+	var isMember = false;
+	var hasRequested = false;
+	mongo.connect(url, function(err, db){
+		var cursor = db.collection('posts').find().sort({mongoDate: -1});;
+		var cursorComments = db.collection('comments').find();
+		var cursorGroups = db.collection('groups').find();
+		var cursorUsers = db.collection('users').find();
+
+		cursorUsers.forEach(function(doc, err){
+			users.push(doc);
+		});
+
+		cursor.forEach(function(doc, err){
+			if (doc.groupPage == req.params.groupId){
+				resultArray.push(doc);
+			}
+		}, function(){
+			//db.close();
+			//res.render('index', {posts: resultArray});
+		});
+
+		cursorComments.forEach(function(doc, err){
+			commentsArray.push(doc);
+		}, function(){
+			//db.close();
+			//res.render('/profile/:userId', {comments: commentsArray, posts:resultArray, user: user, currentUser: req.user, friends: userFriends, friendRequests: userFriendRequests, users: users, isFriend: isFriend});
+		});
+
+		cursorGroups.forEach(function(doc, err){
+			groups.push(doc);
+			if (err) throw err;
+			if (doc._id == req.params.groupId){
+				if (req.user){
+					var members = doc.members;
+					var requests = doc.requests;
+					members.forEach(function(doc2,err){
+						if (doc2 == req.user.id){
+							isMember = true;
+						}
+					});
+					if (requests){
+						requests.forEach(function(doc2,err){
+							if (doc2 == req.user.id){
+								hasRequested = true;
+							}
+						});
+					}
+					res.render('group', {comments: commentsArray, posts:resultArray, group: doc, currentUser: req.user, groups: groups, users: users, isMember: isMember, hasRequested: hasRequested, invites: req.user.invites, admin: doc.admin});
+				}else{
+					res.render('group', {comments: commentsArray, posts:resultArray, group: doc, groups: groups, users: users});
+				}
+			}
+		});
+	});
+	//res.redirect('/');
+});
+
 router.post('/editPost', function(req, res){
 
 	var newPostText = req.body.PostText;
@@ -332,6 +460,7 @@ router.post('/editPost', function(req, res){
 	     $set:{
 	       'text': newPostText,
 	       'date': currentDate,
+				 'mongoDate': new Date(),
 	     }
 		 }
 	);
@@ -355,6 +484,7 @@ router.post('/editVisibility/', function(req, res){
 		 $set:{
 			 'visibility': newVisibility,
 			 'date': currentDate,
+			 'mongoDate': new Date(),
 		 }
 	 }
 );
