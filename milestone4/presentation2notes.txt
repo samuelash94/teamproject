@@ -1,7 +1,7 @@
 PRE-PRESENTATION
 
 create two users with the same name
-crete and login OTHER USER and THIRD USER (information doesn't matter)
+create and login OTHER USER and THIRD USER (information doesn't matter)
 
 
 LOGIN
