@@ -62,8 +62,23 @@
   {{else}}
   <p>No friend requests.</p>
   {{/if}}
-  </div>
 {{/ifCond}}
+</div>
+
+<div name="suggestedFriends" class="loadSuggestedFriends">
+{{#ifCond user._id 'equals' currentUser._id}}
+  <h3>Suggested Friends</h3>
+  {{#if suggestedFriends}}
+  {{#each suggestedFriends}}
+    <div>
+    <p><a href="/profile/{{this._id}}">{{ this.name }}</a> <a class="label label-primary" id="addFriend" name="addFriend" href="/users/addFriend/{{this._id}}">+Add Friend</a></p>
+    </div>
+  {{/each}}
+  {{else}}
+  <p>No users to show.</p>
+  {{/if}}
+{{/ifCond}}
+</div>
 
 <div name="groupRequests" class="loadGroupRequests">
 {{#ifCond user._id 'equals' currentUser._id}}
@@ -85,8 +100,8 @@
   {{else}}
   <p>No group invites.</p>
   {{/if}}
-  </div>
 {{/ifCond}}
+</div>
 
 {{#ifCond user.hasResume '==' true}}
 {{#ifCond user._id 'equals' currentUser._id}}
@@ -147,7 +162,7 @@
 {{/if}}
 
 <h3 id="postHeader" style="display:none">Add a new post</h3>
-<form class="form-horizontal" method="post" action="/posts/post/{{user._id}}">
+<form class="form-horizontal" method="post" action="/posts/post/profile/{{user._id}}">
   <div class="form-group">
   <textarea class="form-control" rows="3" id="postField" name="postField" style="display:none"></textarea>
   </div>
@@ -160,7 +175,7 @@
 
 
 <div>
-  <a href="/posts/loadPosts/{{user._id}}">Load Posts</a>
+  <a href="/posts/loadPosts/profile/{{user._id}}">Load Posts</a>
 </div>
 <div>
   <a href = "#" onclick="hidePosts();"> Hide Posts</a>

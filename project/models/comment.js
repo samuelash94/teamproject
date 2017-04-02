@@ -13,6 +13,9 @@ var CommentSchema = mongoose.Schema({
 	date: {
 		type: String
 	},
+	mongoDate: {
+		type: Date
+	},
 	author: {
 		type: String
 	},
@@ -29,6 +32,7 @@ module.exports.getCurrentDate = function(){
 	var month = dateObj.getMonth();
 	var day = dateObj.getDate();
 	var hour = dateObj.getHours();
+	var minute = dateObj.getMinutes();
 	var ampm = "AM";
 	switch (month){
 		case 0:
@@ -76,7 +80,10 @@ module.exports.getCurrentDate = function(){
 	}else if (hour == 0){
 		hour = hour+12;
 	}
-	var date = month + " " + day + ", " + dateObj.getFullYear() + " " + hour + ":" + dateObj.getMinutes() + ampm;
+	if (minute < 10){
+		minute = "0" + minute;
+	}
+	var date = month + " " + day + ", " + dateObj.getFullYear() + " " + hour + ":" + minute + ampm;
 	return date;
 }
 
