@@ -20,6 +20,11 @@ MAIN USER add OTHER USER as friend
 MAIN USER check profile for  friendship
 OTHER USER check profile for friendship
 OTHER USER check post
+MAIN USER edit visibility (only me)
+OTHER USER check post to see it is no longer visibile
+MAIN USER edit visibility (list of friends, select OTHER USER)
+OTHER USER check post to see it is now visibile
+THIRD USER check post to see it is not visibile
 MAIN USER add comment
 OTHER USER check comment
 MAIN USER delete comment
