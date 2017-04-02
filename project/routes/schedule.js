@@ -21,121 +21,102 @@ router.post('/create', function(req, res){
 	var wed = req.body.wednesday;
 	var thurs = req.body.thursday;
 	var fri = req.body.friday;
-	var daysTimes = [];
+	var error = false;
 
-	if(typeof mon != 'undefined'){
-		var monTime = "Monday at ";
-		var monStartHour = req.body.mondayStartHour;
-		monTime += monStartHour + ":";
-		var monStartMin = req.body.mondayStartMinutes;
-		monTime += monStartMin + " ";
-		var monStartAP = req.body.mondayStartAMPM;
-		monTime += monStartAP + " - ";
-		var monEndHour = req.body.mondayEndHour;
-		monTime += monEndHour + ":";
-		var monEndMin = req.body.mondayEndMinutes;
-		monTime += monEndMin + " ";
-		var monEndAP = req.body.mondayEndAMPM;
-		monTime += monEndAP;
-		//daysTimes.push(monTime);
-	}
-
-	if(typeof tues != 'undefined'){
-		var tuesTime = "Tuesday at ";
-		var tuesStartHour = req.body.tuesdayStartHour;
-		tuesTime += tuesStartHour + ":";
-		var tuesStartMin = req.body.tuesdayStartMinutes;
-		tuesTime += tuesStartMin + " ";
-		var tuesStartAP = req.body.tuesdayStartAMPM;
-		tuesTime += tuesStartAP + " - ";
-		var tuesEndHour = req.body.tuesdayEndHour;
-		tuesTime += tuesEndHour + ":";
-		var tuesEndMin = req.body.tuesdayEndMinutes;
-		tuesTime += tuesEndMin + " ";
-		var tuesEndAP = req.body.tuesdayEndAMPM;
-		tuesTime += tuesEndAP;
-		//daysTimes.push(tuesTime);
-	}
-
-	if(typeof wed != 'undefined'){
-		var wedTime = "Wednesday at ";
-		var wedStartHour = req.body.wednesdayStartHour;
-		wedTime += wedStartHour + ":";
-		var wedStartMin = req.body.wednesdayStartMinutes;
-		wedTime += wedStartMin + " ";
-		var wedStartAP = req.body.wednesdayStartAMPM;
-		wedTime += wedStartAP + " - ";
-		var wedEndHour = req.body.wednesdayEndHour;
-		wedTime += wedEndHour + ":";
-		var wedEndMin = req.body.wednesdayEndMinutes;
-		wedTime += wedEndMin + " ";
-		var wedEndAP = req.body.wednesdayEndAMPM;
-		wedTime += wedEndAP;
-		//daysTimes.push(wedTime);
-	}
-	if(typeof thurs != 'undefined'){
-		var thursTime = "Thursday at ";
-		var thursStartHour = req.body.thursdayStartHour;
-		thursTime += thursStartHour + ":";
-		var thursStartMin = req.body.thursdayStartMinutes;
-		thursTime += thursStartMin + " ";
-		var thursStartAP = req.body.thursdayStartAMPM;
-		thursTime += thursStartAP + " - ";
-		var thursEndHour = req.body.thursdayEndHour;
-		thursTime += thursEndHour + ":";
-		var thursEndMin = req.body.thursdayEndMinutes;
-		thursTime += thursEndMin + " ";
-		var thursEndAP = req.body.thursdayEndAMPM;
-		thursTime += thursEndAP;
-		//daysTimes.push(thursTime);
-	}
-	if(typeof fri != 'undefined'){
-		var friTime = "Friday at ";
-		var friStartHour = req.body.fridayStartHour;
-		friTime += friStartHour + ":";
-		var friStartMin = req.body.fridayStartMinutes;
-		friTime += friStartMin + " ";
-		var friStartAP = req.body.fridayStartAMPM;
-		friTime += friStartAP + " - ";
-		var friEndHour = req.body.fridayEndHour;
-		friTime += friEndHour + ":";
-		var friEndMin = req.body.fridayEndMinutes;
-		friTime += friEndMin + " ";
-		var friEndAP = req.body.fridayEndAMPM;
-		friTime += friEndAP;
-		//daysTimes.push(friTime);
-	}
-
-	req.checkBody('courseName', 'Course name must not be empty').notEmpty();
-	req.checkBody('courseSlot', 'Course slot must not be empty').notEmpty();
-
-	var errors = req.validationErrors();
-
-	if(errors){
-		res.render('schedule',{
-			errors:errors, currentUser: req.user
-		});
-	} else {
-		var newSchedule = new schedule({
-			name: name,
-			//daysTimes: daysTimes,
-			monday: monTime,
-			tuesday: tuesTime,
-			wednesday: wedTime,
-			thursday: thursTime,
-			friday: friTime,
-			slot: slot,
-			userId : userId
-		});
-
-		schedule.createSchedule(newSchedule, function(err, user){
-			if(err) throw err;
-			console.log(user);
-		});
-
-		req.flash('success_msg', 'Course has been added to you schedule.');
-
+	if(name == ''){
+		req.flash('error_msg', 'You must select a course name.');
 		res.redirect('/schedule');
+	}
+
+	else{
+		if(slot == ''){
+			req.flash('error_msg', 'You must select a slot.');
+			res.redirect('/schedule');
+		}
+		else{
+			if(typeof mon == 'undefined' && typeof tues == 'undefined' && typeof wed == 'undefined' && typeof thurs == 'undefined' && typeof fri == 'undefined'){
+				req.flash('error_msg', 'You must select at least one day.');
+				res.redirect('/schedule');
+			}
+			else{
+				if(typeof mon != 'undefined'){
+					//if(req.body.mondayStartHour == '' || req.body.mondayStartMinutes == '' || req.body.mondayStartAMPM == '' || req.body.mondayEndHour == '' || req.body.mondayEndMinutes == '' || req.body.mondayEndAMPM == '')
+					var monTime = "Monday at " + req.body.mondayStartHour + ": "
+																		+ req.body.mondayStartMinutes + " "
+																		+ req.body.mondayStartAMPM + " - "
+																		+ req.body.mondayEndHour + ":"
+																		+ req.body.mondayEndMinutes + " "
+																		+ req.body.mondayEndAMPM;
+				}
+
+				if(typeof tues != 'undefined'){
+					var tuesTime = "Tuesday at " + req.body.tuesdayStartHour + ": "
+																		+ req.body.tuesdayStartMinutes + " "
+																		+ req.body.tuesdayStartAMPM + " - "
+																		+ req.body.tuesdayEndHour + ":"
+																		+ req.body.tuesdayEndMinutes + " "
+																		+ req.body.tuesdayEndAMPM;
+				}
+
+				if(typeof wed != 'undefined'){
+					var wedTime = "Wednesday at " + req.body.wednesdayStartHour + ": "
+																		+ req.body.wednesdayStartMinutes + " "
+																		+ req.body.wednesdayStartAMPM + " - "
+																		+ req.body.wednesdayEndHour + ":"
+																		+ req.body.wednesdayEndMinutes + " "
+																		+ req.body.wednesdayEndAMPM;
+				}
+
+				if(typeof thurs != 'undefined'){
+					var thursTime = "thursday at " + req.body.thursdayStartHour + ": "
+																		+ req.body.thursdayStartMinutes + " "
+																		+ req.body.thursdayStartAMPM + " - "
+																		+ req.body.thursdayEndHour + ":"
+																		+ req.body.thursdayEndMinutes + " "
+																		+ req.body.thursdayEndAMPM;
+				}
+
+				if(typeof fri != 'undefined'){
+					var friTime = "friday at " + req.body.fridayStartHour + ": "
+																		+ req.body.fridayStartMinutes + " "
+																		+ req.body.fridayStartAMPM + " - "
+																		+ req.body.fridayEndHour + ":"
+																		+ req.body.fridayEndMinutes + " "
+																		+ req.body.fridayEndAMPM;
+				}
+
+
+
+				var errors = req.validationErrors();
+
+				if(errors){
+					res.render('schedule',{
+						errors:errors, currentUser: req.user
+					});
+				}
+				else {
+					var newSchedule = new schedule({
+						name: name,
+						monday: monTime,
+						tuesday: tuesTime,
+						wednesday: wedTime,
+						thursday: thursTime,
+						friday: friTime,
+						slot: slot,
+						userId : userId
+					});
+
+					schedule.createSchedule(newSchedule, function(err, user){
+						if(err) throw err;
+						console.log(user);
+					});
+
+					req.flash('success_msg', 'Course has been added to your schedule.');
+
+					res.redirect('/schedule');
+				}
+			}
+		}
 	}
 });
 
@@ -150,7 +131,6 @@ router.get('/loadCourses', function(req, res, next) {
 			res.render('schedule', {schedule: resultArray, currentUser: req.user});
 		});
 	});
-	//res.redirect('/');
 });
 
 router.post('/deleteCourse/', function(req, res) {
