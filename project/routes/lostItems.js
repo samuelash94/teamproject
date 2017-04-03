@@ -39,6 +39,7 @@ router.post('/postItem', function(req, res){
 	var posterId = req.user.id;
 	var poster = req.user.name;
 	var phoneNumber = req.body.phoneNumber;
+	var posterEmail = req.user.email;
 
 	req.checkBody('itemDesc', 'Item description must not be empty').notEmpty();
 	req.checkBody('Address', 'Item Address must not be empty').notEmpty();
@@ -60,6 +61,7 @@ router.post('/postItem', function(req, res){
 			location: location,
 			posterId: posterId,
 			poster: poster,
+			posterEmail: posterEmail,
 			hasImage: false,
 			phoneNumber: phoneNumber,
 			claimed: false
@@ -207,6 +209,7 @@ router.post('/claimItem/:itemId', function(req, res){
 	var found = false;
 	var users = [];
 	var phone = req.body.phoneNumber;
+	var posterEmail = req.body.email;
 	mongo.connect(url, function(err, db){
 		db.collection('lostitems').update(
 	 { _id: objectId(itemId) },
@@ -215,6 +218,7 @@ router.post('/claimItem/:itemId', function(req, res){
 			 'claimed': true,
 			 'claimedBy': req.user.name,
 			 'claimerId': req.user.id,
+			 'claimerEmail': req.user.email,
 		 }
 	 }
 );
@@ -239,7 +243,7 @@ mongo.connect(url, function(err, db){
 				req.flash('success_msg', 'You have successfully claimed the item. The phone number is: ' + phone);
 		}
 		else{
-			req.flash('success_msg', 'You have successfully claimed the item');
+			req.flash('success_msg', 'You have successfully claimed the item. The email is: ' + posterEmail);
 		}
 		db.close();
 			 res.redirect('/lostItems/viewItems');

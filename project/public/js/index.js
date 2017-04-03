@@ -179,3 +179,28 @@ function hidePosts(){
 		x[i].style.display = "none";
 	}
 }
+
+function initMap(id) {
+        var map = new google.maps.Map(document.getElementsByClassName(id)[1], {
+          zoom: 11,
+          center: {lat: -34.397, lng: 150.644}
+        });
+        var geocoder = new google.maps.Geocoder();
+          geocodeAddress(geocoder, map, id);
+      }
+
+      function geocodeAddress(geocoder, resultsMap, id) {
+        var address = document.getElementsByClassName(id)[0].value;
+        geocoder.geocode({'address': address}, function(results, status) {
+          if (status === 'OK') {
+            resultsMap.setCenter(results[0].geometry.location);
+            var marker = new google.maps.Marker({
+              map: resultsMap,
+							title: 'Location is found here',
+              position: results[0].geometry.location
+            });
+          } else {
+            alert('Geocode was not successful for the following reason: ' + status);
+          }
+        });
+      }

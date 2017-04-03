@@ -19,6 +19,7 @@
 
 {{#ifCond this.claimed '==' true}}
 <p> Your item has been claimed by: <a href="/profile/{{this.claimerId}}">{{ this.claimedBy }}</a></p>
+<p>Claimers email is : <a href="mailto:{{this.claimerEmail}}?body={{currentUser.email}}">{{this.claimerEmail}}</a></p>
 <form method="post" action="/lostItems/unclaimItem/{{this._id}}">
 <div class="form-group">
   <button type= "submit" class="btn btn-info">Unclaim Item</button>
@@ -33,6 +34,14 @@
   <button type= "submit" class="btn btn-danger">Delete Item</button>
 </div>
 </form>
+<p><label>Address</label></p>
+<input class="{{this._id}} form-control" value="{{this.location}}" name="mapLocation" id = "{{this._id}}" readonly />
+<p></p>
+<p></p>
+<div id="map" class="{{this._id}}"></div>
+<script>
+initMap('{{this._id}}')
+</script>
 </div>
 {{/each}}
 
@@ -51,6 +60,7 @@
     <form method="post" action="/lostItems/claimItem/{{this._id}}">
       <input name="posterId" value="{{this.posterId}}"  style="display:none" />
       <input name="phoneNumber" value="{{this.phoneNumber}}"  style="display:none" />
+      <input name="posterEmail" value="{{this.posterEmail}}" style="display:none" />
     <div class="form-group">
       <button type= "submit" class="btn btn-warning">Claim Item</button>
     </div>
@@ -60,6 +70,7 @@
   {{else}}
   {{#ifCond this.claimerId '==' ../currentUser._id}}
   <p>You have claimed this item</p>
+  <p>The posters email is: <a href="mailto:{{this.posterEmail}}?body={{currentUser.email}}">{{this.posterEmail}}</a></p>
 
 
   {{else}}
@@ -67,5 +78,13 @@
   {{/ifCond}}
 
   {{/ifCond}}
+  <p><label>Address</label></p>
+  <input class="{{this._id}} form-control" value="{{this.location}}" name="mapLocation" id = "{{this._id}}" readonly />
+  <p></p>
+  <p></p>
+  <div id="map" class = "{{this._id}}"></div>
+  <script>
+  initMap('{{this._id}}')
+  </script>
   </div>
     {{/each}}
