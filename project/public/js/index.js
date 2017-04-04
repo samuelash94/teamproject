@@ -6,6 +6,7 @@ $(document).ready(function () {
 	$('.dropdown-toggle').dropdown('toggle');
 
 	$('.selectpicker').selectpicker('toggle');
+	$('.selectpicker').selectpicker('toggle');
 	$(document).scrollTop(0);
 
 

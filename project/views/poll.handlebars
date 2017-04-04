@@ -6,7 +6,7 @@
   <p>Enter the name of the course.</p>
   <form method="post" action="/poll/create">
     <div class="form-group">
-      <select class="selectpicker" id = "pollName" name = "pollName" title="Course">
+      <select class="selectpicker" data-live-search="true" id = "pollName" name = "pollName" title="Course">
         <option value="COMP 1000">COMP 1000</option>
         <option value="COMP 1001">COMP 1001</option>
         <option value="COMP 1002">COMP 1002</option>
@@ -58,10 +58,10 @@
   <a href="/poll/loadPolls">Show Polls</a>
 </div>
 <div>
-  <a href="/polls">Hide Polls</a>
+  <a href = "#" onclick="hidePosts();"> Hide Polls</a>
 </div>
 
-<div class="loadthesePolls">
+<div class="loadthesePosts">
   {{# each poll }}
   <div class="jumbotron">
     <h3>{{ this.name }}<h3>

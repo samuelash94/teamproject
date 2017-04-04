@@ -68,7 +68,7 @@ router.post('/create', function(req, res){
 				}
 
 				if(typeof thurs != 'undefined'){
-					var thursTime = "thursday at " + req.body.thursdayStartHour + ": "
+					var thursTime = "Thursday at " + req.body.thursdayStartHour + ": "
 																		+ req.body.thursdayStartMinutes + " "
 																		+ req.body.thursdayStartAMPM + " - "
 																		+ req.body.thursdayEndHour + ":"
@@ -77,7 +77,7 @@ router.post('/create', function(req, res){
 				}
 
 				if(typeof fri != 'undefined'){
-					var friTime = "friday at " + req.body.fridayStartHour + ": "
+					var friTime = "Friday at " + req.body.fridayStartHour + ": "
 																		+ req.body.fridayStartMinutes + " "
 																		+ req.body.fridayStartAMPM + " - "
 																		+ req.body.fridayEndHour + ":"

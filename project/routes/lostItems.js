@@ -69,7 +69,6 @@ router.post('/postItem', function(req, res){
 
 		lostItem.postNewItem(newItem, function(err, user){
 			if(err) throw err;
-			console.log(user);
 		});
 
 		req.flash('success_msg', 'Item successfully added to lost and found.');
@@ -209,7 +208,7 @@ router.post('/claimItem/:itemId', function(req, res){
 	var found = false;
 	var users = [];
 	var phone = req.body.phoneNumber;
-	var posterEmail = req.body.email;
+	var posterEmail = req.body.posterEmail;
 	mongo.connect(url, function(err, db){
 		db.collection('lostitems').update(
 	 { _id: objectId(itemId) },

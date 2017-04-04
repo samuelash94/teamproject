@@ -81,7 +81,6 @@ router.get('/profile/:userId', function(req, res, next){
 							}
 						}
 					}
-					console.log(tenSuggestedFriends);
 					res.render('profile', {user: doc, currentUser: req.user, friends: userFriends, friendRequests: userFriendRequests, users: users, isFriend: isFriend, groupInvites: doc.invites, groups: groups, schedule: schedule, suggestedFriends: tenSuggestedFriends});
 
 				}else{

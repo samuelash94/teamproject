@@ -16,7 +16,7 @@ var formidable = require('formidable');
 var fs = require('fs');
 var path = require('path');
 var bcrypt = require('bcryptjs');
-//var msopdf = require('node-msoffice-pdf');
+var msopdf = require('node-msoffice-pdf');
 
 // Register
 router.get('/register', function(req, res){
@@ -51,13 +51,10 @@ router.post('/reset', function(req, res){
 			var cursor = db.collection('users').find({email: email});
 			var resetLink = req.protocol + "://" + req.get('host')  + '/users/resetPassword/';
 			cursor.forEach(function (doc,err){
-				if(doc._email = email){
+				if(doc.email ==  email){
 					//resultArray.push(doc._id);
 					resetLink = resetLink + doc._id;
 					mailer.resetPasswordEmail(email, resetLink);
-				}
-				else {
-					console.log("Did not find a user with that email");
 				}
 				db.close();
 				});
@@ -83,10 +80,10 @@ router.post('/reset', function(req, res){
 router.post('/changePassword/:userId', function(req, res){
 	var password = req.body.newpassword;
 	var userId = req.params.userId;
-	//var password2 = req.body.password2;
+	var password2 = req.body.newpassword2;
 
 	req.checkBody('newpassword', 'Password is required').notEmpty();
-	//req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
+	req.checkBody('newpassword2', 'Passwords do not match').equals(req.body.password);
 
 	var errors = req.validationErrors();
 
@@ -159,7 +156,8 @@ router.post('/register', function(req, res){
 			postDefault: postDefault,
 			visibilityList: visibilityList,
 			whoCanPost: 0,
-			whoCanPostList: []
+			whoCanPostList: [],
+			isAuthenticated: false
 		});
 
 		User.createUser(newUser, function(err, user){
@@ -171,8 +169,26 @@ router.post('/register', function(req, res){
 
 		res.redirect('/users/login');
 
-		mailer.sendInitialEmail(newUser.email, newUser.username);
+var authLink = req.protocol + "://" + req.get('host')  + '/users/authenticate/' + newUser._id;
+		mailer.sendInitialEmail(newUser.email, authLink);
 	}
+});
+
+router.get('/authenticate/:userId', function(req, res){
+	var userId = req.params.userId;
+	mongo.connect(url, function(err, db){
+		db.collection('users').update(
+	 { _id: objectId(itemId) },
+	 {
+		 $set:{
+			 'isAuthenticated': true,
+		 }
+	 }
+);
+db.close();
+req.flash('success_msg', 'You are now authenticated and can now log in');
+res.redirect('/users/login');
+	});
 });
 
 passport.use(new LocalStrategy(
@@ -207,7 +223,23 @@ passport.deserializeUser(function(id, done) {
 router.post('/login',
   passport.authenticate('local', {successRedirect:'/', failureRedirect:'/users/login',failureFlash: true}),
   function(req, res) {
-    res.redirect('/');
+		var username = req.body.username;
+		var resultArray = [];
+		mongo.connect(url, function(err, db){
+			var users = db.collection('users').find({username: username});
+			users.forEach(function(doc, err){
+				resultArray.push(user);
+			}, function(){
+				if(users[0].isAuthenticated == false){
+					req.flash('error_msg', 'You are not authenticated yet. Please check your email');
+					res.redirect('/users/login');
+				}
+				else{
+					res.redirect('/');
+				}
+				db.close();
+			});
+		});
   });
 
 router.get('/logout', function(req, res){
@@ -403,10 +435,20 @@ router.get('/acceptFriend/:userId', function(req, res){
 		if (err) throw err;
 		else{
 			req.flash('success_msg', 'Friend request accepted.');
-			res.redirect('/');
+			res.redirect('/profile/' + req.user.id);
 		}
 	});
 
+});
+
+router.post('/removeFriend/:userId', function(req, res){
+	User.removeFriend(req.user.id, req.params.userId, function(err){
+		if (err) throw err;
+		else{
+			req.flash('success_msg', 'You have remove the user from your friend list');
+			res.redirect('/profileSettings/' + req.user.id);
+		}
+	});
 });
 
 router.post('/setDefaultVisibility/:userId', function(req, res){
@@ -444,7 +486,6 @@ router.post('/visibilityList/:userId', function(req, res){
 			res.redirect('/');
 			db.close();
 		}else{
-			console.log(friendsToAdd);
 			var cursor3 = db.collection('users').update(
 			{ _id: objectId(req.params.userId) },
 			{ $addToSet:{ visibilityList: friendsToAdd }});
@@ -481,7 +522,6 @@ router.post('/whoCanPostList/:userId', function(req, res){
 		var friendsToAdd = req.body.friendsList;
 		if (Array.isArray(friendsToAdd)){
 			friendsToAdd.forEach(function(doc, err){
-				console.log(doc);
 				var cursor2 = db.collection('users').update(
 			 	{ _id: objectId(req.params.userId) },
 			 	{ $addToSet:{ whoCanPostList: doc }});
@@ -490,7 +530,6 @@ router.post('/whoCanPostList/:userId', function(req, res){
 			res.redirect('/');
 			db.close();
 		}else{
-			console.log(friendsToAdd);
 			var cursor3 = db.collection('users').update(
 			{ _id: objectId(req.params.userId) },
 			{ $addToSet:{ whoCanPostList: friendsToAdd }});

@@ -7,7 +7,7 @@
   <p>Enter information about a course to add to your schedule.</p>
   <form method="post" action="/schedule/create">
     <div class="form-group">
-      <select class="selectpicker" id = "courseName" name = "courseName" title="Course">
+      <select class="selectpicker" data-live-search="true" id = "courseName" name = "courseName" title="Course">
         <option value="COMP 1000">COMP 1000</option>
         <option value="COMP 1001">COMP 1001</option>
         <option value="COMP 1002">COMP 1002</option>
@@ -433,10 +433,10 @@
   <a href="/schedule/loadCourses">Show Courses</a>
 </div>
 <div>
-  <a href="/schedule">Hide Courses</a>
+  <a href = "#" onclick="hidePosts();">Hide Courses</a>
 </div>
 
-<div class="loadtheseCourses">
+<div class="loadthesePosts">
   {{# each schedule }}
   <div class="jumbotron">
     <h3>{{ this.name }}<h3>

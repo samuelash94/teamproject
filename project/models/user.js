@@ -44,6 +44,9 @@ var UserSchema = mongoose.Schema({
 	},
 	whoCanPostList: {
 		type: Array
+	},
+	isAuthenticated: {
+		type: Boolean
 	}
 });
 
@@ -79,13 +82,6 @@ module.exports.addFriend = function(user1id, user2id, callback){
 	User.requestFriend(user1id, user2id, callback);
 }
 
-/* Not sure about this
-module.exports.resetPassword = function(){
-
+module.exports.removeFriend = function(user1id, user2id, callback){
+	User.removeFriend(user1id, user2id, callback);
 }
-*/
-
-//module.exports.getAcceptedFriends = function(callback){
-	//var query = {friends: [status = 'accepted']};
-	//User.find(query);
-//}
