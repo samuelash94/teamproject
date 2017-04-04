@@ -1,8 +1,17 @@
 <h2 class="page-header">Reset Password</h2>
+{{#if errors}}
+      {{#each errors}}
+        <div class="alert alert-danger">{{msg}}</div>
+      {{/each}}
+{{/if}}
 <form method="post" action="/users/reset">
   <div class="form-group">
+    <label>Enter your username</label>
+    <input type="text" class="form-control" name="username" placeholder="username">
+  </div>
+  <div class="form-group">
     <label>Enter your email</label>
-    <input type="text" class="form-control" name="email" placeholder="@mun.ca">
+    <input type="text" class="form-control" name="email" placeholder="something@mun.ca">
   </div>
   <button type="submit" class="btn btn-default">Submit</button>
 </form>

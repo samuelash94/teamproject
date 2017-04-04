@@ -36,8 +36,10 @@ router.get('/goToReset', function(req, res){
 // Reset request page
 router.post('/reset', function(req, res){
 	var email = req.body.email;
+	var username = req.body.username;
 
 	req.checkBody('email', 'Email is required').notEmpty();
+	req.checkBody('username', 'username required').notEmpty();
 	var errors = req.validationErrors();
 
 	if(errors){
@@ -48,7 +50,7 @@ router.post('/reset', function(req, res){
 		var resultArray = [];
 
 		mongo.connect(url, function(err, db){
-			var cursor = db.collection('users').find({email: email});
+			var cursor = db.collection('users').find({email: email, username:username});
 			var resetLink = req.protocol + "://" + req.get('host')  + '/users/resetPassword/';
 			cursor.forEach(function (doc,err){
 				if(doc.email ==  email){
@@ -83,14 +85,14 @@ router.post('/changePassword/:userId', function(req, res){
 	var password2 = req.body.newpassword2;
 
 	req.checkBody('newpassword', 'Password is required').notEmpty();
-	req.checkBody('newpassword2', 'Passwords do not match').equals(req.body.password);
+	req.checkBody('newpassword2', 'Confirm password has to match').notEmpty();
+	req.checkBody('newpassword2', 'Passwords do not match').equals(req.body.newpassword);
 
 	var errors = req.validationErrors();
 
 	if(errors){
-		res.render('resetPassword',{
-			errors:errors, userId: userId
-		});
+		req.flash('error_msg', 'Please make sure the two fields match and that they are not empty');
+		res.redirect('/users/resetPassword/' + userId);
 	} else {
 		var hash = bcrypt.hashSync(password, 10);
 
@@ -105,10 +107,9 @@ router.post('/changePassword/:userId', function(req, res){
 					 			});
 					db.close();
 				});
-		};
-		req.flash('success_msg', 'Your Password is now reset');
-
-		res.redirect('/users/login');
+				req.flash('success_msg', 'Your Password is now reset');
+				res.redirect('/users/login');
+		}
 	});
 
 // Register User
@@ -178,7 +179,7 @@ router.get('/authenticate/:userId', function(req, res){
 	var userId = req.params.userId;
 	mongo.connect(url, function(err, db){
 		db.collection('users').update(
-	 { _id: objectId(itemId) },
+	 { _id: objectId(userId) },
 	 {
 		 $set:{
 			 'isAuthenticated': true,
@@ -186,7 +187,7 @@ router.get('/authenticate/:userId', function(req, res){
 	 }
 );
 db.close();
-req.flash('success_msg', 'You are now authenticated and can now log in');
+req.flash('success_msg', 'You are now authenticated!');
 res.redirect('/users/login');
 	});
 });
@@ -223,23 +224,7 @@ passport.deserializeUser(function(id, done) {
 router.post('/login',
   passport.authenticate('local', {successRedirect:'/', failureRedirect:'/users/login',failureFlash: true}),
   function(req, res) {
-		var username = req.body.username;
-		var resultArray = [];
-		mongo.connect(url, function(err, db){
-			var users = db.collection('users').find({username: username});
-			users.forEach(function(doc, err){
-				resultArray.push(user);
-			}, function(){
-				if(users[0].isAuthenticated == false){
-					req.flash('error_msg', 'You are not authenticated yet. Please check your email');
-					res.redirect('/users/login');
-				}
-				else{
-					res.redirect('/');
-				}
-				db.close();
-			});
-		});
+		res.redirect('/');
   });
 
 router.get('/logout', function(req, res){
