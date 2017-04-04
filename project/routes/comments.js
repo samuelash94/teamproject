@@ -37,6 +37,10 @@ router.post('/addComment/', function(req, res){
   var commentText = req.body.commentTextField;
   var date = comment.getCurrentDate();
 	var mongoDate = new Date();
+	var textHistory = [];
+	textHistory.push(commentText);
+	var dateHistory = [];
+	dateHistory.push(date);
   req.checkBody('commentTextField', 'comment text must not be empty').notEmpty();
 
 	var errors = req.validationErrors();
@@ -69,7 +73,9 @@ router.post('/addComment/', function(req, res){
 			date: date,
 			mongoDate: mongoDate,
 			author: req.user.name,
-			isEdited: false
+			isEdited: false,
+			textHistory: textHistory,
+			dateHistory: dateHistory
 		});
 
     comment.addComment(newComment, function(err, user){
@@ -78,7 +84,7 @@ router.post('/addComment/', function(req, res){
 		});
 
 		req.flash('success_msg', 'comment was added.');
-    res.redirect("/");
+    res.redirect("/posts/loadPosts");
   }
 
 });
@@ -88,7 +94,7 @@ router.post('/editComment/', function(req, res){
 
 	if(req.body.userIdentif != req.user.id){
 		req.flash('error', 'You are not the author of this comment');
-		res.redirect('/');
+		res.redirect("/posts/loadPosts");
 	}
 
 	else{
@@ -121,8 +127,6 @@ router.post('/editComment/', function(req, res){
 		}
 		else {
 			mongo.connect(url, function(err, db){
-				var oldComment = db.collection('comments').findOne({_id : objectId(req.body.commentIdentif)});
-	    		db.collection('oldComments').insert(oldComment);
 				var newComment = db.collection('comments').update(
 		   { _id: objectId(req.body.commentIdentif) },
 			 {
@@ -135,9 +139,20 @@ router.post('/editComment/', function(req, res){
 			 }
 		);
 		db.close();
-		req.flash('success_msg', 'comment was edited.');
-			 res.redirect('/');
 			});
+
+			mongo.connect(url, function(err, db){
+				db.collection('comments').update({_id: objectId(req.body.commentIdentif)},{
+					$push:{
+						'dateHistory': currentDate,
+						'textHistory': newCommentText,
+					}
+				});
+				db.close();
+			});
+
+			req.flash('success_msg', 'comment was edited.');
+				 res.redirect("/posts/loadPosts");
 		}
 	}
 });
@@ -148,7 +163,7 @@ router.post('/editComment/', function(req, res){
 router.post('/deleteComment/', function(req, res) {
 	if(req.body.userIdentif != req.user.id){
 		req.flash('error', 'You are not the author of this comment');
-		res.redirect('/');
+		res.redirect("/posts/loadPosts");
 	}
 	else{
 		mongo.connect(url, function(err, db){
@@ -156,7 +171,7 @@ router.post('/deleteComment/', function(req, res) {
 	   { _id: objectId(req.body.commentIdentif) });
 	db.close();
 	req.flash('success_msg', 'comment was deleted.');
-		 res.redirect('/');
+		 res.redirect("/posts/loadPosts");
 
 		});
 	}

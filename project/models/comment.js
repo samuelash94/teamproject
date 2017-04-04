@@ -21,6 +21,12 @@ var CommentSchema = mongoose.Schema({
 	},
 	isEdited: {
 		type: Boolean
+	},
+	textHistory: {
+		type: Array
+	},
+	dateHistory: {
+		type: Array
 	}
 });
 
@@ -83,7 +89,7 @@ module.exports.getCurrentDate = function(){
 	if (minute < 10){
 		minute = "0" + minute;
 	}
-	var date = month + " " + day + ", " + dateObj.getFullYear() + " " + hour + ":" + minute + ampm;
+	var date = month + " " + day + " " + dateObj.getFullYear() + " " + hour + ":" + minute + ampm;
 	return date;
 }
 

@@ -123,6 +123,21 @@
         <input name="userIdentif" value="{{this.userId}}"  style="display:none" />
       </div>
     </form>
+    <script>
+    function seePreviousComments{{this._id}}(){
+      var history = '{{this.textHistory}}';
+      var dateHistory = '{{this.dateHistory}}';
+      var finalArr = [];
+      var regex = /\s*,\s*/;
+      var newHistory = history.split(regex);
+      var newDate = dateHistory.split(regex);
+      for(var i = 0; i<newHistory.length; i++){
+        finalArr[i] = newDate[i] + ', ' + newHistory[i];
+      }
+      alert(finalArr.join("\n"));
+    }
+    </script>
+    <a onclick="seePreviousComments{{this._id}}();"> Comment History</a>
     </div>
       {{/ifCond}}
     {{/each}}

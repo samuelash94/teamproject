@@ -214,15 +214,12 @@ router.post('/post/group/:groupId', function(req, res){
 						friendsList: [],
 						groupPage: req.params.groupId
 					});
-					console.log("here.");
 					var posted = false;
 					var members = doc.members;
 					for (var i=0; i<members.length; i++){
-						console.log("here..");
 						if (members[i] == userId){
 							Post.createPost(newPost, function(err, post){
 								if(err) throw err;
-								console.log(post);
 							});
 						posted = true;
 						req.flash('success_msg', 'Post was posted.');
@@ -248,7 +245,6 @@ router.get('/loadPosts', function(req, res, next) {
 		var cursor = db.collection('posts').find().sort({mongoDate: -1});
 		var cursorUsers = db.collection('users').find();
 		cursorUsers.forEach(function(doc, err){
-			console.log(doc.name);
 			users.push(doc);
 		}, function(){
 		});
@@ -273,10 +269,7 @@ router.get('/loadPosts', function(req, res, next) {
 										}
 									}
 								}else if (doc.visible == 3){
-									console.log(visible.length);
 									for (var j=0; j<visible.length; j++){
-										console.log(visible[j]);
-										console.log(req.user.id);
 										if (visible[j] == req.user.id){
 											resultArray.push(doc);
 										}
@@ -466,7 +459,7 @@ router.post('/editPost', function(req, res){
 	);
 	db.close();
 	req.flash('success_msg', 'post was edited.');
-		 res.redirect('/');
+		 res.redirect('/posts/loadPosts');
 
 		});
 
@@ -502,7 +495,7 @@ router.post('/deletePost/', function(req, res) {
 	   { _id: objectId(req.body.postIdentif) });
 	db.close();
 	req.flash('success_msg', 'post was deleted.');
-		 res.redirect('/');
+		 res.redirect('/posts/loadPosts');
 
 		});
 });
