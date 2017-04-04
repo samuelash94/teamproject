@@ -1,0 +1,13 @@
+delete poll (only author)
+remove friend
+edit privacy of group
+leave group
+cancel friend request
+cancel group request
+empty search loads all users
+check if user is logged in on every page load
+check file type and size on upload
+
+
+
+CSS
