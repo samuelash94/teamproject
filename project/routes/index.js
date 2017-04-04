@@ -10,6 +10,12 @@ var url = 'mongodb://localhost/4770TeamProject';
 
 // Get Homepage
 router.get('/', ensureAuthenticated, function(req, res){
+	if(req.user.isAuthenticated == false){
+		req.flash('error_msg', 'You have not authenticated via email yet.');
+		res.redirect('/users/login');
+	}
+
+	else{
 	var allFriends;
 	var acceptedFriends = [];
 	var users = [];
@@ -29,6 +35,7 @@ router.get('/', ensureAuthenticated, function(req, res){
 		});
 		db.close();
 	});
+}
 });
 
 router.get('/profile/:userId', function(req, res, next){
@@ -38,7 +45,7 @@ router.get('/profile/:userId', function(req, res, next){
 		cursor2.forEach(function(doc, err){
 			groups.push(doc);
 		});
-		var cursor3 = db.collection('schedules').find();
+		var cursor3 = db.collection('schedules').find({_id: objectId(req.params.userId)});
 		var schedule = [];
 		cursor3.forEach(function(doc, err){
 			schedule.push(doc);

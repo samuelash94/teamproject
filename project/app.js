@@ -39,7 +39,7 @@ handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
         case '==':
             return (v1 == v2) ? options.fn(this) : options.inverse(this);
         case 'contains':
-            return (v1.includes(v2)) ? options.fn(this) : options.inverse(this);    
+            return (v1.includes(v2)) ? options.fn(this) : options.inverse(this);
         case 'equals':
             return (v1.equals(v2)) ? options.fn(this) : options.inverse(this);
         case '===':
@@ -126,28 +126,6 @@ app.use(expressValidator({
     endsWith: function(param, regex) {
         return param.endsWith(regex);
     },
-    isStudentNumberUnique: function(value){
-      var resultArray = [];
-      var newValue = Number(value);
-
-      mongo.connect(url, function(err, db){
-        var numbers = db.collection('users').find(
-  	   { 'student_id': newValue });
-    		numbers.forEach(function(doc, err){
-    			resultArray.push(doc);
-    		}, function(){
-          db.close();
-    		});
-    	});
-
-      if(resultArray.length > 0){
-          return false;
-        }else{
-          return true;
-        }
-
-        console.log(resultArray);
-    }
  }
 }));
 

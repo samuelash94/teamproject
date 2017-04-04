@@ -131,7 +131,6 @@ router.post('/register', function(req, res){
 	req.checkBody('email', 'Email is required').notEmpty();
 	req.checkBody('student_id', 'Student number is required').notEmpty();
 	req.checkBody('student_id', 'Student number must be an Integer').isInt();
-	req.checkBody('student_id', 'Student number already in use').isStudentNumberUnique();
 	req.checkBody('email', 'Email is not valid').isEmail();
 	req.checkBody('email', 'Email must end in @mun.ca').endsWith('@mun.ca');
 	req.checkBody('username', 'Username is required').notEmpty();
@@ -145,33 +144,84 @@ router.post('/register', function(req, res){
 			errors:errors
 		});
 	} else {
-		var newUser = new User({
-			name: name,
-			email:email,
-			username: username,
-			password: password,
-			student_id: student_id,
-			gender: gender,
-			campus: campus,
-			invites: invites,
-			postDefault: postDefault,
-			visibilityList: visibilityList,
-			whoCanPost: 0,
-			whoCanPostList: [],
-			isAuthenticated: false
+		var resultArray = [];
+		var numberArray = [];
+		var nameArray = [];
+		var errArr = [];
+
+		var newNumber = Number(student_id);
+
+		mongo.connect(url, function(err, db){
+			var nameUsers = db.collection('users').find({username: username});
+			nameUsers.forEach(function(doc, err){
+				nameArray.push(doc)
+			}, function(){
+				db.close();
+			});
 		});
 
-		User.createUser(newUser, function(err, user){
-			if(err) throw err;
-			console.log(user);
+		mongo.connect(url, function(err, db){
+			var numberUsers = db.collection('users').find({student_id: newNumber});
+			numberUsers.forEach(function(doc, err){
+				numberArray.push(doc)
+			}, function(){
+				db.close();
+			});
 		});
 
-		req.flash('success_msg', 'You are registered and can now login');
+		mongo.connect(url, function(err, db){
+			var emailUsers = db.collection('users').find({email: email});
+			emailUsers.forEach(function(doc, err){
+				resultArray.push(doc);
+			}, function(){
+				if(resultArray.length !=0){
+					errArr.push(' email is already in use');
+				}
+				if(nameArray.length!=0){
+					errArr.push(' username is already in use ');
+				}
+				if(numberArray.length!=0){
+					errArr.push(' student number is already in use');
+				}
+				if(errArr.length != 0){
+					for(var i=0; i<errArr.length; i++){
+						req.flash('error_msg', errArr[i]);
+					}
+					res.redirect('/users/register');
+				}
+				else{
+					var newUser = new User({
+						name: name,
+						email:email,
+						username: username,
+						password: password,
+						student_id: student_id,
+						gender: gender,
+						campus: campus,
+						invites: invites,
+						postDefault: postDefault,
+						visibilityList: visibilityList,
+						whoCanPost: 0,
+						whoCanPostList: [],
+						isAuthenticated: false
+					});
 
-		res.redirect('/users/login');
+					User.createUser(newUser, function(err, user){
+						if(err) throw err;
+						console.log(user);
+					});
 
-var authLink = req.protocol + "://" + req.get('host')  + '/users/authenticate/' + newUser._id;
-		mailer.sendInitialEmail(newUser.email, authLink);
+					req.flash('success_msg', 'You are registered and can now login');
+
+					res.redirect('/users/login');
+
+			var authLink = req.protocol + "://" + req.get('host')  + '/users/authenticate/' + newUser._id;
+					mailer.sendInitialEmail(newUser.email, authLink);
+				}
+			});
+		});
+
+
 	}
 });
 

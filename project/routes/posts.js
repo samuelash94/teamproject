@@ -40,10 +40,6 @@ router.post('/post', function(req, res){
 	var author = req.user.name;
 	var visibility = req.body.visibility;
 	var friendsList;
-	if(req.user.isAuthenticated == false){
-		req.flash('error_msg', 'You have not authenticated via email yet.');
-		res.redirect('/');
-	}
 	if (req.body.friendsList){
 		friendsList = req.body.friendsList;
 	}else{
