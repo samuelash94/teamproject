@@ -196,7 +196,6 @@ router.post('/register', function(req, res){
 						username: username,
 						password: password,
 						student_id: student_id,
-						gender: gender,
 						campus: campus,
 						invites: invites,
 						postDefault: postDefault,
