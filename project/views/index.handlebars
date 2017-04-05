@@ -107,18 +107,24 @@
       <form method="post" action="/comments/editComment/">
         <div class="form-group">
           <textarea class="form-control" id="commentText"  name="commentText" readonly>{{this.text}}</textarea>
+          {{#ifCond this.userId '==' ../../currentUser._id}}
           <button type="button" class="commentEditButton btn btn-primary">Edit Comment</button>
+          {{/ifCond}}
           <input name="commentIdentif" value="{{this._id}}"  style="display:none" />
           <input name="userIdentif" value="{{this.userId}}"  style="display:none" />
           </div>
       <div class="form-group">
+        {{#ifCond this.userId '==' ../../currentUser._id}}
         <button type= "submit" class="saveButton btn btn-warning" >Save</button>
+        {{/ifCond}}
       </div>
       <p></p>
     </form>
     <form method="post" action="/comments/deleteComment/">
       <div class="form-group">
+        {{#ifCond this.userId '==' ../../currentUser._id}}
         <button class="btn btn-danger" type="submit">Delete Comment</button>
+        {{/ifCond}}
         <input name="commentIdentif" value="{{this._id}}"  style="display:none" />
         <input name="userIdentif" value="{{this.userId}}"  style="display:none" />
       </div>
