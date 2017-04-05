@@ -24,9 +24,6 @@ var UserSchema = mongoose.Schema({
 	student_id:{
 		type: Number
 	},
-	gender: {
-		type: String
-	},
 	campus: {
 		type: String
 	},
