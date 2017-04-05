@@ -156,6 +156,20 @@
   {{/if}}
   <br>
 
+  <h3> Change privacy of {{group.name}}.</h3>
+  <form method="post" action="/groups/changePrivacy/{{group._id}}">
+  <div class="form-group">
+    <select id="groupPrivacy" class="form-control" name="groupPrivacy" style="display:block">
+  	<option value="public">Public</option>
+  	<option value="private">Private</option>
+	</select>
+  <p id="groupNote" name="groupNote" style="display:none">*Note that making a group private means that users must request to join or be invited to join by you, the owner, or by other users you specify who may send invites.</p>
+  </div>
+  <div class="form-group">
+  <button class="btn btn-default" type="submit" id="groupSubmit" style="display:block">Submit</button>
+  </div>
+  </form>
+
   <form method="post" action="/groups/deleteGroup/">
   <div class="form-group">
     <input name="groupIdentif" value="{{group._id}}" style="display:none"/>

@@ -2,11 +2,12 @@
 
 {{#if currentUser}}
   {{#ifCond currentUser._id '==' group.ownerId}}
-    <span class="label label-warning">You own this Group</span>
+    <span class="label label-info">You own this Group</span>
     <a class="label label-danger" id="groupSettings" name="groupSettings" href="/groupSettings/{{group._id}}">Settings</a>
   {{else}}
     {{#ifCond isMember '==' true}}
       <span class="label label-info">You're in this Group</span>
+      <a class="label label-danger" id="leaveGroup" name="leaveGroup" href="/groups/leaveGroup/{{group._id}}">-Leave Group</a>
       {{#if admin}}
         {{#each admin}}
           {{#ifCond ../currentUser._id '==' this}}

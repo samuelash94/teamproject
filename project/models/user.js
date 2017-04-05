@@ -82,6 +82,6 @@ module.exports.addFriend = function(user1id, user2id, callback){
 	User.requestFriend(user1id, user2id, callback);
 }
 
-module.exports.removeFriend = function(user1id, user2id, callback){
+module.exports.remove = function(user1id, user2id, callback){
 	User.removeFriend(user1id, user2id, callback);
 }

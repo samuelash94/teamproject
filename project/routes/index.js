@@ -53,9 +53,11 @@ router.get('/profile/:userId', function(req, res, next){
 		var cursor = db.collection('users').find();
 		var cursorUsers = db.collection('users').find();
 		var users = [];
+		var suggestedFriends = [];
 		var isFriend = false;
 		cursorUsers.forEach(function(doc, err){
 			users.push(doc);
+			suggestedFriends.push(doc);
 		});
 		cursor.forEach(function(doc, err){
 			if (err) throw err;
@@ -64,7 +66,6 @@ router.get('/profile/:userId', function(req, res, next){
 					var allFriends = doc.friends;
 					var userFriends = [];
 					var userFriendRequests = [];
-					var suggestedFriends = users;
 					var tenSuggestedFriends = [];
 					if (allFriends){
 						allFriends.forEach(function(doc2, err){
@@ -224,28 +225,22 @@ router.get('/groupSettings/:groupId', function(req, res, next){
 					}
 				}
 				for (var i=0; i<a.length; i++){
-					if (a[i]){
-						if (a[i] == doc.ownerId){
-							a.splice(i, 1);
-						}
+					if (a[i] == doc.ownerId){
+						a.splice(i, 1);
+					}
 						for (var j=0; j<b.length; j++){
-							if (b[j]){
-								if (b[j] == doc.ownerId){
-									b.splice(j, 1);
-								}
-								if (a[i] == b[j]){
-									b.splice(j, 1);
-								}
+							if (b[j] == doc.ownerId){
+								b.splice(j, 1);
+							}
+							if (a[i] == b[j]){
+								b.splice(j, 1);
 							}
 						}
-					}
 				}
 				for (var i=0; i<d.length; i++){
-					if (d[i]){
-						for (var j=0; j<c.length; j++){
-							if (d[i] == c[j]._id){
-								c.splice(j, 1);
-							}
+					for (var j=0; j<c.length; j++){
+						if (d[i] == c[j]._id){
+							c.splice(j, 1);
 						}
 					}
 				}

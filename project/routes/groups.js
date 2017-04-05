@@ -173,6 +173,18 @@ router.get('/requestJoinGroup/:groupId', function(req, res){
 	});
 });
 
+router.get('/leaveGroup/:groupId', function(req, res){
+	mongo.connect(url, function(err, db){
+		var update1 = {$pull: {members: req.user.id}};
+		var update2 = {$pull: {admin: req.user.id}};
+		db.collection('groups').update({_id: objectId(req.params.groupId)}, update1);
+		db.collection('groups').update({_id: objectId(req.params.groupId)}, update2);
+		db.close();
+		req.flash('success_msg', 'You have left the group.');
+	 	res.redirect('/');
+	});
+});
+
 router.get('/acceptRequest/:groupId/:userId', function(req, res){
 	mongo.connect(url, function(err, db){
 		var cursor = db.collection('groups').update(
@@ -190,6 +202,38 @@ router.get('/acceptRequest/:groupId/:userId', function(req, res){
 		res.redirect('/');
 	});
 
+});
+
+router.get('/rejectInvite/:groupId', function(req, res){
+	mongo.connect(url, function(err, db){
+		var cursor = db.collection('groups').update(
+   { _id: objectId(req.params.groupId) },
+   { $pull: { invites: req.params.userId } }
+);
+		var cursor2 = db.collection('users').update(
+	 { _id: objectId(req.user.id) },
+	 { $pull: { invites: req.params.groupId } });
+
+ 		db.close();
+
+		req.flash('success_msg', 'Group join request rejected.');
+		res.redirect('/');
+	});
+});
+
+router.post('/changePrivacy/:groupId', function(req, res){
+	mongo.connect(url, function(err, db){
+		var privacy = req.body.groupPrivacy;
+		var cursor = db.collection('groups').update(
+   { _id: objectId(req.params.groupId) },
+   { $set: { privacy: privacy } }
+);
+
+ 		db.close();
+
+		req.flash('success_msg', 'Group privacy changed.');
+		res.redirect('/');
+	});
 });
 
 router.post('/invite/:groupId', function(req, res){

@@ -16,7 +16,7 @@ var formidable = require('formidable');
 var fs = require('fs');
 var path = require('path');
 var bcrypt = require('bcryptjs');
-var msopdf = require('node-msoffice-pdf');
+//var msopdf = require('node-msoffice-pdf');
 
 // Register
 router.get('/register', function(req, res){
@@ -295,6 +295,18 @@ router.get('/addFriend/:userId', function(req, res){
 	});
 });
 
+router.get('/removeFriend/:userId', function(req, res){
+	mongo.connect(url, function(err, db){
+		var update1 = {$pull: {friends: {_id: objectId(req.params.userId)}}};
+		var update2 = {$pull: {friends: {_id: objectId(req.user.id)}}};
+		db.collection('users').update({_id: objectId(req.user.id)}, update1);
+		db.collection('users').update({_id: objectId(req.params.userId)}, update2);
+		req.flash('success_msg', 'Removed friend.');
+		res.redirect('/');
+		db.close();
+	});
+});
+
 router.get('/goToUpload', function(req, res){
 	res.render('upload', {currentUser:req.user});
 });
@@ -476,13 +488,15 @@ router.get('/acceptFriend/:userId', function(req, res){
 
 });
 
-router.post('/removeFriend/:userId', function(req, res){
-	User.removeFriend(req.user.id, req.params.userId, function(err){
-		if (err) throw err;
-		else{
-			req.flash('success_msg', 'You have remove the user from your friend list');
-			res.redirect('/profileSettings/' + req.user.id);
-		}
+router.get('/rejectFriend/:userId', function(req, res){
+	mongo.connect(url, function(err, db){
+		var update1 = {$pull: {friends: {_id: objectId(req.params.userId)}}};
+		var update2 = {$pull: {friends: {_id: objectId(req.user.id)}}};
+		db.collection('users').update({_id: objectId(req.user.id)}, update1);
+		db.collection('users').update({_id: objectId(req.params.userId)}, update2);
+		req.flash('success_msg', 'Friend request rejected.');
+		res.redirect('/');
+		db.close();
 	});
 });
 

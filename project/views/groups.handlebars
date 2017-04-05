@@ -30,17 +30,32 @@
 
 <div class="loadtheseGroups">
   {{# each myGroups }}
-  <div class="jumbotron">
-  <h3><a href="/group/{{this._id}}">{{ this.name }}</a><h3>
-  <p>{{ this.description }}</p>
-  <input name="groupIdentif" value="{{this._id}}" style="display:none"/>
-  <form method="post" action="/groups/deleteGroup/">
-  <div class="form-group">
-    <input name="groupIdentif" value="{{this._id}}" style="display:none"/>
-    <button type= "submit" class="btn btn-danger">Delete Group</button>
-  </div>
-  </form>
-</div>
+    <div class="jumbotron">
+      <h3><a href="/group/{{this._id}}">{{ this.name }}</a><h3>
+      <p>{{ this.description }}</p>
+      {{#ifCond this.ownerId '==' ../currentUser._id}}
+      <form method="post" action="/groups/deleteGroup/">
+      <div class="form-group">
+      <input name="groupIdentif" value="{{this._id}}" style="display:none"/>
+      <button type= "submit" class="btn btn-danger">Delete Group</button>
+      </div>
+      </form>
+      {{else}}
+        {{#if this.admin}}
+          {{#each this.admin}}
+            {{#ifCond this '==' ../../currentUser._id}}
+              <span class="label label-info">Admin</span>
+            {{else}}
+              <span class="label label-info">Member</span>
+              <a class="btn btn-danger" href="/groups/leaveGroup/{{../this._id}}">Leave Group</a>
+            {{/ifCond}}
+          {{/each}}
+        {{else}}
+          <span class="label label-info">Member</span>
+          <a class="btn btn-danger" href="/groups/leaveGroup/{{this._id}}">Leave Group</a>
+        {{/if}}
+      {{/ifCond}}
+    </div>
   {{/each}}
 
   {{# each notMyGroups }}

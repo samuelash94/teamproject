@@ -31,9 +31,9 @@
     {{#each friends }}
       {{#each ../users}}
         {{#ifCond ../this._id 'equals' this._id}}
-        <div>
-          <p><a href="/profile/{{this._id}}">{{ this.name }}</a><p>
-        </div>
+          <div>
+            <p><a href="/profile/{{this._id}}">{{ this.name }}</a> <a class="label label-danger" id="removeFriend" name="removeFriend" href="/users/removeFriend/{{this._id}}">-Remove Friend</a></p>
+          </div>
         {{/ifCond}}
       {{/each}}
     {{/each}}
@@ -52,7 +52,7 @@
       <div>
         <form method="post" action="/users/acceptFriend/">
           <div class="form-group">
-          <p><a href="/profile/{{this._id}}">{{ this.name }}</a> <a class="label label-primary" id="acceptFriend" name="acceptFriend" href="/users/acceptFriend/{{this._id}}">+Add Friend</a></p>
+          <p><a href="/profile/{{this._id}}">{{ this.name }}</a> <a class="label label-primary" id="acceptFriend" name="acceptFriend" href="/users/acceptFriend/{{this._id}}">+Add Friend</a> <a class="label label-danger" id="rejectFriend" name="rejectFriend" href="/users/rejectFriend/{{this._id}}">-Reject Request</a></p>
           </div>
         </form>
       </div>
@@ -90,7 +90,7 @@
       <div>
         <form method="post" action="/groups/joinGroup/{{this._id}}">
           <div class="form-group">
-          <p><a href="/group/{{this._id}}">{{ this.name }}</a> <a class="label label-primary" id="acceptInvite" name="acceptInvite" href="/groups/joinGroup/{{this._id}}">+Join Group</a></p>
+          <p><a href="/group/{{this._id}}">{{ this.name }}</a> <a class="label label-primary" id="acceptInvite" name="acceptInvite" href="/groups/joinGroup/{{this._id}}">+Join Group</a> <a class="label label-danger" id="rejectInvite" name="rejectInvite" href="/groups/rejectInvite/{{this._id}}">Reject Invite</a></p>
           </div>
         </form>
       </div>
