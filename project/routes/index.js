@@ -139,17 +139,50 @@ router.get('/profileSettings/:userId', function(req, res, next){
 
 router.post('/search', function(req, res){
 	var search = req.body.searchBar;
-	var regex = new RegExp(["^", search, "$"].join(""), "i");
 	var resultArray = [];
-	mongo.connect(url, function(err, db){
-		var cursor = db.collection('users').find({name: regex});
-		cursor.forEach(function(doc, err){
-			resultArray.push(doc);
-		}, function(){
+	var groupArray = [];
+	if(search){
+		var regex = new RegExp(["^", search, "$"].join(""), "i");
+		mongo.connect(url, function(err, db){
+			var cursor = db.collection('users').find({name: regex});
+			cursor.forEach(function(doc, err){
+				resultArray.push(doc);
+			}, function(){
+				db.close();
+			});
 		});
-		db.close();
-	 	res.render('searchResults', {userResults: resultArray});
-	});
+
+		mongo.connect(url, function(err, db){
+			var cursorGroups = db.collection('groups').find({name: regex});
+			cursorGroups.forEach(function(doc, err){
+				groupArray.push(doc);
+			}, function(){
+				db.close();
+				res.render('searchResults', {userResults: resultArray, groupResults: groupArray});
+			});
+		});
+	}
+	else {
+		mongo.connect(url, function(err, db){
+			var cursor = db.collection('users').find();
+			cursor.forEach(function(doc, err){
+				resultArray.push(doc);
+			}, function(){
+				db.close();
+			});
+		});
+
+		mongo.connect(url, function(err, db){
+			var cursorGroups = db.collection('groups').find();
+			cursorGroups.forEach(function(doc, err){
+				groupArray.push(doc);
+			}, function(){
+				db.close();
+				res.render('searchResults', {userResults: resultArray, groupResults: groupArray});
+			});
+		});
+	}
+
 });
 
 router.get('/group/:groupId', function(req, res, next){

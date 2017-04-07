@@ -1,5 +1,18 @@
 <h2 class="page-header"> Search Results </h2>
-
+<h3>Users</h3>
+{{#if userResults}}
 {{#each userResults}}
 <p><a href="/profile/{{this._id}}">{{ this.name }}</a><p>
   {{/each}}
+  {{else}}
+  <p>No Users to show</p>
+  {{/if}}
+
+<h3>Groups</h3>
+{{#if groupResults}}
+{{#each groupResults}}
+<p><a href="/group/{{this._id}}">{{ this.name }}</a><p>
+  {{/each}}
+  {{else}}
+  <p>No groups to show</p>
+  {{/if}}
