@@ -73,12 +73,12 @@ router.post('/vote', function(req, res){
 				if(registered){
 					var cursor = db.collection('polls').update(	{ _id: objectId(pollId)},	{ "$push":	{"ratings": vote}	});
 					req.flash('success_msg', 'Vote was added successfully');
-					res.redirect('/poll');
+					res.redirect('/poll/loadPolls');
 					db.close();
 				}
 				else{
 					req.flash('error_msg', 'You must be registered for the course to vote.');
-					res.redirect('/poll');
+					res.redirect('/poll/loadPolls');
 					db.close();
 				}
 			});
@@ -100,6 +100,16 @@ router.get('/loadPolls', function(req, res, next) {
 		});
 	});
 	//res.redirect('/');
+});
+
+router.post('/deletePoll/:pollId', function(req, res){
+	var pollId = req.params.pollId;
+	mongo.connect(url, function(err, db){
+		db.collection('polls').deleteOne({_id: objectId(pollId)});
+		db.close();
+		req.flash('success_msg', 'poll was deleted.');
+		res.redirect('/poll/loadPolls');
+	});
 });
 
 module.exports = router;

@@ -86,6 +86,14 @@
       {{/ratingsAverage}} stars
     </p>
 
+    {{#ifCond this.userId '==' ../currentUser._id}}
+    <form method="post" action="/poll/deletePoll/{{this._id}}">
+    <div class="form-group">
+      <button type= "submit" class="btn btn-danger">Delete Poll</button>
+    </div>
+    </form>
+    {{/ifCond}}
+
   </div>
   {{/each}}
 </div>
