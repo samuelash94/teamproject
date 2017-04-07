@@ -16,7 +16,7 @@ var formidable = require('formidable');
 var fs = require('fs');
 var path = require('path');
 var bcrypt = require('bcryptjs');
-//var msopdf = require('node-msoffice-pdf');
+var msopdf = require('node-msoffice-pdf');
 
 // Register
 router.get('/register', function(req, res){
@@ -54,7 +54,6 @@ router.post('/reset', function(req, res){
 			var resetLink = req.protocol + "://" + req.get('host')  + '/users/resetPassword/';
 			cursor.forEach(function (doc,err){
 				if(doc.email ==  email){
-					//resultArray.push(doc._id);
 					resetLink = resetLink + doc._id;
 					mailer.resetPasswordEmail(email, resetLink);
 				}
@@ -184,6 +183,8 @@ router.post('/register', function(req, res){
 					errArr.push(' student number is already in use');
 				}
 				if(errArr.length != 0){
+					console.log(resultArray);
+					console.log(nameArray);
 					for(var i=0; i<errArr.length; i++){
 						req.flash('error_msg', errArr[i]);
 					}
@@ -210,7 +211,7 @@ router.post('/register', function(req, res){
 						console.log(user);
 					});
 
-					req.flash('success_msg', 'You are registered and can now login');
+					req.flash('success_msg', 'You are registered. Please authenticate via email');
 
 					res.redirect('/users/login');
 

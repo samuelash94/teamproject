@@ -25,6 +25,7 @@ var groups = require('./routes/groups');
 var lostItems = require('./routes/lostItems');
 var schedule = require('./routes/schedule');
 var poll = require('./routes/poll');
+var feedback = require('./routes/feedback');
 
 // Init App
 var app = express();
@@ -150,6 +151,7 @@ app.use('/groups', groups);
 app.use('/lostItems', lostItems);
 app.use('/schedule', schedule);
 app.use('/poll', poll);
+app.use('/feedback', feedback);
 
 // Set Port
 app.set('port', (process.env.PORT || 3000));

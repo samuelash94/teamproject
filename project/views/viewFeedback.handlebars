@@ -1,0 +1,9 @@
+<h2 class="page-header">Feedback</h2>
+
+{{#each feedback}}
+<p>Title: {{this.title}}</p>
+<p>Description: {{this.description}}</p>
+<p>Feedback Type: {{this.feedbackType}}</p>
+<p>date: {{this.date}}</p>
+<p> Submitted by: <a href="/profile/{{this.userId}}">{{ this.author }}</a></p>
+{{/each}}
