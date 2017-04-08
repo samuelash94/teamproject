@@ -70,47 +70,56 @@ router.post('/create', function(req, res){
 
 
 router.get('/loadGroups', function(req, res, next) {
+	var resultArray = [];
+	var res2 = [];
+	var res3 = [];
 	if(!req.user){
 		res.redirect('/users/login');
 	}
 	else{
-	var resultArray = [];
-	var res2 = [];
-	var res3 = [];
-	mongo.connect(url, function(err, db){
-		var cursor = db.collection('groups').find({ members: { "$in" : [req.user.id]} });
-		var notCursor = db.collection('groups').find({ members: { "$nin" : [req.user.id]} });
-		var requested = db.collection('groups').find({ requests: { "$in" : [req.user.id]} });
-		cursor.forEach(function(doc, err){
-			resultArray.push(doc);
-		}, function(){
+		mongo.connect(url, function(err, db){
+			var cursor = db.collection('groups').find({ members: { "$in" : [req.user.id]} });
+			cursor.forEach(function(doc, err){
+				resultArray.push(doc)
+			}, function(){
+				db.close();
+			});
 		});
 
-		requested.forEach(function(doc, err){
-			res3.push(doc);
-		}, function(){
+		mongo.connect(url, function(err, db){
+			var requested = db.collection('groups').find({ requests: { "$in" : [req.user.id]} });
+			requested.forEach(function(doc, err){
+				res3.push(doc)
+			}, function(){
+				db.close();
+			});
 		});
 
-		notCursor.forEach(function(doc, err){
-			res2.push(doc);
-		}, function(){
-			for (var i=0; i<res3.length; i++){
-				if (res3[i]){
-					for (var j=0; j<res2.length; j++){
-						if (res2[j]){
-							if (res3[i].name == res2[j].name){
-								res2.splice(j, 1);
+
+
+		mongo.connect(url, function(err, db){
+			var notCursor = db.collection('groups').find({ members: { "$nin" : [req.user.id]} });
+			notCursor.forEach(function(doc, err){
+				res2.push(doc)
+			}, function(){
+				for (var i=0; i<res3.length; i++){
+					if (res3[i]){
+						for (var j=0; j<res2.length; j++){
+							if (res2[j]){
+								if (res3[i].name == res2[j].name){
+									res2.splice(j, 1);
+								}
 							}
 						}
 					}
 				}
-			}
-			db.close();
-			res.render('groups', {myGroups: resultArray, notMyGroups:res2, currentUser: req.user, requestedGroups: res3, invites: req.user.invites});
+				db.close();
+				res.render('groups', {myGroups: resultArray, notMyGroups:res2, currentUser: req.user, requestedGroups: res3, invites: req.user.invites});
+			});
 		});
-	});
+
 }
-	//res.redirect('/');
+
 });
 
 router.post('/joinGroup', function(req, res){
