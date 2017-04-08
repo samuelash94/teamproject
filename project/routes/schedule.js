@@ -52,7 +52,7 @@ router.post('/create', function(req, res){
 			else{
 				if(typeof mon != 'undefined'){
 					//if(req.body.mondayStartHour == '' || req.body.mondayStartMinutes == '' || req.body.mondayStartAMPM == '' || req.body.mondayEndHour == '' || req.body.mondayEndMinutes == '' || req.body.mondayEndAMPM == '')
-					var monTime = "Monday at " + req.body.mondayStartHour + ": "
+					var monTime = "Monday at " + req.body.mondayStartHour + ":"
 																		+ req.body.mondayStartMinutes + " "
 																		+ req.body.mondayStartAMPM + " - "
 																		+ req.body.mondayEndHour + ":"
@@ -61,7 +61,7 @@ router.post('/create', function(req, res){
 				}
 
 				if(typeof tues != 'undefined'){
-					var tuesTime = "Tuesday at " + req.body.tuesdayStartHour + ": "
+					var tuesTime = "Tuesday at " + req.body.tuesdayStartHour + ":"
 																		+ req.body.tuesdayStartMinutes + " "
 																		+ req.body.tuesdayStartAMPM + " - "
 																		+ req.body.tuesdayEndHour + ":"
@@ -70,7 +70,7 @@ router.post('/create', function(req, res){
 				}
 
 				if(typeof wed != 'undefined'){
-					var wedTime = "Wednesday at " + req.body.wednesdayStartHour + ": "
+					var wedTime = "Wednesday at " + req.body.wednesdayStartHour + ":"
 																		+ req.body.wednesdayStartMinutes + " "
 																		+ req.body.wednesdayStartAMPM + " - "
 																		+ req.body.wednesdayEndHour + ":"
@@ -79,7 +79,7 @@ router.post('/create', function(req, res){
 				}
 
 				if(typeof thurs != 'undefined'){
-					var thursTime = "Thursday at " + req.body.thursdayStartHour + ": "
+					var thursTime = "Thursday at " + req.body.thursdayStartHour + ":"
 																		+ req.body.thursdayStartMinutes + " "
 																		+ req.body.thursdayStartAMPM + " - "
 																		+ req.body.thursdayEndHour + ":"
@@ -88,7 +88,7 @@ router.post('/create', function(req, res){
 				}
 
 				if(typeof fri != 'undefined'){
-					var friTime = "Friday at " + req.body.fridayStartHour + ": "
+					var friTime = "Friday at " + req.body.fridayStartHour + ":"
 																		+ req.body.fridayStartMinutes + " "
 																		+ req.body.fridayStartAMPM + " - "
 																		+ req.body.fridayEndHour + ":"
@@ -161,7 +161,7 @@ router.post('/deleteCourse/', function(req, res) {
 		var newComment = db.collection('schedules').deleteOne(
 	 	{ _id: objectId(req.body.schedId) });
 		db.close();
-	req.flash('success_msg', 'course was deleted.');
+	req.flash('success_msg', 'Course was removed from your schedule.');
 	 res.redirect('/schedule');
 
 	});
