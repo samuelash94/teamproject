@@ -32,7 +32,10 @@
       {{#each ../users}}
         {{#ifCond ../this._id 'equals' this._id}}
           <div>
-            <p><a href="/profile/{{this._id}}">{{ this.name }}</a> <a class="label label-danger" id="removeFriend" name="removeFriend" href="/users/removeFriend/{{this._id}}">-Remove Friend</a></p>
+          <p><a href="/profile/{{this._id}}">{{ this.name }}</a>
+            {{#ifCond ../../user._id 'equals' ../../currentUser._id}}
+          <a class="label label-danger" id="removeFriend" name="removeFriend" href="/users/removeFriend/{{this._id}}">-Remove Friend</a></p>
+          {{/ifCond}}
           </div>
         {{/ifCond}}
       {{/each}}

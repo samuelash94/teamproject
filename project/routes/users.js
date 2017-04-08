@@ -301,7 +301,7 @@ router.get('/addFriend/:userId', function(req, res){
 		if (err) throw err;
 		else{
 			req.flash('success_msg', 'Friend request sent.');
-			res.redirect('/');
+			res.redirect('/profile/'+ req.user.id);
 		}
 	});
 }
@@ -319,7 +319,7 @@ router.get('/removeFriend/:userId', function(req, res){
 		db.collection('users').update({_id: objectId(req.user.id)}, update1);
 		db.collection('users').update({_id: objectId(req.params.userId)}, update2);
 		req.flash('success_msg', 'Removed friend.');
-		res.redirect('/');
+		res.redirect('/profile/'+ req.user.id);
 		db.close();
 	});
 }
@@ -538,7 +538,7 @@ router.get('/rejectFriend/:userId', function(req, res){
 		db.collection('users').update({_id: objectId(req.user.id)}, update1);
 		db.collection('users').update({_id: objectId(req.params.userId)}, update2);
 		req.flash('success_msg', 'Friend request rejected.');
-		res.redirect('/');
+		res.redirect('/profile/'+ req.user.id);
 		db.close();
 	});
 }
@@ -562,7 +562,7 @@ router.post('/setDefaultVisibility/:userId', function(req, res){
 		 	}
 	 	});
 		req.flash('success_msg', 'Default post visibility updated.');
-		res.redirect('/');
+		res.redirect('/profileSettings/'+ req.user.id);
 		db.close();
 	});
 }
@@ -587,14 +587,14 @@ router.post('/visibilityList/:userId', function(req, res){
 			 	{ $addToSet:{ visibilityList: doc }});
 			});
 			req.flash('success_msg', 'List of friends who can view your posts updated.');
-			res.redirect('/');
+			res.redirect('/profileSettings/'+ req.user.id);
 			db.close();
 		}else{
 			var cursor3 = db.collection('users').update(
 			{ _id: objectId(req.params.userId) },
 			{ $addToSet:{ visibilityList: friendsToAdd }});
 			req.flash('success_msg', 'List of friends who can view your posts updated.');
-			res.redirect('/');
+			res.redirect('/profileSettings/'+ req.user.id);
 			db.close();
 		}
 	});
@@ -619,7 +619,7 @@ router.post('/setWhoCanPost/:userId', function(req, res){
 		 	}
 	 	});
 		req.flash('success_msg', 'Who can post on your profile updated.');
-		res.redirect('/');
+		res.redirect('/profileSettings/'+ req.user.id);
 		db.close();
 	});
 }
@@ -643,14 +643,14 @@ router.post('/whoCanPostList/:userId', function(req, res){
 			 	{ $addToSet:{ whoCanPostList: doc }});
 			});
 			req.flash('success_msg', 'List of friends who can post on your profile updated.');
-			res.redirect('/');
+			res.redirect('/profileSettings/'+ req.user.id);
 			db.close();
 		}else{
 			var cursor3 = db.collection('users').update(
 			{ _id: objectId(req.params.userId) },
 			{ $addToSet:{ whoCanPostList: friendsToAdd }});
 			req.flash('success_msg', 'List of friends who can post on your profile updated.');
-			res.redirect('/');
+			res.redirect('/profileSettings/'+ req.user.id);
 			db.close();
 		}
 	});

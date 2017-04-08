@@ -142,6 +142,9 @@ router.post('/post/profile/:userId', function(req, res){
 						res.redirect('/profile/' + param);
 					}else if (user.whoCanPost == 1){
 						var posted = false;
+						if(req.user.id == param){
+							posted = true;
+						}
 						var friendsList = user.friends;
 						if (friendsList){
 							for (var i=0; i<friendsList.length; i++){
