@@ -136,12 +136,13 @@ router.post('/joinGroup', function(req, res){
 );
 		db.close();
 		req.flash('success_msg', 'You have successfully joined this group');
-	 	res.redirect('/');
+	 	res.redirect('/groups/loadGroups');
 	});
 }
 });
 
 router.get('/joinGroup/:groupId', function(req, res){
+	var groupId = req.params.groupId;
 	if(!req.user){
 		res.redirect('/users/login');
 	}
@@ -158,7 +159,7 @@ router.get('/joinGroup/:groupId', function(req, res){
  		{ $pull: { invites: req.user.id } });
 		db.close();
 		req.flash('success_msg', 'You have successfully joined this group.');
-	 	res.redirect('/');
+	 	res.redirect('/group/' + groupId);
 	});
 }
 });
@@ -182,7 +183,7 @@ router.get('/requestJoinGroup/:groupId', function(req, res){
  					{ $pull: { invites: req.user.id } });
 				 	db.close();
 				 	req.flash('success_msg', 'You have successfully joined this group.');
-		 	 		res.redirect('/');
+		 	 		res.redirect('/groups/loadGroups');
 					sent = true;
 				}
 			});
@@ -210,12 +211,13 @@ router.get('/leaveGroup/:groupId', function(req, res){
 		db.collection('groups').update({_id: objectId(req.params.groupId)}, update2);
 		db.close();
 		req.flash('success_msg', 'You have left the group.');
-	 	res.redirect('/');
+	 	res.redirect('/groups/loadGroups');
 	});
 }
 });
 
 router.get('/acceptRequest/:groupId/:userId', function(req, res){
+	var userId = req.params.userId;
 	if(!req.user){
 		res.redirect('/users/login');
 	}
@@ -234,7 +236,7 @@ router.get('/acceptRequest/:groupId/:userId', function(req, res){
  		db.close();
 
 		req.flash('success_msg', 'Group join request accepted.');
-		res.redirect('/');
+		res.redirect('/profile/' + userId);
 	});
 }
 });
@@ -257,12 +259,13 @@ router.get('/rejectInvite/:groupId', function(req, res){
  		db.close();
 
 		req.flash('success_msg', 'Group join request rejected.');
-		res.redirect('/');
+		res.redirect('/profile/' + req.user.id);
 	});
 }
 });
 
 router.post('/changePrivacy/:groupId', function(req, res){
+	var groupId = req.params.groupId;
 	if(!req.user){
 		res.redirect('/users/login');
 	}
@@ -278,12 +281,13 @@ router.post('/changePrivacy/:groupId', function(req, res){
  		db.close();
 
 		req.flash('success_msg', 'Group privacy changed.');
-		res.redirect('/');
+		res.redirect('/groupSettings/'+ groupId);
 	});
 }
 });
 
 router.post('/invite/:groupId', function(req, res){
+	var groupId = req.params.groupId;
 	if(!req.user){
 		res.redirect('/users/login');
 	}
@@ -305,7 +309,7 @@ router.post('/invite/:groupId', function(req, res){
 						 { $addToSet: { invites: doc2 }});
 						});
 						req.flash('success_msg', 'Successfully invited friends to group.');
-						res.redirect('/');
+						res.redirect('/groupSettings/'+ groupId);
 						db.close();
 					}else{
 						newInvites.forEach(function(doc2, err){
@@ -314,7 +318,7 @@ router.post('/invite/:groupId', function(req, res){
 						 { $addToSet: { members: doc2 }});
 						});
 						req.flash('success_msg', 'Successfully added friends to group.');
-						res.redirect('/');
+						res.redirect('/groupSettings/'+ groupId);
 						db.close();
 					}
 				}
@@ -330,17 +334,15 @@ router.post('/invite/:groupId', function(req, res){
 						var cursor5 = db.collection('groups').update(
 					  { _id: objectId(req.params.groupId) },
 					  { $addToSet: { invites: newInvites }});
-						console.log(cursor5);
 						req.flash('success_msg', 'Successfully invited friend to group.');
-						res.redirect('/');
+						res.redirect('/groupSettings/'+ groupId);
 						db.close();
 					}else{
 						var cursor6 = db.collection('groups').update(
 					  { _id: objectId(req.params.groupId) },
 					  { $addToSet: { members: newInvites }});
-						console.log(cursor6);
 						req.flash('success_msg', 'Successfully added friend to group.');
-						res.redirect('/');
+						res.redirect('/groupSettings/'+ groupId);
 						db.close();
 					}
 				}
@@ -351,6 +353,7 @@ router.post('/invite/:groupId', function(req, res){
 });
 
 router.post('/promote/:groupId', function(req, res){
+	var groupId = req.params.groupId;
 	if(!req.user){
 		res.redirect('/users/login');
 	}
@@ -370,13 +373,14 @@ router.post('/promote/:groupId', function(req, res){
 		 { $addToSet: { admin: newAdmin }});
 		}
 		req.flash('success_msg', 'Successfully promoted admin.');
-		res.redirect('/');
+		res.redirect('/groupSettings/'+ groupId);
 		db.close();
 	});
 }
 });
 
 router.post('/demote/:groupId', function(req, res){
+	var groupId = req.params.groupId;
 	if(!req.user){
 		res.redirect('/users/login');
 	}
@@ -396,13 +400,14 @@ router.post('/demote/:groupId', function(req, res){
 		 { $pull: { admin: demoted }});
 		}
 		req.flash('success_msg', 'Successfully demoted admin.');
-		res.redirect('/');
+		res.redirect('/groupSettings/'+ groupId);
 		db.close();
 	});
 }
 });
 
 router.post('/remove/:groupId', function(req, res){
+	var groupId = req.params.groupId;
 	if(!req.user){
 		res.redirect('/users/login');
 	}
@@ -420,7 +425,7 @@ router.post('/remove/:groupId', function(req, res){
 			 { $pull: { admin: doc }});
 			});
 			req.flash('success_msg', 'Successfully removed users from group.');
- 			res.redirect('/');
+ 			res.redirect('/groupSettings/'+ groupId);
 		}else{
 			var cursor3 = db.collection('groups').update(
 		 { _id: objectId(req.params.groupId) },
@@ -429,7 +434,7 @@ router.post('/remove/:groupId', function(req, res){
 		 { _id: objectId(req.params.groupId) },
 		 { $pull: { admin: removed }});
 			req.flash('success_msg', 'Successfully removed user from group.');
- 			res.redirect('/');
+ 			res.redirect('/groupSettings/'+ groupId);
 		}
 		db.close();
 	});
@@ -447,7 +452,7 @@ router.post('/deleteGroup/', function(req, res) {
 	   { _id: objectId(req.body.groupIdentif) });
 	db.close();
 	req.flash('success_msg', 'group was deleted.');
-		 res.redirect('/');
+		 res.redirect('/groups/loadGroups');
 
 		});
 	}

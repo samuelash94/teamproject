@@ -1,9 +1,6 @@
 check file type and size on upload
-suggested friends algorithm - in progress
 check to make sure system cant break
 
 NEW:
-join/leave group brings you to dashboard, should go to groups page
 loading posts on profile removes information such as schedule, suggested friends, etc.
 edit visibility of the post
-
