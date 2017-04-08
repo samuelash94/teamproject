@@ -187,7 +187,6 @@ router.get('/requestJoinGroup/:groupId', function(req, res){
 		 	res.redirect('/');
 		}
 	});
-}
 });
 
 router.get('/leaveGroup/:groupId', function(req, res){

@@ -71,11 +71,7 @@
       </div>
       </form>
     {{else}}
-      <form method="post" action="/groups/requestJoinGroup/">
-      <div class="form-group">
-        <input name="groupIdentif" value="{{../this._id}}"  style="display:none" />
-        <button type= "submit" class="btn btn-warning">Request to Join</button>
-      </div>
+        <a class="btn btn-warning" href="/groups/requestJoinGroup/{{this._id}}">Request to Join</a>
       </form>
     {{/ifCond}}
     </div>
