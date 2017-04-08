@@ -1,3 +1,3 @@
-check if user is logged in on every page load
 check file type and size on upload
-CSS
+suggested friends algorithm - in progress
+check to make sure system cant break

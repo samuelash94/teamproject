@@ -73,7 +73,7 @@ handlebars.registerHelper('ratingsAverage', function(v1){
     sum += parseInt(v1[i]);
   }
   average = sum/v1.length;
-  return average;
+  return average.toFixed(2);
 });
 
 handlebars.registerHelper('voteCount', function(v1){
