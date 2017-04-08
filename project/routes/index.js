@@ -250,18 +250,53 @@ router.get('/profile/:userId', function(req, res, next){
 							}
 						}
 
+						for (var i=0; i<10; i++){
+							if (mutualThree[i]){
+								tenSuggestedFriends.push(mutualThree[i]);
+							}
+						}
+						if (tenSuggestedFriends.length < 10){
+							for (var i=0; i<10-tenSuggestedFriends.length; i++){
+								if (mutualTwo[i]){
+									tenSuggestedFriends.push(mutualTwo[i]);
+								}
+							}
+						}
+						if (tenSuggestedFriends.length < 10){
+							for (var i=0; i<10-tenSuggestedFriends.length; i++){
+								if (mutualFriends[i]){
+									tenSuggestedFriends.push(mutualFriends[i]);
+								}
+							}
+						}
+						if (tenSuggestedFriends.length < 10){
+							for (var i=0; i<10-tenSuggestedFriends.length; i++){
+								if (mutualCourses[i]){
+									tenSuggestedFriends.push(mutualCourses[i]);
+								}
+							}
+						}
+						if (tenSuggestedFriends.length < 10){
+							for (var i=0; i<10-tenSuggestedFriends.length; i++){
+								if (mutualGroups[i]){
+									tenSuggestedFriends.push(mutualGroups[i]);
+								}
+							}
+						}
+
 						console.log(mutualFriends);
 						console.log(mutualGroups);
 						console.log(mutualCourses);
 						console.log(mutualTwo);
 						console.log(mutualThree);
+						console.log(tenSuggestedFriends);
 						//for (var i=0; i<10; i++){
 							//if (suggestedFriends[i]){
 								//tenSuggestedFriends.push(suggestedFriends[i]);
 							//}
 						//}
 					}
-					res.render('profile', {user: doc, currentUser: req.user, friends: userFriends, friendRequests: userFriendRequests, users: users, isFriend: isFriend, groupInvites: doc.invites, groups: groups, schedule: schedule});
+					res.render('profile', {user: doc, currentUser: req.user, friends: userFriends, friendRequests: userFriendRequests, users: users, isFriend: isFriend, groupInvites: doc.invites, groups: groups, schedule: schedule, suggestedFriends: tenSuggestedFriends});
 
 				}else{
 					var userFriends = doc.friends;
