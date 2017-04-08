@@ -154,13 +154,8 @@ router.get('/joinGroup/:groupId', function(req, res){
 }
 });
 
-router.post('/requestJoinGroup', function(req, res){
-	if(!req.user){
-		res.redirect('/users/login');
-	}
-	else {
-
-	var groupId = req.body.groupIdentif;
+router.get('/requestJoinGroup/:groupId', function(req, res){
+	var groupId = req.params.groupId;
 	var userId = req.user.id;
 	var sent = false;
 	mongo.connect(url, function(err, db){
@@ -170,9 +165,12 @@ router.post('/requestJoinGroup', function(req, res){
 					var cursor = db.collection('groups').update(
 				  { _id: objectId(groupId) },
 				  { $addToSet: { members: req.user.id } });
-				 var cursor2 = db.collection('users').update(
+				 	var cursor2 = db.collection('users').update(
 					{ _id: objectId(req.user.id) },
 					{ $pull: { invites: groupId } });
+				 	var cursor3 = db.collection('groups').update(
+ 					{ _id: objectId(groupId) },
+ 					{ $pull: { invites: req.user.id } });
 				 	db.close();
 				 	req.flash('success_msg', 'You have successfully joined this group.');
 		 	 		res.redirect('/');
@@ -188,24 +186,6 @@ router.post('/requestJoinGroup', function(req, res){
 			req.flash('success_msg', 'You have requested to join this group.');
 		 	res.redirect('/');
 		}
-	});
-}
-});
-
-router.get('/requestJoinGroup/:groupId', function(req, res){
-	if(!req.user){
-		res.redirect('/users/login');
-	}
-	else {
-
-	mongo.connect(url, function(err, db){
-		var cursor = db.collection('groups').update(
-   { _id: objectId(req.params.groupId) },
-   { $addToSet: { requests: req.user.id } }
-);
-		db.close();
-		req.flash('success_msg', 'You have requested to join this group.');
-	 	res.redirect('/');
 	});
 }
 });

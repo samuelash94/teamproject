@@ -58,12 +58,22 @@ router.get('/profile/:userId', function(req, res, next){
 		});
 		var cursor = db.collection('users').find();
 		var cursorUsers = db.collection('users').find();
+		var cursorSchedules = db.collection('schedules').find();
+		var cursorSchedules2 = [];
+		var cursorSchedules3 = [];
+		cursorSchedules.forEach(function(doc, err){
+			cursorSchedules2.push(doc);
+			cursorSchedules3.push(doc);
+		});
 		var users = [];
-		var suggestedFriends = [];
+		var mutualFriends = [];
+		var mutualGroups = [];
+		var mutualCourses = [];
+		var mutualTwo = [];
+		var mutualThree = [];
 		var isFriend = false;
 		cursorUsers.forEach(function(doc, err){
 			users.push(doc);
-			suggestedFriends.push(doc);
 		});
 		cursor.forEach(function(doc, err){
 			if (err) throw err;
@@ -72,14 +82,10 @@ router.get('/profile/:userId', function(req, res, next){
 					var allFriends = doc.friends;
 					var userFriends = [];
 					var userFriendRequests = [];
+					var userGroups = [];
 					var tenSuggestedFriends = [];
 					if (allFriends){
 						allFriends.forEach(function(doc2, err){
-							for (var i=0; i<suggestedFriends.length; i++){
-								if (doc2._id.equals(suggestedFriends[i]._id) || suggestedFriends[i]._id == req.user.id){
-									suggestedFriends.splice(i, 1);
-								}
-							}
 							if (doc2.status == "accepted"){
 								userFriends.push(doc2);
 							}else if (doc2.status == "pending"){
@@ -89,13 +95,173 @@ router.get('/profile/:userId', function(req, res, next){
 								isFriend = true;
 							}
 						});
-						for (var i=0; i<10; i++){
-							if (suggestedFriends[i]){
-								tenSuggestedFriends.push(suggestedFriends[i]);
+						userFriends.forEach(function(doc2, err){
+							var doc3;
+							for (var i=0; i<users.length; i++){
+								if (users[i]._id.equals(doc2._id)){
+									doc2 = users[i];
+								}
+							}
+							if (doc2.friends){
+								var otherFriends = doc2.friends;
+								for (var i=0; i<otherFriends.length; i++){
+									if (otherFriends[i].status == "accepted"){
+										var toAdd = true;
+										for (var j=0; j<doc.friends.length; j++){
+											if (doc.friends[j]._id.equals(otherFriends[i]._id)){
+												toAdd = false;
+											}else if (otherFriends[i]._id.equals(doc._id)){
+												toAdd = false;
+											}
+										}
+										if (toAdd){
+											for (var j=0; j<users.length; j++){
+												if (users[j]._id.equals(otherFriends[i]._id)){
+													mutualFriends.push(users[j]);
+												}
+											}
+										}
+									}
+								}
+							}
+						});
+						groups.forEach(function(doc2, err){
+							for (var i=0; i<doc2.members.length; i++){
+								if (doc2.members[i] == doc._id){
+									for (var j=0; j<doc2.members.length; j++){
+										var toAdd = true;
+										if (doc2.members[i] != doc2.members[j]){
+											for (var k=0; k<doc.friends.length; k++){
+												if (doc2.members[j] == doc.friends[k]._id){
+													toAdd = false;
+												}
+											}
+											if (toAdd){
+												if (doc2.members[j] != doc._id){
+													for (var k=0; k<users.length; k++){
+														if (users[k]._id == doc2.members[j]){
+															mutualGroups.push(users[k]);
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						});
+						cursorSchedules2.forEach(function(doc2, err){
+							if (doc2.userId == doc._id){
+								for (var i=0; i<cursorSchedules3.length; i++){
+									var toAdd = true;
+									if (doc2.name == cursorSchedules3[i].name){
+										if (cursorSchedules3[i].userId == doc._id){
+											toAdd = false;
+										}else{
+											for (var j=0; j<doc.friends.length; j++){
+												if (cursorSchedules3[i].userId == doc.friends[j]._id){
+													toAdd = false;
+												}
+											}
+										}
+									}
+									if (toAdd){
+										for (var j=0; j<users.length; j++){
+											if (users[j]._id == cursorSchedules3[i].userId){
+												mutualCourses.push(users[j]);
+											}
+										}
+									}
+								}
+							}
+						});
+						for (var i=0; i<mutualFriends.length; i++){
+							for (var j=0; j<mutualGroups.length; j++){
+								for (var k=0; k<mutualCourses.length; k++){
+									var three = false;
+									if (mutualFriends[i]._id.equals(mutualGroups[j]._id) && mutualFriends[i]._id.equals(mutualCourses[k]._id)){
+										mutualThree.push(mutualFriends[i]);
+										three = true;
+									}else if (mutualGroups[j]._id.equals(mutualCourses[k]._id)){
+										mutualTwo.push(mutualGroups[j]);
+									}
+								}
+								if (!three){
+									if (mutualFriends[i] && mutualGroups[j]){
+										if (mutualFriends[i]._id.equals(mutualGroups[j]._id)){
+											mutualTwo.push(mutualFriends[i]);
+										}
+									}
+								}
+							}
+							for (var j=0; j<mutualCourses.length; j++){
+								if (mutualFriends[i] && mutualCourses[j]){
+									if (mutualFriends[i]._id.equals(mutualCourses[j]._id)){
+										mutualTwo.push(mutualFriends[i]);
+									}
+								}
 							}
 						}
+						//splicing
+						for (var i=0; i<mutualTwo.length; i++){
+							for (var j=0; j<mutualFriends.length; j++){
+								if (mutualTwo[i]._id.equals(mutualFriends[j]._id)){
+									mutualFriends.splice(j, 1);
+									j--;
+								}
+							}
+							for (var j=0; j<mutualGroups.length; j++){
+								if (mutualTwo[i]._id.equals(mutualGroups[j]._id)){
+									mutualGroups.splice(j, 1);
+									j--;
+								}
+							}
+							for (var j=0; j<mutualCourses.length; j++){
+								if (mutualTwo[i]._id.equals(mutualCourses[j]._id)){
+									mutualCourses.splice(j, 1);
+									j--;
+								}
+							}
+						}
+						for (var i=0; i<mutualThree.length; i++){
+							for (var j=0; j<mutualFriends.length; j++){
+								if (mutualThree[i]._id.equals(mutualFriends[j]._id)){
+									mutualFriends.splice(j, 1);
+									j--;
+								}
+							}
+							for (var j=0; j<mutualGroups.length; j++){
+								if (mutualThree[i]._id.equals(mutualGroups[j]._id)){
+									mutualGroups.splice(j, 1);
+									j--;
+								}
+							}
+							for (var j=0; j<mutualCourses.length; j++){
+								if (mutualThree[i]._id.equals(mutualCourses[j]._id)){
+									mutualCourses.splice(j, 1);
+									j--;
+								}
+							}
+							for (var j=0; j<mutualTwo.length; j++){
+								if (mutualThree[i]._id.equals(mutualTwo[j]._id)){
+									mutualTwo.splice(j, 1);
+									j--;
+								}
+							}
+						}
+
+						console.log(mutualFriends);
+						console.log(mutualGroups);
+						console.log(mutualCourses);
+						console.log(mutualTwo);
+						console.log(mutualThree);
+						//for (var i=0; i<10; i++){
+							//if (suggestedFriends[i]){
+								//tenSuggestedFriends.push(suggestedFriends[i]);
+							//}
+						//}
 					}
-					res.render('profile', {user: doc, currentUser: req.user, friends: userFriends, friendRequests: userFriendRequests, users: users, isFriend: isFriend, groupInvites: doc.invites, groups: groups, schedule: schedule, suggestedFriends: tenSuggestedFriends});
+					res.render('profile', {user: doc, currentUser: req.user, friends: userFriends, friendRequests: userFriendRequests, users: users, isFriend: isFriend, groupInvites: doc.invites, groups: groups, schedule: schedule});
 
 				}else{
 					var userFriends = doc.friends;
@@ -103,6 +269,7 @@ router.get('/profile/:userId', function(req, res, next){
 				}
 			}
 		});
+		db.close();
 	});
 }
 });

@@ -32,10 +32,11 @@
       {{#each ../users}}
         {{#ifCond ../this._id 'equals' this._id}}
           <div>
-          <p><a href="/profile/{{this._id}}">{{ this.name }}</a>
             {{#ifCond ../../user._id 'equals' ../../currentUser._id}}
-          <a class="label label-danger" id="removeFriend" name="removeFriend" href="/users/removeFriend/{{this._id}}">-Remove Friend</a></p>
-          {{/ifCond}}
+              <p><a href="/profile/{{this._id}}">{{ this.name }}</a> <a class="label label-danger" id="removeFriend" name="removeFriend" href="/users/removeFriend/{{this._id}}">-Remove Friend</a></p>
+            {{else}}
+              <p><a href="/profile/{{this._id}}">{{ this.name }}</a></p>
+            {{/ifCond}}
           </div>
         {{/ifCond}}
       {{/each}}
@@ -64,34 +65,6 @@
   {{/each}}
   {{else}}
   <p>No friend requests.</p>
-  {{/if}}
-{{/ifCond}}
-</div>
-
-<div name="suggestedFriends" class="loadSuggestedFriends">
-{{#ifCond user._id 'equals' currentUser._id}}
-  <h3>Suggested Friends</h3>
-  {{#if suggestedFriends}}
-  {{#each suggestedFriends}}
-
-  <div class="row">
-    <div class="col-sm-6 col-md-4">
-      <div class="thumbnail">
-      {{#ifCond this.hasProfile '==' true}}
-        <img src="/uploads/{{this._id}}/profile/{{this._id}}.{{this.profExt}}" alt="My Profile Pic">
-        {{else}}
-        <img src="/profile.jpg" alt="My Profile Pic">
-        {{/ifCond}}
-        <div class="caption">
-          <h3><a href="/profile/{{this._id}}">{{ this.name}}</a></h3>
-          <p><a class="label label-primary" id="addFriend" name="addFriend" href="/users/addFriend/{{this._id}}">+Add Friend</a></p>
-        </div>
-      </div>
-    </div>
-  </div>
-  {{/each}}
-  {{else}}
-  <p>No users to show.</p>
   {{/if}}
 {{/ifCond}}
 </div>
