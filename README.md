@@ -1,3 +1,21 @@
+# How to run our website
+
+Download/pull the "Project" folder.
+
+Open command prompt and navigate to the "Project" folder.
+
+Type "npm install" (you may need to type "npm install formidable" as well)
+
+Open another command prompt and navigate to the bin folder in the MongoDB folder.
+
+Type "mongod" to start the database.
+
+In the other command prompt, type "node app.js"
+
+Navigate to localhost:3000 in an internet browser to view the page.
+
+
+
 # teamproject
 CS4770 team project repository, Memorial University of Newfoundland, Winter 2017.
 
