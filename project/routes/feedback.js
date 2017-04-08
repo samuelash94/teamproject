@@ -7,10 +7,21 @@ var objectId = require('mongodb').ObjectID;
 var url = 'mongodb://localhost/4770TeamProject';
 
 router.get('/', function(req, res){
+  if(!req.user){
+		res.redirect('/users/login');
+	}
+  else {
+
   res.render('feedback', {currentUser: req.user});
+}
 });
 
 router.post('/submitFeedback', function(req, res){
+  if(!req.user){
+		res.redirect('/users/login');
+	}
+  else {
+
   var title = req.body.Title;
   var description = req.body.Description;
   var feedbackType = req.body.feedbackType;
@@ -47,9 +58,15 @@ router.post('/submitFeedback', function(req, res){
 
     res.redirect('/feedback');
   }
+}
 });
 
 router.get('/viewFeedback', function(req, res){
+  if(!req.user){
+		res.redirect('/users/login');
+	}
+  else {
+
   var resultArray = [];
   mongo.connect(url, function(err, db){
     var feedback = db.collection('feedbacks').find().sort({mongoDate: -1});
@@ -60,6 +77,7 @@ router.get('/viewFeedback', function(req, res){
       res.render('viewFeedback', {feedback: resultArray});
 		});
   });
+}
 });
 
 module.exports = router;

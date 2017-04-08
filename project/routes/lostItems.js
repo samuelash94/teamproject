@@ -15,10 +15,21 @@ var objectId = require('mongodb').ObjectID;
 var url = 'mongodb://localhost/4770TeamProject';
 
 router.get('/', function(req, res){
+	if(!req.user){
+		res.redirect('/users/login');
+	}
+	else {
+
 	res.render('lostandfound', {currentUser: req.user});
+}
 });
 
 router.get("/uploadItemImage/:itemId", function(req, res){
+	if(!req.user){
+		res.redirect('/users/login');
+	}
+	else {
+
 	var itemId = req.params.itemId;
 	var resultArray = [];
 	mongo.connect(url, function(err, db){
@@ -30,9 +41,15 @@ router.get("/uploadItemImage/:itemId", function(req, res){
 			res.render('uploadLostPhoto', {lostItem: resultArray[0], currentUser: req.user});
 		});
 	});
+}
 });
 
 router.post('/postItem', function(req, res){
+	if(!req.user){
+		res.redirect('/users/login');
+	}
+	else {
+
 	var description = req.body.itemDesc;
 	var lostRegion = req.body.region;
 	var address = req.body.Address;
@@ -75,9 +92,15 @@ router.post('/postItem', function(req, res){
 
 		res.render('uploadLostPhoto', {lostItem: newItem});
 	}
+}
 });
 
 router.post('/upload/:itemId', function(req, res){
+	if(!req.user){
+		res.redirect('/users/login');
+	}
+	else {
+
 	var itemId = req.params.itemId;
 
   // create an incoming form object
@@ -148,10 +171,16 @@ form.uploadDir = path.join(__dirname, '/uploads/lostItems/'+ itemId);
 );
 db.close();
 	});
+}
 
 });
 
 router.get('/viewItems', function(req, res, next) {
+	if(!req.user){
+		res.redirect('/users/login');
+	}
+	else {
+
 	var resultArray = [];
 	var res2 = [];
 	mongo.connect(url, function(err, db){
@@ -169,9 +198,15 @@ router.get('/viewItems', function(req, res, next) {
 			res.render('lostItemsIndex', {myItems: resultArray, notMyItems:res2, currentUser: req.user});
 		});
 	});
+}
 });
 
 router.post('/deleteItem/:itemId', function(req, res){
+	if(!req.user){
+		res.redirect('/users/login');
+	}
+	else {
+
 	var itemId = req.params.itemId;
 	mongo.connect(url, function(err, db){
 		db.collection('lostitems').deleteOne(
@@ -199,10 +234,16 @@ db.close();
     fs.rmdirSync(dir);
 req.flash('success_msg', 'The item was deleted.');
 	 res.redirect('/lostItems/viewItems');
+ }
 
 });
 
 router.post('/claimItem/:itemId', function(req, res){
+	if(!req.user){
+		res.redirect('/users/login');
+	}
+	else {
+
 	var itemId = req.params.itemId;
 	var posterId = req.body.posterId;
 	var found = false;
@@ -249,10 +290,16 @@ mongo.connect(url, function(err, db){
 
 	});
 });
+}
 
 });
 
 router.post('/unclaimItem/:itemId', function(req, res){
+	if(!req.user){
+		res.redirect('/users/login');
+	}
+	else {
+
 	var itemId = req.params.itemId;
 	mongo.connect(url, function(err, db){
 		db.collection('lostitems').update(
@@ -267,6 +314,7 @@ db.close();
 req.flash('success_msg', 'You have set the item back to unclaimed');
 res.redirect('/lostItems/viewItems');
 	});
+}
 });
 
 module.exports = router;

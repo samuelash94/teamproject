@@ -9,10 +9,20 @@ var url = 'mongodb://localhost/4770TeamProject';
 var poll = require('../models/poll');
 
 router.get('/', function(req, res){
+	if(!req.user){
+		res.redirect('/users/login');
+	}
+	else {
 	res.render('poll', {currentUser: req.user});
+}
 });
 
 router.post('/create', function(req, res){
+	if(!req.user){
+		res.redirect('/users/login');
+	}
+	else {
+
 	var name = req.body.pollName;
 	var userId = req.user.id;
 	var author = req.user.name;
@@ -47,8 +57,14 @@ router.post('/create', function(req, res){
 			res.redirect('/poll');
 		}
 	}
+}
 });
 router.post('/vote', function(req, res){
+	if(!req.user){
+		res.redirect('/users/login');
+	}
+	else {
+
 	var vote = req.body.vote;
 	if(typeof vote == 'undefined'){
 		req.flash('error_msg', 'Select a rating to vote.');
@@ -84,11 +100,17 @@ router.post('/vote', function(req, res){
 			});
 		});
 	}
+}
 });
 
 
 
 router.get('/loadPolls', function(req, res, next) {
+	if(!req.user){
+		res.redirect('/users/login');
+	}
+	else {
+
 	var resultArray = [];
 	mongo.connect(url, function(err, db){
 		var cursor = db.collection('polls').find();
@@ -99,10 +121,15 @@ router.get('/loadPolls', function(req, res, next) {
 			res.render('poll', {poll: resultArray, currentUser: req.user});
 		});
 	});
-	//res.redirect('/');
+}
 });
 
 router.post('/deletePoll/:pollId', function(req, res){
+	if(!req.user){
+		res.redirect('/users/login');
+	}
+	else {
+
 	var pollId = req.params.pollId;
 	mongo.connect(url, function(err, db){
 		db.collection('polls').deleteOne({_id: objectId(pollId)});
@@ -110,6 +137,7 @@ router.post('/deletePoll/:pollId', function(req, res){
 		req.flash('success_msg', 'poll was deleted.');
 		res.redirect('/poll/loadPolls');
 	});
+}
 });
 
 module.exports = router;

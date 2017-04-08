@@ -226,6 +226,11 @@ router.post('/register', function(req, res){
 });
 
 router.get('/authenticate/:userId', function(req, res){
+	if(!req.user){
+		res.redirect('/users/login');
+	}
+	else {
+
 	var userId = req.params.userId;
 	mongo.connect(url, function(err, db){
 		db.collection('users').update(
@@ -240,6 +245,7 @@ db.close();
 req.flash('success_msg', 'You are now authenticated!');
 res.redirect('/users/login');
 	});
+}
 });
 
 passport.use(new LocalStrategy(
@@ -286,6 +292,11 @@ router.get('/logout', function(req, res){
 });
 
 router.get('/addFriend/:userId', function(req, res){
+	if(!req.user){
+		res.redirect('/users/login');
+	}
+	else {
+
 	User.addFriend(req.user.id, req.params.userId, function(err){
 		if (err) throw err;
 		else{
@@ -293,9 +304,15 @@ router.get('/addFriend/:userId', function(req, res){
 			res.redirect('/');
 		}
 	});
+}
 });
 
 router.get('/removeFriend/:userId', function(req, res){
+	if(!req.user){
+		res.redirect('/users/login');
+	}
+	else {
+
 	mongo.connect(url, function(err, db){
 		var update1 = {$pull: {friends: {_id: objectId(req.params.userId)}}};
 		var update2 = {$pull: {friends: {_id: objectId(req.user.id)}}};
@@ -305,13 +322,24 @@ router.get('/removeFriend/:userId', function(req, res){
 		res.redirect('/');
 		db.close();
 	});
+}
 });
 
 router.get('/goToUpload', function(req, res){
+	if(!req.user){
+		res.redirect('/users/login');
+	}
+	else {
+
 	res.render('upload', {currentUser:req.user});
+}
 });
 
 router.post('/upload/profile', function(req, res){
+	if(!req.user){
+		res.redirect('/users/login');
+	}
+	else {
 
   // create an incoming form object
   var form = new formidable.IncomingForm();
@@ -383,10 +411,15 @@ form.uploadDir = path.join(__dirname, '/uploads/'+ req.user.id + '/profile');
 );
 db.close();
 	});
-
+}
 });
 
 router.post('/upload/resume', function(req, res){
+	if(!req.user){
+		res.redirect('/users/login');
+	}
+	else {
+
 
   // create an incoming form object
   var form = new formidable.IncomingForm();
@@ -473,11 +506,16 @@ form.uploadDir = path.join(__dirname, '/uploads/'+ req.user.id + '/resume');
 );
 db.close();
 	});
-
+}
 });
 
 
 router.get('/acceptFriend/:userId', function(req, res){
+	if(!req.user){
+		res.redirect('/users/login');
+	}
+	else {
+
 	User.addFriend(req.user.id, req.params.userId, function(err){
 		if (err) throw err;
 		else{
@@ -485,10 +523,15 @@ router.get('/acceptFriend/:userId', function(req, res){
 			res.redirect('/profile/' + req.user.id);
 		}
 	});
-
+}
 });
 
 router.get('/rejectFriend/:userId', function(req, res){
+	if(!req.user){
+		res.redirect('/users/login');
+	}
+	else {
+
 	mongo.connect(url, function(err, db){
 		var update1 = {$pull: {friends: {_id: objectId(req.params.userId)}}};
 		var update2 = {$pull: {friends: {_id: objectId(req.user.id)}}};
@@ -498,9 +541,15 @@ router.get('/rejectFriend/:userId', function(req, res){
 		res.redirect('/');
 		db.close();
 	});
+}
 });
 
 router.post('/setDefaultVisibility/:userId', function(req, res){
+	if(!req.user){
+		res.redirect('/users/login');
+	}
+	else {
+
 	mongo.connect(url, function(err, db){
 		var cursor = db.collection('users').update(
 		{ _id: objectId(req.params.userId) },
@@ -516,9 +565,15 @@ router.post('/setDefaultVisibility/:userId', function(req, res){
 		res.redirect('/');
 		db.close();
 	});
+}
 });
 
 router.post('/visibilityList/:userId', function(req, res){
+	if(!req.user){
+		res.redirect('/users/login');
+	}
+	else {
+
 	mongo.connect(url, function(err, db){
 		var cursor = db.collection('users').update(
 		{ _id: objectId(req.params.userId) },
@@ -543,9 +598,15 @@ router.post('/visibilityList/:userId', function(req, res){
 			db.close();
 		}
 	});
+}
 });
 
 router.post('/setWhoCanPost/:userId', function(req, res){
+	if(!req.user){
+		res.redirect('/users/login');
+	}
+	else {
+
 	mongo.connect(url, function(err, db){
 		var cursor = db.collection('users').update(
 		{ _id: objectId(req.params.userId) },
@@ -561,9 +622,15 @@ router.post('/setWhoCanPost/:userId', function(req, res){
 		res.redirect('/');
 		db.close();
 	});
+}
 });
 
 router.post('/whoCanPostList/:userId', function(req, res){
+	if(!req.user){
+		res.redirect('/users/login');
+	}
+	else {
+
 	mongo.connect(url, function(err, db){
 		var cursor = db.collection('users').update(
 		{ _id: objectId(req.params.userId) },
@@ -587,6 +654,7 @@ router.post('/whoCanPostList/:userId', function(req, res){
 			db.close();
 		}
 	});
+}
 });
 
 module.exports = router;

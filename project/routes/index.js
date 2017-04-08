@@ -39,6 +39,11 @@ router.get('/', ensureAuthenticated, function(req, res){
 });
 
 router.get('/profile/:userId', function(req, res, next){
+	if(!req.user){
+		res.redirect('/users/login');
+	}
+	else {
+
 	mongo.connect(url, function(err, db){
 		var cursor2 = db.collection('groups').find();
 		var groups = [];
@@ -97,13 +102,16 @@ router.get('/profile/:userId', function(req, res, next){
 				}
 			}
 		});
-		//if (db.collection('users').find({_id : req.params.userId}) > 0){
-			//res.render('profile', {output: req.params.userId});
-		//}
 	});
+}
 });
 
 router.get('/profileSettings/:userId', function(req, res, next){
+	if(!req.user){
+		res.redirect('/users/login');
+	}
+	else {
+
 	mongo.connect(url, function(err, db){
 		var cursor2 = db.collection('groups').find();
 		var groups = [];
@@ -135,6 +143,7 @@ router.get('/profileSettings/:userId', function(req, res, next){
 			//res.render('profile', {output: req.params.userId});
 		//}
 	});
+}
 });
 
 router.post('/search', function(req, res){
@@ -186,6 +195,11 @@ router.post('/search', function(req, res){
 });
 
 router.get('/group/:groupId', function(req, res, next){
+	if(!req.user){
+		res.redirect('/users/login');
+	}
+	else {
+
 	mongo.connect(url, function(err, db){
 		var cursor = db.collection('groups').find();
 		var cursor2 = db.collection('users').find();
@@ -221,13 +235,16 @@ router.get('/group/:groupId', function(req, res, next){
 				}
 			}
 		});
-		//if (db.collection('users').find({_id : req.params.userId}) > 0){
-			//res.render('profile', {output: req.params.userId});
-		//}
 	});
+}
 });
 
 router.get('/groupSettings/:groupId', function(req, res, next){
+	if(!req.user){
+		res.redirect('/users/login');
+	}
+	else {
+
 	mongo.connect(url, function(err, db){
 		var cursor = db.collection('groups').find();
 		var cursor2 = db.collection('users').find();
@@ -289,6 +306,7 @@ router.get('/groupSettings/:groupId', function(req, res, next){
 		});
 		db.close();
 	});
+}
 });
 
 

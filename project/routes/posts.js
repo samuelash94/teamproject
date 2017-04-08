@@ -10,6 +10,11 @@ var url = 'mongodb://localhost/4770TeamProject';
 var Post = require('../models/post');
 
 router.get('/', function(req, res){
+	if(!req.user){
+		res.redirect('/users/login');
+	}
+	else {
+
 	var allFriends;
 	var acceptedFriends = [];
 	var users = [];
@@ -29,9 +34,15 @@ router.get('/', function(req, res){
 		});
 		db.close();
 	});
+}
 });
 
 router.post('/post', function(req, res){
+	if(!req.user){
+		res.redirect('/users/login');
+	}
+	else {
+
 	var text = req.body.postField;
 	var date = Post.getCurrentDate();
 	var mongoDate = new Date();
@@ -78,9 +89,15 @@ router.post('/post', function(req, res){
 
 		res.redirect('/posts/loadPosts');
 	}
+}
 });
 
 router.post('/post/profile/:userId', function(req, res){
+	if(!req.user){
+		res.redirect('/users/login');
+	}
+	else {
+
 	var param = req.params.userId;
 	var text = req.body.postField;
 	var date = Post.getCurrentDate();
@@ -178,9 +195,15 @@ router.post('/post/profile/:userId', function(req, res){
 		});
 		db.close();
 	});
+}
 });
 
 router.post('/post/group/:groupId', function(req, res){
+	if(!req.user){
+		res.redirect('/users/login');
+	}
+	else {
+
 	var text = req.body.postField;
 	var param = req.params.groupId;
 	var date = Post.getCurrentDate();
@@ -237,9 +260,15 @@ router.post('/post/group/:groupId', function(req, res){
 		});
 		db.close();
 	});
+}
 });
 
 router.get('/loadPosts', function(req, res, next) {
+	if(!req.user){
+		res.redirect('/users/login');
+	}
+	else {
+
 	var resultArray = [];
 	var commentsArray = [];
 	var users = [];
@@ -310,10 +339,15 @@ router.get('/loadPosts', function(req, res, next) {
 					db.close();
 				});
 			});
-	//res.redirect('/');
+	}
 });
 
 router.get('/loadPosts/profile/:userId', function(req, res, next) {
+	if(!req.user){
+		res.redirect('/users/login');
+	}
+	else {
+
 	var resultArray = [];
 	var commentsArray = [];
 	var users = [];
@@ -369,10 +403,15 @@ router.get('/loadPosts/profile/:userId', function(req, res, next) {
 			}
 		});
 	});
-	//res.redirect('/');
+}
 });
 
 router.get('/loadPosts/group/:groupId', function(req, res, next) {
+	if(!req.user){
+		res.redirect('/users/login');
+	}
+	else {
+
 	var resultArray = [];
 	var commentsArray = [];
 	var users = [];
@@ -431,10 +470,14 @@ router.get('/loadPosts/group/:groupId', function(req, res, next) {
 			}
 		});
 	});
-	//res.redirect('/');
+}
 });
 
 router.post('/editPost', function(req, res){
+	if(!req.user){
+		res.redirect('/users/login');
+	}
+	else {
 
 	var newPostText = req.body.PostText;
 	var currentDate = Post.getCurrentDate();
@@ -466,9 +509,15 @@ router.post('/editPost', function(req, res){
 		});
 
 	}
+}
 });
 
 router.post('/editVisibility/', function(req, res){
+	if(!req.user){
+		res.redirect('/users/login');
+	}
+	else {
+
 	var visibility = req.body.postVisibility;
 	var newVisibility = Number(visibility);
 
@@ -488,10 +537,15 @@ req.flash('success_msg', 'post was edited.');
 	 res.redirect('/');
 
 	});
-
+}
 });
 
 router.post('/deletePost/', function(req, res) {
+	if(!req.user){
+		res.redirect('/users/login');
+	}
+	else {
+
 		mongo.connect(url, function(err, db){
 			var newComment = db.collection('posts').deleteOne(
 	   { _id: objectId(req.body.postIdentif) });
@@ -500,6 +554,7 @@ router.post('/deletePost/', function(req, res) {
 		 res.redirect('/posts/loadPosts');
 
 		});
+	}
 });
 
 module.exports = router;

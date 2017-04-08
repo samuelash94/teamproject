@@ -10,10 +10,19 @@ var url = 'mongodb://localhost/4770TeamProject';
 var Group = require('../models/group');
 
 router.get('/', function(req, res){
+	if(!req.user){
+		res.redirect('/users/login');
+	}
+	else{
 	res.render('groups', {currentUser: req.user, invites: req.user.invites});
+}
 });
 
 router.post('/create', function(req, res){
+	if(!req.user){
+		res.redirect('/users/login');
+	}
+	else{
 	var name = req.body.groupName;
 	var description = req.body.groupDesc;
 	var privacy = req.body.groupPrivacy;
@@ -56,10 +65,15 @@ router.post('/create', function(req, res){
 
 		res.redirect('/groups');
 	}
+}
 });
 
 
 router.get('/loadGroups', function(req, res, next) {
+	if(!req.user){
+		res.redirect('/users/login');
+	}
+	else{
 	var resultArray = [];
 	var res2 = [];
 	var res3 = [];
@@ -95,10 +109,15 @@ router.get('/loadGroups', function(req, res, next) {
 			res.render('groups', {myGroups: resultArray, notMyGroups:res2, currentUser: req.user, requestedGroups: res3, invites: req.user.invites});
 		});
 	});
+}
 	//res.redirect('/');
 });
 
 router.post('/joinGroup', function(req, res){
+	if(!req.user){
+		res.redirect('/users/login');
+	}
+	else{
 	var groupId = req.body.groupIdentif;
 	var userId = req.user.id;
 	mongo.connect(url, function(err, db){
@@ -110,9 +129,14 @@ router.post('/joinGroup', function(req, res){
 		req.flash('success_msg', 'You have successfully joined this group');
 	 	res.redirect('/');
 	});
+}
 });
 
 router.get('/joinGroup/:groupId', function(req, res){
+	if(!req.user){
+		res.redirect('/users/login');
+	}
+	else {
 	mongo.connect(url, function(err, db){
 		var cursor = db.collection('groups').update(
     { _id: objectId(req.params.groupId) },
@@ -127,9 +151,15 @@ router.get('/joinGroup/:groupId', function(req, res){
 		req.flash('success_msg', 'You have successfully joined this group.');
 	 	res.redirect('/');
 	});
+}
 });
 
 router.post('/requestJoinGroup', function(req, res){
+	if(!req.user){
+		res.redirect('/users/login');
+	}
+	else {
+
 	var groupId = req.body.groupIdentif;
 	var userId = req.user.id;
 	var sent = false;
@@ -159,9 +189,15 @@ router.post('/requestJoinGroup', function(req, res){
 		 	res.redirect('/');
 		}
 	});
+}
 });
 
 router.get('/requestJoinGroup/:groupId', function(req, res){
+	if(!req.user){
+		res.redirect('/users/login');
+	}
+	else {
+
 	mongo.connect(url, function(err, db){
 		var cursor = db.collection('groups').update(
    { _id: objectId(req.params.groupId) },
@@ -171,9 +207,14 @@ router.get('/requestJoinGroup/:groupId', function(req, res){
 		req.flash('success_msg', 'You have requested to join this group.');
 	 	res.redirect('/');
 	});
+}
 });
 
 router.get('/leaveGroup/:groupId', function(req, res){
+	if(!req.user){
+		res.redirect('/users/login');
+	}
+	else{
 	mongo.connect(url, function(err, db){
 		var update1 = {$pull: {members: req.user.id}};
 		var update2 = {$pull: {admin: req.user.id}};
@@ -183,9 +224,15 @@ router.get('/leaveGroup/:groupId', function(req, res){
 		req.flash('success_msg', 'You have left the group.');
 	 	res.redirect('/');
 	});
+}
 });
 
 router.get('/acceptRequest/:groupId/:userId', function(req, res){
+	if(!req.user){
+		res.redirect('/users/login');
+	}
+	else {
+
 	mongo.connect(url, function(err, db){
 		var cursor = db.collection('groups').update(
    { _id: objectId(req.params.groupId) },
@@ -201,10 +248,15 @@ router.get('/acceptRequest/:groupId/:userId', function(req, res){
 		req.flash('success_msg', 'Group join request accepted.');
 		res.redirect('/');
 	});
-
+}
 });
 
 router.get('/rejectInvite/:groupId', function(req, res){
+	if(!req.user){
+		res.redirect('/users/login');
+	}
+	else {
+
 	mongo.connect(url, function(err, db){
 		var cursor = db.collection('groups').update(
    { _id: objectId(req.params.groupId) },
@@ -219,9 +271,15 @@ router.get('/rejectInvite/:groupId', function(req, res){
 		req.flash('success_msg', 'Group join request rejected.');
 		res.redirect('/');
 	});
+}
 });
 
 router.post('/changePrivacy/:groupId', function(req, res){
+	if(!req.user){
+		res.redirect('/users/login');
+	}
+	else {
+
 	mongo.connect(url, function(err, db){
 		var privacy = req.body.groupPrivacy;
 		var cursor = db.collection('groups').update(
@@ -234,9 +292,15 @@ router.post('/changePrivacy/:groupId', function(req, res){
 		req.flash('success_msg', 'Group privacy changed.');
 		res.redirect('/');
 	});
+}
 });
 
 router.post('/invite/:groupId', function(req, res){
+	if(!req.user){
+		res.redirect('/users/login');
+	}
+	else {
+
 	mongo.connect(url, function(err, db){
 		var newInvites = req.body.adminFriendList;
 		if (Array.isArray(newInvites)){
@@ -295,9 +359,15 @@ router.post('/invite/:groupId', function(req, res){
 			});
 		}
 	});
+}
 });
 
 router.post('/promote/:groupId', function(req, res){
+	if(!req.user){
+		res.redirect('/users/login');
+	}
+	else {
+
 	mongo.connect(url, function(err, db){
 		var newAdmin = req.body.memberList;
 		if (Array.isArray(newAdmin)){
@@ -315,9 +385,15 @@ router.post('/promote/:groupId', function(req, res){
 		res.redirect('/');
 		db.close();
 	});
+}
 });
 
 router.post('/demote/:groupId', function(req, res){
+	if(!req.user){
+		res.redirect('/users/login');
+	}
+	else {
+
 	mongo.connect(url, function(err, db){
 		var demoted = req.body.memberList;
 		if (Array.isArray(demoted)){
@@ -335,9 +411,15 @@ router.post('/demote/:groupId', function(req, res){
 		res.redirect('/');
 		db.close();
 	});
+}
 });
 
 router.post('/remove/:groupId', function(req, res){
+	if(!req.user){
+		res.redirect('/users/login');
+	}
+	else {
+
 	mongo.connect(url, function(err, db){
 		var removed = req.body.memberList;
 		if (Array.isArray(removed)){
@@ -363,9 +445,15 @@ router.post('/remove/:groupId', function(req, res){
 		}
 		db.close();
 	});
+}
 });
 
 router.post('/deleteGroup/', function(req, res) {
+	if(!req.user){
+		res.redirect('/users/login');
+	}
+	else {
+
 		mongo.connect(url, function(err, db){
 			var newComment = db.collection('groups').deleteOne(
 	   { _id: objectId(req.body.groupIdentif) });
@@ -374,6 +462,7 @@ router.post('/deleteGroup/', function(req, res) {
 		 res.redirect('/');
 
 		});
+	}
 });
 
 

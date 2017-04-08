@@ -9,10 +9,21 @@ var url = 'mongodb://localhost/4770TeamProject';
 var schedule = require('../models/schedule');
 
 router.get('/', function(req, res){
+	if(!req.user){
+		res.redirect('/users/login');
+	}
+	else {
+
 	res.render('schedule', {currentUser: req.user});
+}
 });
 
 router.post('/create', function(req, res){
+	if(!req.user){
+		res.redirect('/users/login');
+	}
+	else{
+
 	var name = req.body.courseName;
 	var slot = req.body.courseSlot;
 	var userId = req.user.id;
@@ -118,9 +129,15 @@ router.post('/create', function(req, res){
 			}
 		}
 	}
+}
 });
 
 router.get('/loadCourses', function(req, res, next) {
+	if(!req.user){
+		res.redirect('/users/login');
+	}
+	else {
+
 	var resultArray = [];
 	mongo.connect(url, function(err, db){
 		var cursor = db.collection('schedules').find({userId: req.user.id});
@@ -131,9 +148,15 @@ router.get('/loadCourses', function(req, res, next) {
 			res.render('schedule', {schedule: resultArray, currentUser: req.user});
 		});
 	});
+}
 });
 
 router.post('/deleteCourse/', function(req, res) {
+	if(!req.user){
+		res.redirect('/users/login');
+	}
+	else {
+
 	mongo.connect(url, function(err, db){
 		var newComment = db.collection('schedules').deleteOne(
 	 	{ _id: objectId(req.body.schedId) });
@@ -142,6 +165,7 @@ router.post('/deleteCourse/', function(req, res) {
 	 res.redirect('/schedule');
 
 	});
+}
 });
 
 module.exports = router;

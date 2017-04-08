@@ -11,6 +11,11 @@ var objectId = require('mongodb').ObjectID;
 var url = 'mongodb://localhost/4770TeamProject';
 
 router.get('/', function(req, res){
+	if(!req.user){
+		res.redirect('/users/login');
+	}
+	else {
+
 	var allFriends;
 	var acceptedFriends = [];
 	var users = [];
@@ -30,9 +35,15 @@ router.get('/', function(req, res){
 		});
 		db.close();
 	});
+}
 });
 
 router.post('/addComment/', function(req, res){
+	if(!req.user){
+		res.redirect('/users/login');
+	}
+	else {
+
 	var postIdentif = req.body.postIdentif;
   var commentText = req.body.commentTextField;
   var date = comment.getCurrentDate();
@@ -86,11 +97,16 @@ router.post('/addComment/', function(req, res){
 		req.flash('success_msg', 'comment was added.');
     res.redirect("/posts/loadPosts");
   }
+}
 
 });
 
 
 router.post('/editComment/', function(req, res){
+	if(!req.user){
+		res.redirect('/users/login');
+	}
+	else {
 
 	if(req.body.userIdentif != req.user.id){
 		req.flash('error', 'You are not the author of this comment');
@@ -155,12 +171,18 @@ router.post('/editComment/', function(req, res){
 				 res.redirect("/posts/loadPosts");
 		}
 	}
+}
 });
 
 
 
 
 router.post('/deleteComment/', function(req, res) {
+	if(!req.user){
+		res.redirect('/users/login');
+	}
+	else {
+
 	if(req.body.userIdentif != req.user.id){
 		req.flash('error', 'You are not the author of this comment');
 		res.redirect("/posts/loadPosts");
@@ -175,6 +197,7 @@ router.post('/deleteComment/', function(req, res) {
 
 		});
 	}
+}
 
 });
 
