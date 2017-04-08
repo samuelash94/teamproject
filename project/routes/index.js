@@ -50,7 +50,8 @@ router.get('/profile/:userId', function(req, res, next){
 		cursor2.forEach(function(doc, err){
 			groups.push(doc);
 		});
-		var cursor3 = db.collection('schedules').find({_id: objectId(req.params.userId)});
+		var cursor3 = db.collection('schedules').find({userId: req.params.userId});
+
 		var schedule = [];
 		cursor3.forEach(function(doc, err){
 			schedule.push(doc);
