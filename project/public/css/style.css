@@ -83,6 +83,16 @@ body {
 	width: 350px;
 	}
 
+  .postDeleteButton{
+    margin-top: -112px;
+    margin-right: 403px;
+  }
+
+  .commentDeleteButton{
+    margin-top: -77px;
+    margin-left: 183px;
+  }
+
 
 .page-header{
   margin-top:0;

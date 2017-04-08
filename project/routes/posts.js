@@ -76,11 +76,12 @@ router.post('/post', function(req, res){
 
 		req.flash('success_msg', 'Post was posted.');
 
-		res.redirect('/');
+		res.redirect('/posts/loadPosts');
 	}
 });
 
 router.post('/post/profile/:userId', function(req, res){
+	var param = req.params.userId;
 	var text = req.body.postField;
 	var date = Post.getCurrentDate();
 	var mongoDate = new Date();
@@ -121,7 +122,7 @@ router.post('/post/profile/:userId', function(req, res){
 							console.log(post);
 						});
 						req.flash('success_msg', 'Post was posted.');
-						res.redirect('/');
+						res.redirect('/profile/' + param);
 					}else if (user.whoCanPost == 1){
 						var posted = false;
 						var friendsList = user.friends;
@@ -134,16 +135,16 @@ router.post('/post/profile/:userId', function(req, res){
 									});
 									posted = true;
 									req.flash('success_msg', 'Post was posted.');
-									res.redirect('/');
+									res.redirect('/profile/' + param);
 								}
 							}
 							if (!posted){
 								req.flash('error_msg', 'Error: Post was not posted. You do not have permission to post on this page.');
-								res.redirect('/');
+								res.redirect('/profile/' + param);
 							}
 						}else{
 							req.flash('error_msg', 'Error: Post was not posted. You do not have permission to post on this page.');
-							res.redirect('/');
+							res.redirect('/profile/' + param);
 						}
 					}else if (user.whoCanPost == 3){
 						var posted = false;
@@ -157,20 +158,20 @@ router.post('/post/profile/:userId', function(req, res){
 									});
 									posted = true;
 									req.flash('success_msg', 'Post was posted.');
-									res.redirect('/');
+									res.redirect('/profile/' + param);
 								}
 							}
 							if (!posted){
 								req.flash('error_msg', 'Error: Post was not posted. You do not have permission to post on this page.');
-								res.redirect('/');
+								res.redirect('/profile/' + param);
 							}
 						}else{
 							req.flash('error_msg', 'Error: Post was not posted. You do not have permission to post on this page.');
-							res.redirect('/');
+							res.redirect('/profile/' + param);
 						}
 					}else{
 						req.flash('error_msg', 'Error: Post was not posted. You do not have permission to post on this page.');
-						res.redirect('/');
+						res.redirect('/profile/' + param);
 					}
 				}
 			}
@@ -181,6 +182,7 @@ router.post('/post/profile/:userId', function(req, res){
 
 router.post('/post/group/:groupId', function(req, res){
 	var text = req.body.postField;
+	var param = req.params.groupId;
 	var date = Post.getCurrentDate();
 	var mongoDate = new Date();
 	var image = 0;

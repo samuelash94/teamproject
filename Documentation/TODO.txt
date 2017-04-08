@@ -1,4 +1,3 @@
-empty search loads all users
 check if user is logged in on every page load
 check file type and size on upload
 CSS
