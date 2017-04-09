@@ -515,29 +515,30 @@ router.post('/editPost', function(req, res){
 }
 });
 
-router.post('/editVisibility/', function(req, res){
+router.post('/editVisibility/:postId', function(req, res){
+	var postId = req.params.postId;
 	if(!req.user){
 		res.redirect('/users/login');
 	}
 	else {
-
+	var currentDate = Post.getCurrentDate();
 	var visibility = req.body.postVisibility;
 	var newVisibility = Number(visibility);
 
 	mongo.connect(url, function(err, db){
 		var newComment = db.collection('posts').update(
-	 { _id: objectId(req.body.postIdentif) },
+	 { _id: objectId(postId) },
 	 {
 		 $set:{
-			 'visibility': newVisibility,
+			 'visible': newVisibility,
 			 'date': currentDate,
 			 'mongoDate': new Date(),
 		 }
 	 }
 );
 db.close();
-req.flash('success_msg', 'post was edited.');
-	 res.redirect('/');
+req.flash('success_msg', 'post visibility changed.');
+	 res.redirect('/posts/loadPosts');
 
 	});
 }

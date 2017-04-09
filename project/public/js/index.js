@@ -138,10 +138,8 @@ $(document).ready(function () {
 });
 
 function displayPostField(){
-	document.getElementById("postField").style.display = 'block';
-	document.getElementById("postHeader").style.display = 'block';
-	document.getElementById("postSubmit").style.display = 'block';
-	document.getElementById("visibility").style.display = 'block';
+
+	document.getElementById("createPost").style.display = 'block';
 }
 
 function displayCommentField(){

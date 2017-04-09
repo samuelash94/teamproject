@@ -16,7 +16,7 @@ var formidable = require('formidable');
 var fs = require('fs');
 var path = require('path');
 var bcrypt = require('bcryptjs');
-//var msopdf = require('node-msoffice-pdf');
+var msopdf = require('node-msoffice-pdf');
 
 // Register
 router.get('/register', function(req, res){
