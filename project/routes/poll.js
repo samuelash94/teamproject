@@ -5,7 +5,8 @@ var LocalStrategy = require('passport-local').Strategy;
 var mongo = require('mongodb').MongoClient;
 var objectId = require('mongodb').ObjectID;
 
-var url = 'mongodb://localhost/4770TeamProject';
+var url = 'mongodb://sraa61@excalibur.cs.mun.ca/teamproject/project/projectdb';
+
 var poll = require('../models/poll');
 
 router.get('/', function(req, res){

@@ -6,7 +6,8 @@ var mongo = require('mongodb').MongoClient;
 var objectId = require('mongodb').ObjectID;
 var friends = require("mongoose-friends");
 
-var url = 'mongodb://localhost/4770TeamProject';
+var url = 'mongodb://sraa61@excalibur.cs.mun.ca/teamproject/project/projectdb';
+
 
 // Get Homepage
 router.get('/', ensureAuthenticated, function(req, res){
