@@ -140,6 +140,7 @@ $(document).ready(function () {
 function displayPostField(){
 
 	document.getElementById("createPost").style.display = 'block';
+	document.getElementById("friendListDiv").style.display = 'none';
 }
 
 function displayCommentField(){
@@ -156,7 +157,6 @@ function displayScheduleFields(){
 }
 
 function selectCheck(select){
-    console.log(select);
     if(select){
         optionValue = document.getElementById("listOnly").value;
         if(optionValue == select.value){
