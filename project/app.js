@@ -13,7 +13,7 @@ var mongoose = require('mongoose');
 var friends = require("mongoose-friends");
 var handlebars = require('handlebars');
 
-var url = 'mongodb://localhost/4770TeamProject';
+var url = 'mongodb://sraa61@excalibur.cs.mun.ca/teamproject/project/projectdb';
 mongoose.connect(url);
 var db = mongoose.connection;
 
@@ -154,7 +154,7 @@ app.use('/poll', poll);
 app.use('/feedback', feedback);
 
 // Set Port
-app.set('port', (process.env.PORT || 3000));
+app.set('port', (process.env.PORT || 3332));
 
 app.listen(app.get('port'), function(){
 	console.log('Server started on port '+app.get('port'));
