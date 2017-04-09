@@ -290,11 +290,6 @@ router.get('/profile/:userId', function(req, res, next){
 						console.log(mutualTwo);
 						console.log(mutualThree);
 						console.log(tenSuggestedFriends);
-						//for (var i=0; i<10; i++){
-							//if (suggestedFriends[i]){
-								//tenSuggestedFriends.push(suggestedFriends[i]);
-							//}
-						//}
 					}
 					res.render('profile', {user: doc, currentUser: req.user, friends: userFriends, friendRequests: userFriendRequests, users: users, isFriend: isFriend, groupInvites: doc.invites, groups: groups, schedule: schedule, suggestedFriends: tenSuggestedFriends});
 

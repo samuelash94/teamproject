@@ -354,7 +354,18 @@ router.get('/loadPosts/profile/:userId', function(req, res, next) {
 	var resultArray = [];
 	var commentsArray = [];
 	var users = [];
+	var schedule = [];
 	var isFriend = false;
+
+	mongo.connect(url, function(err, db){
+		var sched = db.collection('schedules').find({userId: req.params.userId});
+		sched.forEach(function(doc, err){
+			schedule.push(doc);
+		}, function(){
+			db.close();
+		});
+	});
+
 	mongo.connect(url, function(err, db){
 		var cursor = db.collection('posts').find().sort({mongoDate: -1});;
 		var cursorComments = db.collection('comments').find();
@@ -366,15 +377,11 @@ router.get('/loadPosts/profile/:userId', function(req, res, next) {
 				resultArray.push(doc);
 			}
 		}, function(){
-			//db.close();
-			//res.render('index', {posts: resultArray});
 		});
 
 		cursorComments.forEach(function(doc, err){
 			commentsArray.push(doc);
 		}, function(){
-			//db.close();
-			//res.render('/profile/:userId', {comments: commentsArray, posts:resultArray, user: user, currentUser: req.user, friends: userFriends, friendRequests: userFriendRequests, users: users, isFriend: isFriend});
 		});
 
 		cursorUsers.forEach(function(doc, err){
@@ -397,7 +404,7 @@ router.get('/loadPosts/profile/:userId', function(req, res, next) {
 							}
 						});
 					}
-					res.render('profile', {comments: commentsArray, posts:resultArray, user: doc, currentUser: req.user, friends: userFriends, friendRequests: userFriendRequests, users: users, isFriend: isFriend});
+					res.render('profile', {comments: commentsArray, posts:resultArray, user: doc, currentUser: req.user, friends: userFriends, friendRequests: userFriendRequests, users: users, isFriend: isFriend, schedule: schedule});
 
 				}else{
 					var userFriends = doc.friends;

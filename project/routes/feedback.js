@@ -56,7 +56,7 @@ router.post('/submitFeedback', function(req, res){
 
     req.flash('success_msg', 'Feedback Posted');
 
-    res.redirect('/feedback');
+    res.redirect('/feedback/viewFeedback');
   }
 }
 });
@@ -74,10 +74,30 @@ router.get('/viewFeedback', function(req, res){
 			resultArray.push(doc);
 		}, function(){
       db.close();
-      res.render('viewFeedback', {feedback: resultArray});
+      res.render('viewFeedback', {feedback: resultArray, currentUser: req.user});
 		});
   });
 }
+});
+
+router.post('/deleteFeedback/:feedId', function(req, res) {
+  var feedId = req.params.feedId;
+	if(!req.user){
+		res.redirect('/users/login');
+	}
+	else {
+
+		mongo.connect(url, function(err, db){
+			db.collection('feedbacks').deleteOne(
+	   { _id: objectId(feedId) });
+	    db.close();
+	     req.flash('success_msg', 'Feedback comment was deleted.');
+		 res.redirect("/feedback/viewFeedback");
+
+		});
+
+}
+
 });
 
 module.exports = router;

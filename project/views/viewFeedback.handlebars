@@ -1,9 +1,18 @@
 <h2 class="page-header">Feedback</h2>
 
 {{#each feedback}}
+<div class="jumbotron">
+
 <p>Title: {{this.title}}</p>
 <p>Description: {{this.description}}</p>
 <p>Feedback Type: {{this.feedbackType}}</p>
 <p>date: {{this.date}}</p>
 <p> Submitted by: <a href="/profile/{{this.userId}}">{{ this.author }}</a></p>
+
+{{#ifCond this.userId '==' ../currentUser._id}}
+<form method="post" action="/feedback/deleteFeedback/{{this._id}}">
+  <button class="btn btn-danger" type="submit">Delete</button>
+</form>
+{{/ifCond}}
+</div>
 {{/each}}
