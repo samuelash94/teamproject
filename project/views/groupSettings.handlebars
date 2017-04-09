@@ -158,13 +158,22 @@
 
   <h3> Change privacy of {{group.name}}.</h3>
   <form method="post" action="/groups/changePrivacy/{{group._id}}">
-  <div class="form-group">
-    <select id="groupPrivacy" class="form-control" name="groupPrivacy" style="display:block">
-  	<option value="public">Public</option>
-  	<option value="private">Private</option>
-	</select>
-  <p id="groupNote" name="groupNote" style="display:none">*Note that making a group private means that users must request to join or be invited to join by you, the owner, or by other users you specify who may send invites.</p>
-  </div>
+    <div class="form-group">
+      <select id="groupPrivacy" class="selectpicker" name="groupPrivacy" style="display:block">
+
+      {{#ifCond group.privacy '==' "public"}}
+        <option selected="selected" value="public">Public</option>
+      {{else}}
+        <option value="public">Public</option>
+      {{/ifCond}}
+      {{#ifCond group.privacy '==' "private"}}
+        <option selected="selected" value="private">Private</option>
+      {{else}}
+        <option value="private">Private</option>
+      {{/ifCond}}
+  	</select>
+    <p id="groupNote" name="groupNote" style="display:block">*Note that making a group private means that users must request to join or be invited to join by you, the owner, or by other users you specify who may send invites.</p>
+    </div>
   <div class="form-group">
   <button class="btn btn-default" type="submit" id="groupSubmit" style="display:block">Submit</button>
   </div>
