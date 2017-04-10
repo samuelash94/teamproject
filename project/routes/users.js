@@ -10,14 +10,13 @@ var mailer = require('../mailer');
 var mongo = require('mongodb').MongoClient;
 var objectId = require('mongodb').ObjectID;
 
-var url = 'mongodb://sraa61@excalibur.cs.mun.ca/teamproject/project/projectdb';
-
+var url = 'mongodb://localhost/4770TeamProject';
 
 var formidable = require('formidable');
 var fs = require('fs');
 var path = require('path');
 var bcrypt = require('bcryptjs');
-//var msopdf = require('node-msoffice-pdf');
+var msopdf = require('node-msoffice-pdf');
 
 // Register
 router.get('/register', function(req, res){
